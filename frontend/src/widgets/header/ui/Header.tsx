@@ -4,9 +4,17 @@ import React from 'react';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { Badge, Button, Dropdown, App } from 'antd';
-import { ShoppingCartOutlined, MedicineBoxOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { 
+  ShoppingCartOutlined, 
+  MedicineBoxOutlined, 
+  UserOutlined, 
+  LogoutOutlined,
+  SunOutlined,
+  MoonOutlined 
+} from '@ant-design/icons';
 import { RootState } from '@/app/store';
 import { logout } from '@/entities/user/model/userSlice';
+import { toggleTheme } from '@/entities/theme/model/themeSlice';
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -14,13 +22,14 @@ export const Header = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const { user, isAuthenticated } = useSelector((state: RootState) => state.user);
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
 
   const menuItems = [
     {
       key: 'profile',
       label: (
         <div style={{ padding: '4px 8px' }}>
-          <div style={{ fontWeight: 600, color: '#2d3436' }}>{user?.name}</div>
+          <div style={{ fontWeight: 600, color: themeMode === 'dark' ? '#ffffff' : '#2d3436' }}>{user?.name}</div>
           <div style={{ fontSize: '12px', color: '#8c8c8c' }}>{user?.email}</div>
           <div style={{ fontSize: '11px', color: '#00b894', marginTop: '2px', fontWeight: 600 }}>
             {user?.role === 'admin' ? 'Адміністратор' : 'Покупець'}
@@ -50,15 +59,16 @@ export const Header = () => {
       top: 0,
       zIndex: 1000,
       width: '100%',
-      backgroundColor: '#ffffff',
-      borderBottom: '1px solid #f0f0f0',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      backgroundColor: themeMode === 'dark' ? '#1f1f1f' : '#ffffff',
+      borderBottom: themeMode === 'dark' ? '1px solid #303030' : '1px solid #f0f0f0',
+      boxShadow: themeMode === 'dark' ? '0 2px 8px rgba(0, 0, 0, 0.2)' : '0 2px 8px rgba(0, 0, 0, 0.05)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: '0 24px',
       height: '64px',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      transition: 'background-color 0.3s, border-bottom 0.3s, box-shadow 0.3s'
     }}>
       {/* Логотип */}
       <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
@@ -66,8 +76,9 @@ export const Header = () => {
         <span style={{
           fontSize: '20px',
           fontWeight: 700,
-          color: '#2d3436',
-          letterSpacing: '0.5px'
+          color: themeMode === 'dark' ? '#ffffff' : '#2d3436',
+          letterSpacing: '0.5px',
+          transition: 'color 0.3s'
         }}>
           Аптека <span style={{ color: '#00b894' }}>Здоров'я</span>
         </span>
@@ -78,12 +89,12 @@ export const Header = () => {
         <Link href="/catalog" style={{
           fontSize: '15px',
           fontWeight: 500,
-          color: '#2d3436',
+          color: themeMode === 'dark' ? '#f5f5f5' : '#2d3436',
           textDecoration: 'none',
           transition: 'color 0.2s'
         }}
         onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
-        onMouseLeave={(e) => (e.currentTarget.style.color = '#2d3436')}
+        onMouseLeave={(e) => (e.currentTarget.style.color = themeMode === 'dark' ? '#f5f5f5' : '#2d3436')}
         >
           Каталог ліків
         </Link>
@@ -91,11 +102,27 @@ export const Header = () => {
 
       {/* Користувачі та кошик */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        {/* Перемикач теми */}
+        <Button
+          type="text"
+          icon={themeMode === 'dark' 
+            ? <SunOutlined style={{ fontSize: '18px', color: '#ffb142' }} /> 
+            : <MoonOutlined style={{ fontSize: '18px', color: '#2d3436' }} />
+          }
+          onClick={() => dispatch(toggleTheme())}
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            color: themeMode === 'dark' ? '#f5f5f5' : '#2d3436'
+          }}
+        />
+
         <Link href="/cart" style={{ display: 'flex', alignItems: 'center' }}>
           <Badge count={totalCount} size="small" showZero={false} color="#00b894">
             <Button
               type="text"
-              icon={<ShoppingCartOutlined style={{ fontSize: '20px' }} />}
+              icon={<ShoppingCartOutlined style={{ fontSize: '20px', color: themeMode === 'dark' ? '#f5f5f5' : '#2d3436' }} />}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             />
           </Badge>

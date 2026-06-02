@@ -24,6 +24,8 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
   const cartItem = useSelector((state: RootState) =>
     state.cart.items.find((item) => item.medicine.id === id)
   );
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+  const isDark = themeMode === 'dark';
 
   const currentQuantityInCart = cartItem ? cartItem.quantity : 0;
   
@@ -79,6 +81,12 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
     }
   };
 
+  const textColor = isDark ? '#f5f5f5' : '#2d3436';
+  const cardBorderColor = isDark ? '#303030' : '#f0f0f0';
+  const imageBgColor = isDark ? '#1f1f1f' : '#f8f9fa';
+  const counterBgColor = isDark ? '#142924' : '#f5fcfb';
+  const shadowStyle = isDark ? '0 4px 20px rgba(0, 0, 0, 0.3)' : '0 4px 20px rgba(0, 0, 0, 0.05)';
+
   return (
     <div style={{ maxWidth: '1100px', margin: '32px auto', padding: '0 24px' }}>
       {/* Кнопка Повернутися */}
@@ -86,15 +94,15 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
         type="text"
         icon={<ArrowLeftOutlined />}
         onClick={() => router.push('/catalog')}
-        style={{ marginBottom: '24px', paddingLeft: 0, fontWeight: 500, color: '#2d3436' }}
+        style={{ marginBottom: '24px', paddingLeft: 0, fontWeight: 500, color: textColor }}
       >
         Назад до каталогу
       </Button>
 
       <Card style={{
         borderRadius: '16px',
-        border: '1px solid #f0f0f0',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
+        border: `1px solid ${cardBorderColor}`,
+        boxShadow: shadowStyle,
         overflow: 'hidden'
       }}>
         <Row gutter={[32, 32]}>
@@ -102,12 +110,12 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
           <Col xs={24} md={10}>
             <div style={{
               height: '350px',
-              backgroundColor: '#f8f9fa',
+              backgroundColor: imageBgColor,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: '12px',
-              border: '1px solid #f0f0f0',
+              border: `1px solid ${cardBorderColor}`,
               position: 'relative',
               overflow: 'hidden'
             }}>
@@ -149,7 +157,7 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
               <Text type="secondary" style={{ fontSize: '14px', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
                 {medicine.manufacturer}
               </Text>
-              <Title level={2} style={{ margin: '8px 0 16px 0', fontWeight: 700, color: '#2d3436', fontSize: '28px' }}>
+              <Title level={2} style={{ margin: '8px 0 16px 0', fontWeight: 700, color: textColor, fontSize: '28px' }}>
                 {medicine.name}
               </Title>
 
@@ -159,7 +167,7 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
                 <Text type="secondary" style={{ fontSize: '13px', display: 'block', marginBottom: '8px' }}>
                   Опис препарату
                 </Text>
-                <Paragraph style={{ color: '#2d3436', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
+                <Paragraph style={{ color: textColor, fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
                   {medicine.description}
                 </Paragraph>
               </div>
@@ -168,13 +176,13 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
                 <Row gutter={16}>
                   <Col span={12}>
                     <Text type="secondary" style={{ fontSize: '12px' }}>Форма випуску</Text>
-                    <div style={{ fontWeight: 600, color: '#2d3436', fontSize: '14px', marginTop: '4px' }}>
+                    <div style={{ fontWeight: 600, color: textColor, fontSize: '14px', marginTop: '4px' }}>
                       {medicine.category}
                     </div>
                   </Col>
                   <Col span={12}>
                     <Text type="secondary" style={{ fontSize: '12px' }}>Виробник</Text>
-                    <div style={{ fontWeight: 600, color: '#2d3436', fontSize: '14px', marginTop: '4px' }}>
+                    <div style={{ fontWeight: 600, color: textColor, fontSize: '14px', marginTop: '4px' }}>
                       {medicine.manufacturer}
                     </div>
                   </Col>
@@ -188,7 +196,7 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
                 <div>
                   <Text type="secondary" style={{ fontSize: '13px' }}>Роздрібна ціна</Text>
-                  <div style={{ fontSize: '32px', fontWeight: 800, color: '#2d3436', lineHeight: 1.2 }}>
+                  <div style={{ fontSize: '32px', fontWeight: 800, color: textColor, lineHeight: 1.2 }}>
                     {medicine.price.toFixed(2)} <span style={{ fontSize: '18px', fontWeight: 600 }}>грн</span>
                   </div>
                 </div>
@@ -207,7 +215,7 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
                         border: '1px solid #00b894',
                         borderRadius: '8px',
                         padding: '4px',
-                        backgroundColor: '#f5fcfb'
+                        backgroundColor: counterBgColor
                       }}>
                         <Button 
                           type="text" 

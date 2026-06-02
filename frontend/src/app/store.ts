@@ -3,12 +3,14 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { baseApi } from '@/shared/api/baseApi';
 import cartReducer from '@/entities/cart/model/cartSlice';
 import userReducer from '@/entities/user/model/userSlice';
+import themeReducer from '@/entities/theme/model/themeSlice';
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     cart: cartReducer,
     user: userReducer,
+    theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),

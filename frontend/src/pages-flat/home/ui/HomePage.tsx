@@ -4,12 +4,20 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input, Button, Card, Row, Col, Typography } from 'antd';
 import { SearchOutlined, SafetyCertificateOutlined, TrophyOutlined, CarOutlined, RightOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 
 const { Title, Paragraph } = Typography;
 
 export const HomePage = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+  const isDark = themeMode === 'dark';
+
+  const textColor = isDark ? '#f5f5f5' : '#2d3436';
+  const secondaryTextColor = isDark ? '#b2bec3' : '#636e72';
+  const cardBorderColor = isDark ? '#303030' : '#f0f0f0';
 
   const handleSearch = () => {
     if (searchValue.trim()) {
@@ -50,12 +58,13 @@ export const HomePage = () => {
           <div style={{
             maxWidth: '600px',
             margin: '0 auto',
-            backgroundColor: '#ffffff',
+            backgroundColor: isDark ? '#1f1f1f' : '#ffffff',
             padding: '6px',
             borderRadius: '30px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+            boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.4)' : '0 8px 24px rgba(0,0,0,0.15)',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            border: isDark ? '1px solid #303030' : 'none'
           }}>
             <Input
               placeholder="Введіть назву ліків (наприклад, Парацетамол)..."
@@ -63,7 +72,7 @@ export const HomePage = () => {
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               onPressEnter={handleSearch}
-              style={{ flex: 1, fontSize: '16px', paddingLeft: '16px' }}
+              style={{ flex: 1, fontSize: '16px', paddingLeft: '16px', color: textColor }}
             />
             <Button
               type="primary"
@@ -90,24 +99,24 @@ export const HomePage = () => {
       <section style={{ maxWidth: '1200px', margin: '60px auto 0 auto', padding: '0 24px' }}>
         <Row gutter={[24, 24]} justify="center">
           <Col xs={24} md={8}>
-            <Card hoverable styles={{ body: { textAlign: 'center', padding: '32px 24px' } }} style={{ borderRadius: '16px', border: '1px solid #f0f0f0' }}>
+            <Card hoverable styles={{ body: { textAlign: 'center', padding: '32px 24px' } }} style={{ borderRadius: '16px', border: `1px solid ${cardBorderColor}` }}>
               <SafetyCertificateOutlined style={{ fontSize: '40px', color: '#00b894', marginBottom: '16px' }} />
-              <Title level={4} style={{ marginTop: 0, marginBottom: '12px', fontSize: '18px' }}>100% Сертифіковано</Title>
-              <Paragraph style={{ color: '#636e72', margin: 0 }}>Усі медикаменти проходять суворий державний контроль та мають сертифікати якості.</Paragraph>
+              <Title level={4} style={{ marginTop: 0, marginBottom: '12px', fontSize: '18px', color: textColor }}>100% Сертифіковано</Title>
+              <Paragraph style={{ color: secondaryTextColor, margin: 0 }}>Усі медикаменти проходять суворий державний контроль та мають сертифікати якості.</Paragraph>
             </Card>
           </Col>
           <Col xs={24} md={8}>
-            <Card hoverable styles={{ body: { textAlign: 'center', padding: '32px 24px' } }} style={{ borderRadius: '16px', border: '1px solid #f0f0f0' }}>
+            <Card hoverable styles={{ body: { textAlign: 'center', padding: '32px 24px' } }} style={{ borderRadius: '16px', border: `1px solid ${cardBorderColor}` }}>
               <TrophyOutlined style={{ fontSize: '40px', color: '#00b894', marginBottom: '16px' }} />
-              <Title level={4} style={{ marginTop: 0, marginBottom: '12px', fontSize: '18px' }}>Найкращі Ціни</Title>
-              <Paragraph style={{ color: '#636e72', margin: 0 }}>Ми працюємо напряму з дистриб'юторами, гарантуючи чесну вартість ліків.</Paragraph>
+              <Title level={4} style={{ marginTop: 0, marginBottom: '12px', fontSize: '18px', color: textColor }}>Найкращі Ціни</Title>
+              <Paragraph style={{ color: secondaryTextColor, margin: 0 }}>Ми працюємо напряму з дистриб'юторами, гарантуючи чесну вартість ліків.</Paragraph>
             </Card>
           </Col>
           <Col xs={24} md={8}>
-            <Card hoverable styles={{ body: { textAlign: 'center', padding: '32px 24px' } }} style={{ borderRadius: '16px', border: '1px solid #f0f0f0' }}>
+            <Card hoverable styles={{ body: { textAlign: 'center', padding: '32px 24px' } }} style={{ borderRadius: '16px', border: `1px solid ${cardBorderColor}` }}>
               <CarOutlined style={{ fontSize: '40px', color: '#00b894', marginBottom: '16px' }} />
-              <Title level={4} style={{ marginTop: 0, marginBottom: '12px', fontSize: '18px' }}>Швидке Отримання</Title>
-              <Paragraph style={{ color: '#636e72', margin: 0 }}>Забирайте замовлення в найближчій аптеці вже за 30 хвилин після оформлення.</Paragraph>
+              <Title level={4} style={{ marginTop: 0, marginBottom: '12px', fontSize: '18px', color: textColor }}>Швидке Отримання</Title>
+              <Paragraph style={{ color: secondaryTextColor, margin: 0 }}>Забирайте замовлення в найближчій аптеці вже за 30 хвилин після оформлення.</Paragraph>
             </Card>
           </Col>
         </Row>
@@ -115,7 +124,7 @@ export const HomePage = () => {
 
       {/* Швидкі категорії */}
       <section style={{ maxWidth: '1200px', margin: '60px auto 0 auto', padding: '0 24px' }}>
-        <Title level={2} style={{ textAlign: 'center', marginBottom: '32px', fontSize: '28px', color: '#2d3436' }}>
+        <Title level={2} style={{ textAlign: 'center', marginBottom: '32px', fontSize: '28px', color: textColor }}>
           Популярні категорії товарів
         </Title>
         <Row gutter={[24, 24]}>
@@ -133,15 +142,17 @@ export const HomePage = () => {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    background: `linear-gradient(135deg, ${cat.color}22 0%, ${cat.color}44 100%)`
+                    background: isDark 
+                      ? `linear-gradient(135deg, ${cat.color}11 0%, ${cat.color}22 100%)`
+                      : `linear-gradient(135deg, ${cat.color}22 0%, ${cat.color}44 100%)`
                   }
                 }}
                 style={{
                   borderRadius: '16px',
-                  border: `1px solid ${cat.color}66`
+                  border: isDark ? `1px solid ${cat.color}33` : `1px solid ${cat.color}66`
                 }}
               >
-                <span style={{ fontSize: '18px', fontWeight: 700, color: '#2d3436', marginBottom: '8px' }}>
+                <span style={{ fontSize: '18px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
                   {cat.title}
                 </span>
                 <Button type="text" icon={<RightOutlined />} style={{ color: '#00b894' }}>

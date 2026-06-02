@@ -20,6 +20,8 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
   const cartItem = useSelector((state: RootState) =>
     state.cart.items.find((item) => item.medicine.id === medicine.id)
   );
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+  const isDark = themeMode === 'dark';
 
   const currentQuantityInCart = cartItem ? cartItem.quantity : 0;
   const isOutOfStock = medicine.inStock <= 0;
@@ -45,6 +47,13 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
     ? "orange"
     : "#00b894";
 
+  const cardBorderColor = isDark ? '#303030' : '#f0f0f0';
+  const imageBgColor = isDark ? '#141414' : '#f8f9fa';
+  const textColor = isDark ? '#f5f5f5' : '#2d3436';
+  const secondaryTextColor = isDark ? '#b2bec3' : '#636e72';
+  const badgeBgColor = isDark ? '#142924' : '#e8f8f5';
+  const buttonBgColor = currentQuantityInCart > 0 ? (isDark ? '#142924' : '#e8f8f5') : '#00b894';
+
   return (
     <Badge.Ribbon text={ribbonText} color={ribbonColor}>
       <Card
@@ -55,7 +64,7 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
           flexDirection: 'column',
           borderRadius: '16px',
           overflow: 'hidden',
-          border: currentQuantityInCart > 0 ? '2px solid #00b894' : '1px solid #f0f0f0',
+          border: currentQuantityInCart > 0 ? '2px solid #00b894' : `1px solid ${cardBorderColor}`,
           transition: 'all 0.3s ease'
         }}
         styles={{
@@ -71,7 +80,7 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
           <Link href={`/catalog/${medicine.id}`}>
             <div style={{
               height: '200px',
-              backgroundColor: '#f8f9fa',
+              backgroundColor: imageBgColor,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -101,16 +110,16 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
                 margin: '4px 0 8px 0', 
                 fontSize: '18px', 
                 fontWeight: 600,
-                color: '#2d3436',
+                color: textColor,
                 transition: 'color 0.2s'
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#2d3436')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
             >
               {medicine.name}
             </Title>
           </Link>
-          <Paragraph ellipsis={{ rows: 2 }} style={{ color: '#636e72', fontSize: '13px', margin: 0 }}>
+          <Paragraph ellipsis={{ rows: 2 }} style={{ color: secondaryTextColor, fontSize: '13px', margin: 0 }}>
             {medicine.description}
           </Paragraph>
         </div>
@@ -119,7 +128,7 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <div>
               <Text style={{ fontSize: '13px', color: '#b2bec3' }}>Ціна</Text>
-              <div style={{ fontSize: '20px', fontWeight: 700, color: '#2d3436' }}>
+              <div style={{ fontSize: '20px', fontWeight: 700, color: textColor }}>
                 {medicine.price.toFixed(2)} грн
               </div>
             </div>
@@ -133,7 +142,7 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
                   color: '#00b894', 
                   fontWeight: 600,
                   marginTop: '4px',
-                  backgroundColor: '#e8f8f5',
+                  backgroundColor: badgeBgColor,
                   padding: '2px 6px',
                   borderRadius: '4px'
                 }}>
@@ -153,9 +162,7 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
               height: '40px',
               backgroundColor: isOutOfStock || isMaxStockReached 
                 ? undefined 
-                : currentQuantityInCart > 0 
-                ? '#e8f8f5' 
-                : '#00b894',
+                : buttonBgColor,
               borderColor: isOutOfStock || isMaxStockReached 
                 ? undefined 
                 : '#00b894',

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Row, Col, Card, Radio, Input, Button, Typography, Pagination, Spin, Empty } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 import { useGetMedicinesQuery } from '@/entities/medicine/api/medicineApi';
 import { MedicineCard } from '@/entities/medicine/ui/MedicineCard';
 
@@ -12,6 +14,11 @@ const { Title, Text } = Typography;
 export const CatalogPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+  const isDark = themeMode === 'dark';
+
+  const textColor = isDark ? '#f5f5f5' : '#2d3436';
+  const cardBorderColor = isDark ? '#303030' : '#f0f0f0';
 
   // Зчитуємо параметри з URL
   const categoryParam = searchParams.get('category') || '';
@@ -80,7 +87,7 @@ export const CatalogPage = () => {
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 24px' }}>
-      <Title level={2} style={{ marginBottom: '32px', color: '#2d3436' }}>
+      <Title level={2} style={{ marginBottom: '32px', color: textColor }}>
         Каталог медикаментів
       </Title>
 
@@ -89,7 +96,7 @@ export const CatalogPage = () => {
         <Col xs={24} lg={6}>
           <Card
             title="Фільтрувати ліки"
-            style={{ borderRadius: '16px', border: '1px solid #f0f0f0', position: 'sticky', top: '88px' }}
+            style={{ borderRadius: '16px', border: `1px solid ${cardBorderColor}`, position: 'sticky', top: '88px' }}
             extra={
               <Button type="text" icon={<ReloadOutlined />} onClick={handleResetFilters}>
                 Скинути
@@ -140,11 +147,11 @@ export const CatalogPage = () => {
               </Spin>
             </div>
           ) : error ? (
-            <Card style={{ textAlign: 'center', borderRadius: '16px' }}>
+            <Card style={{ textAlign: 'center', borderRadius: '16px', border: `1px solid ${cardBorderColor}` }}>
               <Empty description="Помилка при завантаженні ліків. Перевірте підключення до бекенду." />
             </Card>
           ) : !data || data.medicines.length === 0 ? (
-            <Card style={{ textAlign: 'center', borderRadius: '16px' }}>
+            <Card style={{ textAlign: 'center', borderRadius: '16px', border: `1px solid ${cardBorderColor}` }}>
               <Empty description="Не знайдено товарів за вибраними фільтрами." />
             </Card>
           ) : (
