@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import { StoreProvider } from "@/app/providers/StoreProvider";
+import { Header } from "@/widgets/header/ui/Header";
+import { Footer } from "@/widgets/footer/ui/Footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -39,7 +41,13 @@ export default function RootLayout({
                 },
               }}
             >
-              {children}
+              <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <Header />
+                <main style={{ flex: 1, backgroundColor: '#f5f7fa' }}>
+                  {children}
+                </main>
+                <Footer />
+              </div>
             </ConfigProvider>
           </AntdRegistry>
         </StoreProvider>
