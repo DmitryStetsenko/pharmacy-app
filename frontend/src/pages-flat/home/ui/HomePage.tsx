@@ -20,10 +20,10 @@ export const HomePage = () => {
   };
 
   const categories = [
-    { title: 'Знеболювальні', key: 'painkillers', color: '#ffeaa7' },
-    { title: 'Вітаміни та БАДи', key: 'vitamins', color: '#fab1a0' },
-    { title: 'Простуда та грип', key: 'cold', color: '#81ecec' },
-    { title: 'Серце та судини', key: 'cardio', color: '#ff7675' },
+    { title: 'Таблетки', key: 'Tablets', color: '#ffeaa7' },
+    { title: 'Капсули', key: 'Capsules', color: '#fab1a0' },
+    { title: 'Сиропи', key: 'Syrup', color: '#81ecec' },
+    { title: 'Мазі', key: 'Ointment', color: '#ff7675' },
   ];
 
   return (
@@ -123,7 +123,7 @@ export const HomePage = () => {
             <Col xs={12} sm={12} md={6} key={cat.key}>
               <Card
                 hoverable
-                onClick={() => router.push(`/catalog?category=${cat.title}`)}
+                onClick={() => router.push(`/catalog?category=${cat.key}`)}
                 styles={{
                   body: {
                     padding: '24px',

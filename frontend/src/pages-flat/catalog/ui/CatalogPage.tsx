@@ -71,11 +71,11 @@ export const CatalogPage = () => {
   };
 
   const categories = [
-    { label: 'Всі категорії', value: '' },
-    { label: 'Знеболювальні', value: 'Знеболювальні' },
-    { label: 'Вітаміни та БАДи', value: 'Вітаміни та БАДи' },
-    { label: 'Простуда та грип', value: 'Простуда та грип' },
-    { label: 'Серце та судини', value: 'Серце та судини' },
+    { label: 'Всі форми випуску', value: '' },
+    { label: 'Таблетки', value: 'Tablets' },
+    { label: 'Капсули', value: 'Capsules' },
+    { label: 'Сиропи', value: 'Syrup' },
+    { label: 'Мазі', value: 'Ointment' },
   ];
 
   return (
@@ -114,7 +114,7 @@ export const CatalogPage = () => {
 
               {/* Категорії */}
               <div>
-                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Категорія</Text>
+                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Форма випуску</Text>
                 <Radio.Group
                   value={categoryParam}
                   onChange={(e) => updateUrl({ category: e.target.value })}
@@ -135,7 +135,9 @@ export const CatalogPage = () => {
         <Col xs={24} lg={18}>
           {isLoading || isFetching ? (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
-              <Spin size="large" tip="Завантаження товарів..." />
+              <Spin size="large">
+                <div style={{ marginTop: '12px', color: '#00b894' }}>Завантаження товарів...</div>
+              </Spin>
             </div>
           ) : error ? (
             <Card style={{ textAlign: 'center', borderRadius: '16px' }}>
