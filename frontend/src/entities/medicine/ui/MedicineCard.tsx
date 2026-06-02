@@ -7,6 +7,7 @@ import { Medicine } from '../model/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '@/entities/cart/model/cartSlice';
 import { RootState } from '@/app/store';
+import Link from 'next/link';
 
 const { Text, Title, Paragraph } = Typography;
 
@@ -67,33 +68,48 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
           }
         }}
         cover={
-          <div style={{
-            height: '200px',
-            backgroundColor: '#f8f9fa',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative'
-          }}>
-            {medicine.image ? (
-              <img
-                src={medicine.image}
-                alt={medicine.name}
-                style={{ maxHeight: '160px', maxWidth: '90%', objectFit: 'contain' }}
-              />
-            ) : (
-              <MedicineBoxOutlined style={{ fontSize: '64px', color: '#b2bec3' }} />
-            )}
-          </div>
+          <Link href={`/catalog/${medicine.id}`}>
+            <div style={{
+              height: '200px',
+              backgroundColor: '#f8f9fa',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'relative'
+            }}>
+              {medicine.image ? (
+                <img
+                  src={medicine.image}
+                  alt={medicine.name}
+                  style={{ maxHeight: '160px', maxWidth: '90%', objectFit: 'contain' }}
+                />
+              ) : (
+                <MedicineBoxOutlined style={{ fontSize: '64px', color: '#b2bec3' }} />
+              )}
+            </div>
+          </Link>
         }
       >
         <div style={{ marginBottom: '16px' }}>
           <Text type="secondary" style={{ fontSize: '12px' }}>
             {medicine.manufacturer}
           </Text>
-          <Title level={4} style={{ margin: '4px 0 8px 0', fontSize: '18px', fontWeight: 600 }}>
-            {medicine.name}
-          </Title>
+          <Link href={`/catalog/${medicine.id}`} style={{ textDecoration: 'none' }}>
+            <Title 
+              level={4} 
+              style={{ 
+                margin: '4px 0 8px 0', 
+                fontSize: '18px', 
+                fontWeight: 600,
+                color: '#2d3436',
+                transition: 'color 0.2s'
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#2d3436')}
+            >
+              {medicine.name}
+            </Title>
+          </Link>
           <Paragraph ellipsis={{ rows: 2 }} style={{ color: '#636e72', fontSize: '13px', margin: 0 }}>
             {medicine.description}
           </Paragraph>
