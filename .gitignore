@@ -1,0 +1,22 @@
+# Залежності
+node_modules/
+.pnpm-store/
+
+# Next.js збірка
+.next/
+out/
+
+# Express збірка
+dist/
+
+# Локальні змінні оточення (конфіденційні дані)
+.env
+.env.local
+.env*.local
+
+# Логи
+*.log
+npm-debug.log*
+
+# Системні файли
+.DS_Store
