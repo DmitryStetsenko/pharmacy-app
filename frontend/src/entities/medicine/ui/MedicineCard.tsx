@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Card, Button, Badge, Typography } from 'antd';
-import { ShoppingCartOutlined, MedicineBoxOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, MedicineBoxOutlined, CheckOutlined } from '@ant-design/icons';
 import { Medicine } from '../model/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '@/entities/cart/model/cartSlice';
@@ -54,7 +54,8 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
           flexDirection: 'column',
           borderRadius: '16px',
           overflow: 'hidden',
-          border: '1px solid #f0f0f0'
+          border: currentQuantityInCart > 0 ? '2px solid #00b894' : '1px solid #f0f0f0',
+          transition: 'all 0.3s ease'
         }}
         styles={{
           body: {
@@ -106,26 +107,59 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
                 {medicine.price.toFixed(2)} грн
               </div>
             </div>
-            <Text type={isOutOfStock ? "danger" : "secondary"} style={{ fontSize: '12px' }}>
-              {isOutOfStock ? "Закінчився" : `В наявності: ${medicine.inStock} шт.`}
-            </Text>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <Text type={isOutOfStock ? "danger" : "secondary"} style={{ fontSize: '12px' }}>
+                {isOutOfStock ? "Закінчився" : `В наявності: ${medicine.inStock} шт.`}
+              </Text>
+              {currentQuantityInCart > 0 && (
+                <span style={{ 
+                  fontSize: '11px', 
+                  color: '#00b894', 
+                  fontWeight: 600,
+                  marginTop: '4px',
+                  backgroundColor: '#e8f8f5',
+                  padding: '2px 6px',
+                  borderRadius: '4px'
+                }}>
+                  У кошику: {currentQuantityInCart} шт.
+                </span>
+              )}
+            </div>
           </div>
 
           <Button
-            type="primary"
-            icon={<ShoppingCartOutlined />}
+            type={currentQuantityInCart > 0 ? "default" : "primary"}
+            icon={currentQuantityInCart > 0 ? <CheckOutlined /> : <ShoppingCartOutlined />}
             onClick={handleAddToCart}
             disabled={isOutOfStock || isMaxStockReached}
             block
             style={{
               height: '40px',
-              backgroundColor: isOutOfStock || isMaxStockReached ? undefined : '#00b894',
-              borderColor: isOutOfStock || isMaxStockReached ? undefined : '#00b894',
+              backgroundColor: isOutOfStock || isMaxStockReached 
+                ? undefined 
+                : currentQuantityInCart > 0 
+                ? '#e8f8f5' 
+                : '#00b894',
+              borderColor: isOutOfStock || isMaxStockReached 
+                ? undefined 
+                : '#00b894',
+              color: isOutOfStock || isMaxStockReached 
+                ? undefined 
+                : currentQuantityInCart > 0 
+                ? '#00b894' 
+                : '#fff',
               fontWeight: 600,
               borderRadius: '8px'
             }}
           >
-            {isOutOfStock ? "Немає в наявності" : isMaxStockReached ? "Вже у кошику" : "Додати в кошик"}
+            {isOutOfStock 
+              ? "Немає в наявності" 
+              : isMaxStockReached 
+              ? "Вже у кошику" 
+              : currentQuantityInCart > 0 
+              ? `У кошику (${currentQuantityInCart}) +` 
+              : "Додати в кошик"
+            }
           </Button>
         </div>
       </Card>
