@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Row, Col, Card, Button, Typography, Divider, Empty, Space, message } from 'antd';
+import { Row, Col, Card, Button, Typography, Divider, Empty, App } from 'antd';
 import { 
   DeleteOutlined, 
   PlusOutlined, 
@@ -21,6 +21,7 @@ const { Title, Text, Paragraph } = Typography;
 export const CartPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { message } = App.useApp();
   const { items, totalAmount } = useSelector((state: RootState) => state.cart);
 
   const handleQuantityChange = (id: string, currentQty: number, change: number, maxStock: number) => {

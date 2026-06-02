@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, App } from "antd";
 import { StoreProvider } from "@/app/providers/StoreProvider";
 import { Header } from "@/widgets/header/ui/Header";
 import { Footer } from "@/widgets/footer/ui/Footer";
@@ -41,13 +41,15 @@ export default function RootLayout({
                 },
               }}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                <Header />
-                <main style={{ flex: 1, backgroundColor: '#f5f7fa' }}>
-                  {children}
-                </main>
-                <Footer />
-              </div>
+              <App style={{ minHeight: '100vh' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                  <Header />
+                  <main style={{ flex: 1, backgroundColor: '#f5f7fa' }}>
+                    {children}
+                  </main>
+                  <Footer />
+                </div>
+              </App>
             </ConfigProvider>
           </AntdRegistry>
         </StoreProvider>
