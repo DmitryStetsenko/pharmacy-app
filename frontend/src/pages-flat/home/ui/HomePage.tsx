@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Input, Button, Card, Row, Col, Typography, Space } from 'antd';
+import { Input, Button, Card, Row, Col, Typography } from 'antd';
 import { SearchOutlined, SafetyCertificateOutlined, TrophyOutlined, CarOutlined, RightOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph } = Typography;

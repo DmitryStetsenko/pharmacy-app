@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Row, Col, Card, Radio, Input, Button, Typography, Pagination, Spin, Empty, Space } from 'antd';
+import { Row, Col, Card, Radio, Input, Button, Typography, Pagination, Spin, Empty } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useGetMedicinesQuery } from '@/entities/medicine/api/medicineApi';
 import { MedicineCard } from '@/entities/medicine/ui/MedicineCard';
@@ -96,7 +96,7 @@ export const CatalogPage = () => {
               </Button>
             }
           >
-            <Space direction="vertical" size="large" style={{ width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
               {/* Пошук */}
               <div>
                 <Text strong style={{ display: 'block', marginBottom: '8px' }}>Пошук за назвою</Text>
@@ -127,7 +127,7 @@ export const CatalogPage = () => {
                   ))}
                 </Radio.Group>
               </div>
-            </Space>
+            </div>
           </Card>
         </Col>
 
@@ -148,7 +148,7 @@ export const CatalogPage = () => {
               <Empty description="Не знайдено товарів за вибраними фільтрами." />
             </Card>
           ) : (
-            <Space direction="vertical" size="large" style={{ width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
               <Row gutter={[16, 16]}>
                 {data.medicines.map((medicine) => (
                   <Col xs={24} sm={12} md={8} key={medicine.id}>
@@ -167,7 +167,7 @@ export const CatalogPage = () => {
                   showSizeChanger={false}
                 />
               </div>
-            </Space>
+            </div>
           )}
         </Col>
       </Row>
