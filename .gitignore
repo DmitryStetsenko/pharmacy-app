@@ -5,6 +5,7 @@ node_modules/
 # Next.js збірка
 .next/
 out/
+next-env.d.ts
 
 # Express збірка
 dist/
