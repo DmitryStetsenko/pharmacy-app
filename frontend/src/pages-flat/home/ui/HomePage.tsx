@@ -59,7 +59,7 @@ export const HomePage = () => {
           }}>
             <Input
               placeholder="Введіть назву ліків (наприклад, Парацетамол)..."
-              bordered={false}
+              variant="borderless"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               onPressEnter={handleSearch}
