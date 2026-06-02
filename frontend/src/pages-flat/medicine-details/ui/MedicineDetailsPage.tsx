@@ -30,7 +30,7 @@ export const MedicineDetailsPage = ({ id }: MedicineDetailsPageProps) => {
   if (isLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-        <Spin size="large" tip="Завантаження деталей препарату..." />
+        <Spin size="large" description="Завантаження деталей препарату..." />
       </div>
     );
   }
