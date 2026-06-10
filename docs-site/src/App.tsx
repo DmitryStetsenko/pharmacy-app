@@ -228,66 +228,8 @@ export default function App() {
               </p>
             </div>
 
-            {/* Stats Summary */}
-            <div className="stats-container">
-              <div className="stat-card">
-                <div className="stat-val">2</div>
-                <div className="stat-lbl">Сервіси (Docker)</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-val">6</div>
-                <div className="stat-lbl">Архітектурних шарів</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-val">9</div>
-                <div className="stat-lbl">API Ендпоінтів</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-val">100%</div>
-                <div className="stat-lbl">У пам'яті (In-Memory)</div>
-              </div>
-            </div>
-
-            {/* Tech Stack Breakdown */}
-            <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Технологічний радар</h2>
-            <div className="grid-cols-2">
-              <div className="card">
-                <div className="card-icon-container emerald">
-                  <Layers size={24} />
-                </div>
-                <h3 className="card-title">Frontend Клієнт</h3>
-                <p className="card-text" style={{ marginBottom: '1rem' }}>
-                  Сучасний інтерфейс користувача на базі компонентного підходу та строгої типізації.
-                </p>
-                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  <li><strong>Next.js 16 (App Router)</strong> — серверна та клієнтська оптимізація.</li>
-                  <li><strong>React 19 & TypeScript</strong> — останні стандарти розробки інтерфейсів.</li>
-                  <li><strong>Ant Design v5</strong> — бібліотека преміальних готових компонентів.</li>
-                  <li><strong>Redux Toolkit (RTK)</strong> — централізований стан кошика та тем.</li>
-                  <li><strong>NextAuth.js</strong> — інтеграція сесій та безпечної авторизації.</li>
-                </ul>
-              </div>
-
-              <div className="card">
-                <div className="card-icon-container blue">
-                  <Cpu size={24} />
-                </div>
-                <h3 className="card-title">Backend API</h3>
-                <p className="card-text" style={{ marginBottom: '1rem' }}>
-                  Швидкий та безпечний REST сервер на Node.js для обробки бізнес-логіки аптеки.
-                </p>
-                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  <li><strong>Express & TypeScript</strong> — модульна архітектура контролерів і роутів.</li>
-                  <li><strong>Swagger UI</strong> — інтерактивна JSDoc-документація на `/api-docs`.</li>
-                  <li><strong>JWT & Bcrypt</strong> — безпечний вхід та шифрування паролів користувачів.</li>
-                  <li><strong>Middlewares безпеки</strong> — Helmet, CORS та Express Rate Limit.</li>
-                  <li><strong>Express Validator</strong> — валідація тіла запитів перед записом.</li>
-                </ul>
-              </div>
-            </div>
-
             {/* Quick Links / Guide */}
-            <div className="card" style={{ marginTop: '2.5rem', background: 'var(--primary-light)', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
+            <div className="card" style={{ marginBottom: '2.5rem', background: 'var(--primary-light)', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
               <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
                 <CheckCircle2 /> Швидкий старт
               </h3>
@@ -346,6 +288,64 @@ export default function App() {
                   <HelpCircle size={18} style={{ color: 'var(--primary)' }} />
                   Покрокова інструкція для новачків
                 </button>
+              </div>
+            </div>
+
+            {/* Stats Summary */}
+            <div className="stats-container">
+              <div className="stat-card">
+                <div className="stat-val">2</div>
+                <div className="stat-lbl">Сервіси (Docker)</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-val">6</div>
+                <div className="stat-lbl">Архітектурних шарів</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-val">9</div>
+                <div className="stat-lbl">API Ендпоінтів</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-val">100%</div>
+                <div className="stat-lbl">У пам'яті (In-Memory)</div>
+              </div>
+            </div>
+
+            {/* Tech Stack Breakdown */}
+            <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Технологічний радар</h2>
+            <div className="grid-cols-2">
+              <div className="card">
+                <div className="card-icon-container emerald">
+                  <Layers size={24} />
+                </div>
+                <h3 className="card-title">Frontend Клієнт</h3>
+                <p className="card-text" style={{ marginBottom: '1rem' }}>
+                  Сучасний інтерфейс користувача на базі компонентного підходу та строгої типізації.
+                </p>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                  <li><strong>Next.js 16 (App Router)</strong> — серверна та клієнтська оптимізація.</li>
+                  <li><strong>React 19 & TypeScript</strong> — останні стандарти розробки інтерфейсів.</li>
+                  <li><strong>Ant Design v5</strong> — бібліотека преміальних готових компонентів.</li>
+                  <li><strong>Redux Toolkit (RTK)</strong> — централізований стан кошика та тем.</li>
+                  <li><strong>NextAuth.js</strong> — інтеграція сесій та безпечної авторизації.</li>
+                </ul>
+              </div>
+
+              <div className="card">
+                <div className="card-icon-container blue">
+                  <Cpu size={24} />
+                </div>
+                <h3 className="card-title">Backend API</h3>
+                <p className="card-text" style={{ marginBottom: '1rem' }}>
+                  Швидкий та безпечний REST сервер на Node.js для обробки бізнес-логіки аптеки.
+                </p>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                  <li><strong>Express & TypeScript</strong> — модульна архітектура контролерів і роутів.</li>
+                  <li><strong>Swagger UI</strong> — інтерактивна JSDoc-документація на `/api-docs`.</li>
+                  <li><strong>JWT & Bcrypt</strong> — безпечний вхід та шифрування паролів користувачів.</li>
+                  <li><strong>Middlewares безпеки</strong> — Helmet, CORS та Express Rate Limit.</li>
+                  <li><strong>Express Validator</strong> — валідація тіла запитів перед записом.</li>
+                </ul>
               </div>
             </div>
           </section>
