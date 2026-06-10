@@ -14,7 +14,8 @@ import {
   Folder,
   FolderOpen,
   CheckCircle2,
-  HelpCircle
+  HelpCircle,
+  Container
 } from 'lucide-react';
 
 type Tab = 'overview' | 'user-guide' | 'frontend' | 'backend' | 'database' | 'deployment';
@@ -668,16 +669,16 @@ export default function App() {
 
             {/* Tech Stack Breakdown */}
             <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Технологічний радар</h2>
-            <div className="grid-cols-2">
+            <div className="grid-cols-3">
               <div className="card">
                 <div className="card-icon-container emerald">
                   <Layers size={24} />
                 </div>
                 <h3 className="card-title">Frontend Клієнт</h3>
-                <p className="card-text" style={{ marginBottom: '1rem' }}>
-                  Сучасний інтерфейс користувача на базі компонентного підходу та строгої типізації.
+                <p className="card-text" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', fontStyle: 'italic' }}>
+                  <strong>Обґрунтування вибору:</strong> Next.js обрано для поєднання швидкості SSR (початкове рендерення для SEO та швидкості завантаження) з гнучкістю SPA на React. TypeScript забезпечує строгу типізацію та зменшує кількість помилок на етапі написання коду. Ant Design v5 обрано як провідну UI-бібліотеку з готовими доступними компонентами та гнучкою системою тем.
                 </p>
-                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <li><strong>Next.js 16 (App Router)</strong> — серверна та клієнтська оптимізація.</li>
                   <li><strong>React 19 & TypeScript</strong> — останні стандарти розробки інтерфейсів.</li>
                   <li><strong>Ant Design v5</strong> — бібліотека преміальних готових компонентів.</li>
@@ -691,15 +692,32 @@ export default function App() {
                   <Cpu size={24} />
                 </div>
                 <h3 className="card-title">Backend API</h3>
-                <p className="card-text" style={{ marginBottom: '1rem' }}>
-                  Швидкий та безпечний REST сервер на Node.js для обробки бізнес-логіки аптеки.
+                <p className="card-text" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', fontStyle: 'italic' }}>
+                  <strong>Обґрунтування вибору:</strong> Node.js та Express є де-факто стандартом для легковагових високопродуктивних мікросервісів та API завдяки неблокуючому вводу-виводу. Використання TypeScript на бекенді дозволяє мати спільні типи з фронтендом, спрощуючи обмін даними. База даних у пам'яті (In-Memory) обрана для швидкого старту проєкту без потреби розгортання та конфігурації громіздких СУБД.
                 </p>
-                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                   <li><strong>Express & TypeScript</strong> — модульна архітектура контролерів і роутів.</li>
                   <li><strong>Swagger UI</strong> — інтерактивна JSDoc-документація на `/api-docs`.</li>
                   <li><strong>JWT & Bcrypt</strong> — безпечний вхід та шифрування паролів користувачів.</li>
                   <li><strong>Middlewares безпеки</strong> — Helmet, CORS та Express Rate Limit.</li>
                   <li><strong>Express Validator</strong> — валідація тіла запитів перед записом.</li>
+                </ul>
+              </div>
+
+              <div className="card">
+                <div className="card-icon-container purple" style={{ backgroundColor: 'rgba(139, 92, 246, 0.15)', color: '#8b5cf6' }}>
+                  <Container size={24} />
+                </div>
+                <h3 className="card-title">Docker та Стек</h3>
+                <p className="card-text" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', fontStyle: 'italic' }}>
+                  <strong>Обґрунтування вибору:</strong> Docker обрано для створення ізольованих контейнерів клієнта та сервера, що повністю усуває проблему "працює на моїй машині". Завдяки Docker Compose весь стек запускається однією командою з автоматичним налаштуванням зв'язків. Оптимізація multi-stage збірки дозволяє отримати мінімальний розмір продакшн-образів.
+                </p>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                  <li><strong>Docker & Compose</strong> — оркестрація та контейнеризація всього стеку.</li>
+                  <li><strong>Multi-stage Build</strong> — легковагові, безпечні продакшн-образи.</li>
+                  <li><strong>Ізольовані мережі</strong> — внутрішній зв'язок між клієнтом та API.</li>
+                  <li><strong>Hot-Reload Volumes</strong> — миттєве оновлення коду під час розробки.</li>
+                  <li><strong>Nginx (опціонально)</strong> — проксіювання та роздача статики.</li>
                 </ul>
               </div>
             </div>
