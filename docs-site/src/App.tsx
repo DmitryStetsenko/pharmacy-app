@@ -232,11 +232,7 @@ export default function App() {
           onClick={(e) => {
             e.stopPropagation();
             if (isFolder) {
-              if (isFsdLayer) {
-                setExpandedFolders(prev => ({ ...prev, [path]: true }));
-              } else {
-                setExpandedFolders(prev => ({ ...prev, [path]: !isOpen }));
-              }
+              setExpandedFolders(prev => ({ ...prev, [path]: !isOpen }));
             }
             if (isFsdLayer) {
               setSelectedFsdLayer(node.fsdLayer!);
