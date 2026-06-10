@@ -656,3 +656,12 @@ pre code {
   color: var(--primary-hover);
   text-decoration: underline;
 }
+
+/* VS Code file tree explorer custom styles */
+.tree-node {
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+.tree-node:hover {
+  background-color: var(--bg-tertiary) !important;
+}
+

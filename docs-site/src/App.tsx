@@ -9,7 +9,10 @@ import {
   Shield,
   Activity,
   ChevronRight,
+  ChevronDown,
   FileCode,
+  Folder,
+  FolderOpen,
   CheckCircle2,
   HelpCircle
 } from 'lucide-react';
@@ -24,9 +27,288 @@ interface FsdLayer {
   screenshots?: { src: string; title: string; desc: string }[];
 }
 
+interface FileTreeNode {
+  name: string;
+  type: 'folder' | 'file';
+  fsdLayer?: string;
+  children?: FileTreeNode[];
+}
+
+const projectTree: FileTreeNode = {
+  name: 'src',
+  type: 'folder',
+  children: [
+    {
+      name: 'app',
+      type: 'folder',
+      fsdLayer: 'app',
+      children: [
+        {
+          name: 'api',
+          type: 'folder',
+          children: [
+            {
+              name: 'auth',
+              type: 'folder',
+              children: [
+                {
+                  name: '[...nextauth]',
+                  type: 'folder',
+                  children: [
+                    { name: 'route.ts', type: 'file' }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'providers',
+          type: 'folder',
+          children: [
+            { name: 'AuthProvider.tsx', type: 'file' },
+            { name: 'ThemeProvider.tsx', type: 'file' },
+            { name: 'StoreProvider.tsx', type: 'file' },
+            { name: 'AntdRegistry.tsx', type: 'file' }
+          ]
+        },
+        { name: 'globals.css', type: 'file' },
+        { name: 'layout.tsx', type: 'file' },
+        { name: 'page.tsx', type: 'file' },
+        { name: 'store.ts', type: 'file' }
+      ]
+    },
+    {
+      name: 'pages-flat',
+      type: 'folder',
+      fsdLayer: 'pages-flat',
+      children: [
+        {
+          name: 'home',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'HomePage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'catalog',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'CatalogPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'medicine-details',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'MedicineDetailsPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'cart',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'CartPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'checkout',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'CheckoutPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'login',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'LoginPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'register',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'RegisterPage.tsx', type: 'file' }] }]
+        }
+      ]
+    },
+    {
+      name: 'widgets',
+      type: 'folder',
+      fsdLayer: 'widgets',
+      children: [
+        {
+          name: 'header',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'Header.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'footer',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'Footer.tsx', type: 'file' }] }]
+        }
+      ]
+    },
+    {
+      name: 'features',
+      type: 'folder',
+      fsdLayer: 'features',
+      children: [
+        {
+          name: 'auth',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'LoginForm.tsx', type: 'file' }] }]
+        }
+      ]
+    },
+    {
+      name: 'entities',
+      type: 'folder',
+      fsdLayer: 'entities',
+      children: [
+        {
+          name: 'medicine',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'MedicineCard.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'cart',
+          type: 'folder',
+          children: [{ name: 'model', type: 'folder', children: [{ name: 'cartSlice.ts', type: 'file' }] }]
+        },
+        {
+          name: 'order',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'OrderCard.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'theme',
+          type: 'folder',
+          children: [{ name: 'model', type: 'folder', children: [{ name: 'themeSlice.ts', type: 'file' }] }]
+        }
+      ]
+    },
+    {
+      name: 'shared',
+      type: 'folder',
+      fsdLayer: 'shared',
+      children: [
+        {
+          name: 'api',
+          type: 'folder',
+          children: [{ name: 'baseApi.ts', type: 'file' }]
+        },
+        {
+          name: 'types',
+          type: 'folder',
+          children: [{ name: 'index.ts', type: 'file' }]
+        }
+      ]
+    }
+  ]
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
+  const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
+    'src': true,
+    'src/app': true,
+    'src/pages-flat': true,
+    'src/widgets': true,
+    'src/features': true,
+    'src/entities': true,
+    'src/shared': true
+  });
+
+  const renderTree = (node: FileTreeNode, path: string = 'src'): React.ReactNode => {
+    const isFolder = node.type === 'folder';
+    const isOpen = expandedFolders[path] !== false;
+    const isFsdLayer = !!node.fsdLayer;
+    const isSelected = selectedFsdLayer === node.fsdLayer;
+
+    const layerColors = {
+      app: { bg: 'rgba(139, 92, 246, 0.15)', border: '#8b5cf6', badge: 'L6' },
+      'pages-flat': { bg: 'rgba(59, 130, 246, 0.15)', border: '#3b82f6', badge: 'L5' },
+      widgets: { bg: 'rgba(16, 185, 129, 0.15)', border: '#10b981', badge: 'L4' },
+      features: { bg: 'rgba(245, 158, 11, 0.15)', border: '#f59e0b', badge: 'L3' },
+      entities: { bg: 'rgba(236, 72, 153, 0.15)', border: '#ec4899', badge: 'L2' },
+      shared: { bg: 'rgba(107, 114, 128, 0.15)', border: '#6b7280', badge: 'L1' }
+    };
+
+    const layerStyle = isFsdLayer ? layerColors[node.fsdLayer as keyof typeof layerColors] : null;
+
+    return (
+      <div key={path} style={{ marginLeft: path === 'src' ? 0 : '16px' }}>
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isFolder) {
+              setExpandedFolders(prev => ({ ...prev, [path]: !isOpen }));
+            }
+            if (isFsdLayer) {
+              setSelectedFsdLayer(node.fsdLayer!);
+              const el = document.getElementById('fsd-details-section');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }
+          }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '6px 8px',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            background: isSelected && layerStyle ? layerStyle.bg : 'transparent',
+            border: isSelected && layerStyle ? `1px solid ${layerStyle.border}` : '1px solid transparent',
+            marginBottom: '2px',
+            transition: 'all 0.15s ease-in-out',
+            color: isSelected ? 'var(--text-primary)' : 'var(--text-secondary)'
+          }}
+          className="tree-node"
+        >
+          {isFolder ? (
+            isOpen ? <ChevronDown size={14} style={{ color: 'var(--text-muted)' }} /> : <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+          ) : (
+            <span style={{ width: '14px' }} />
+          )}
+
+          {isFolder ? (
+            isOpen ? (
+              <FolderOpen size={16} style={{ color: isSelected && layerStyle ? layerStyle.border : 'var(--primary)' }} />
+            ) : (
+              <Folder size={16} style={{ color: isSelected && layerStyle ? layerStyle.border : 'var(--primary)' }} />
+            )
+          ) : (
+            <FileCode size={16} style={{ color: 'var(--text-muted)' }} />
+          )}
+
+          <span style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: isFsdLayer ? '0.95rem' : '0.85rem',
+            fontWeight: isFsdLayer ? 700 : 500,
+            textDecoration: isFsdLayer ? 'underline decoration-dotted' : 'none'
+          }}>
+            {node.name}
+          </span>
+
+          {isFsdLayer && layerStyle && (
+            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span className="badge" style={{
+                background: layerStyle.bg,
+                color: layerStyle.border,
+                border: `1px solid ${layerStyle.border}`,
+                padding: '1px 4px',
+                fontSize: '0.65rem'
+              }}>
+                {layerStyle.badge}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {isFolder && isOpen && node.children && (
+          <div style={{
+            borderLeft: '1px dashed var(--border-color)',
+            marginLeft: '14px',
+            paddingLeft: '4px'
+          }}>
+            {node.children.map(child => renderTree(child, `${path}/${child.name}`))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const fsdLayers: Record<string, FsdLayer> = {
     'app': {
@@ -387,105 +669,19 @@ export default function App() {
             </div>
 
             <div className="fsd-layout" style={{ marginBottom: '3rem' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {Object.keys(fsdLayers).map((key, idx) => {
-                  const layer = fsdLayers[key];
-                  const levelsCount = Object.keys(fsdLayers).length;
-                  const currentLevel = levelsCount - idx;
-                  const isActive = selectedFsdLayer === key;
-                  
-                  const widthPercent = 100 - (idx * 4); // 100, 96, 92, 88, 84, 80
-                  const bgColors = {
-                    app: isActive ? 'rgba(139, 92, 246, 0.25)' : 'rgba(139, 92, 246, 0.08)',
-                    'pages-flat': isActive ? 'rgba(59, 130, 246, 0.25)' : 'rgba(59, 130, 246, 0.08)',
-                    widgets: isActive ? 'rgba(16, 185, 129, 0.25)' : 'rgba(16, 185, 129, 0.08)',
-                    features: isActive ? 'rgba(245, 158, 11, 0.25)' : 'rgba(245, 158, 11, 0.08)',
-                    entities: isActive ? 'rgba(236, 72, 153, 0.25)' : 'rgba(236, 72, 153, 0.08)',
-                    shared: isActive ? 'rgba(107, 114, 128, 0.25)' : 'rgba(107, 114, 128, 0.08)'
-                  };
-
-                  const borderColors = {
-                    app: 'rgba(139, 92, 246, 0.4)',
-                    'pages-flat': 'rgba(59, 130, 246, 0.4)',
-                    widgets: 'rgba(16, 185, 129, 0.4)',
-                    features: 'rgba(245, 158, 11, 0.4)',
-                    entities: 'rgba(236, 72, 153, 0.4)',
-                    shared: 'rgba(107, 114, 128, 0.4)'
-                  };
-
-                  const activeBorders = {
-                    app: '#8b5cf6',
-                    'pages-flat': '#3b82f6',
-                    widgets: '#10b981',
-                    features: '#f59e0b',
-                    entities: '#ec4899',
-                    shared: '#6b7280'
-                  };
-
-                  return (
-                    <div key={key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                      <button
-                        onClick={() => {
-                          setSelectedFsdLayer(key);
-                          const el = document.getElementById('fsd-details-section');
-                          if (el) {
-                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
-                        }}
-                        style={{
-                          width: `${widthPercent}%`,
-                          padding: '1rem 1.25rem',
-                          background: bgColors[key as keyof typeof bgColors],
-                          border: isActive ? `2px solid ${activeBorders[key as keyof typeof activeBorders]}` : `1px solid ${borderColors[key as keyof typeof borderColors]}`,
-                          borderRadius: '12px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          boxShadow: isActive ? '0 4px 12px rgba(16, 185, 129, 0.1)' : 'none',
-                          transform: isActive ? 'scale(1.02)' : 'none',
-                          transition: 'all 0.2s ease-in-out',
-                          outline: 'none'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          <span style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '24px',
-                            height: '24px',
-                            minWidth: '24px',
-                            borderRadius: '6px',
-                            background: isActive ? 'var(--primary)' : 'var(--bg-tertiary)',
-                            color: isActive ? '#fff' : 'var(--text-secondary)',
-                            fontSize: '0.75rem',
-                            fontWeight: 700
-                          }}>
-                            {currentLevel}
-                          </span>
-                          <strong style={{ fontSize: '1rem', textTransform: 'capitalize', color: 'var(--text-primary)' }}>
-                            {key}
-                          </strong>
-                          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            ({layer.name.split(' (')[0]})
-                          </span>
-                        </div>
-                        <ChevronRight size={16} style={{ color: isActive ? 'var(--primary)' : 'var(--text-muted)' }} />
-                      </button>
-                      
-                      {idx < levelsCount - 1 && (
-                        <div style={{
-                          height: '8px',
-                          width: '2px',
-                          background: 'linear-gradient(to bottom, var(--text-muted), transparent)',
-                          margin: '1px 0'
-                        }} />
-                      )}
-                    </div>
-                  );
-                })}
+              {/* Interactive Hierarchical VS-Code like File Tree */}
+              <div className="card" style={{ padding: '1.5rem', maxHeight: '650px', overflowY: 'auto', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                    📁 Файлова ієрархія (src)
+                  </h3>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Клікніть шар для опису</span>
+                </div>
+                <div style={{ userSelect: 'none' }}>
+                  {renderTree(projectTree)}
+                </div>
               </div>
+
 
               <div id="fsd-details-section" className="fsd-layer-details" style={{ scrollMarginTop: '2rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--primary)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
