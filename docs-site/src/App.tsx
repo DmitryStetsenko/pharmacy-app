@@ -310,9 +310,9 @@ export default function App() {
                 e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)';
                 e.currentTarget.style.color = 'var(--primary)';
               }}
-              title="Перейти до скріншотів"
+              title="Детальніше про цей шар"
             >
-              📷 Скріншоти
+              🔍 Детальніше
             </button>
           )}
 
