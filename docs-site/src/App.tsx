@@ -196,12 +196,40 @@ const projectTree: FileTreeNode = {
   ]
 };
 
+const getAllFolderPaths = (node: FileTreeNode, currentPath: string = 'src'): string[] => {
+  let paths: string[] = [];
+  if (node.type === 'folder') {
+    paths.push(currentPath);
+    if (node.children) {
+      node.children.forEach(child => {
+        paths = [...paths, ...getAllFolderPaths(child, `${currentPath}/${child.name}`)];
+      });
+    }
+  }
+  return paths;
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
     'src': true
   });
+
+  const folderPaths = getAllFolderPaths(projectTree);
+  const hasAnyExpanded = folderPaths.some(p => p !== 'src' && expandedFolders[p]);
+
+  const handleToggleAll = () => {
+    if (hasAnyExpanded) {
+      setExpandedFolders({ 'src': true });
+    } else {
+      const nextExpanded: Record<string, boolean> = {};
+      folderPaths.forEach(p => {
+        nextExpanded[p] = true;
+      });
+      setExpandedFolders(nextExpanded);
+    }
+  };
 
   const renderTree = (node: FileTreeNode, path: string = 'src'): React.ReactNode => {
     const isFolder = node.type === 'folder';
@@ -703,7 +731,33 @@ export default function App() {
                   <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
                     📁 Файлова ієрархія (src)
                   </h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Клікніть шар для опису</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <button
+                      onClick={handleToggleAll}
+                      style={{
+                        padding: '0.25rem 0.6rem',
+                        fontSize: '0.75rem',
+                        fontWeight: 500,
+                        borderRadius: '6px',
+                        border: '1px solid var(--border-color)',
+                        background: 'var(--bg-primary)',
+                        color: 'var(--text-secondary)',
+                        cursor: 'pointer',
+                        transition: 'all var(--transition-normal)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = 'var(--primary)';
+                        e.currentTarget.style.color = 'var(--primary)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'var(--border-color)';
+                        e.currentTarget.style.color = 'var(--text-secondary)';
+                      }}
+                    >
+                      {hasAnyExpanded ? 'Згорнути все' : 'Розгорнути все'}
+                    </button>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Клікніть шар для опису</span>
+                  </div>
                 </div>
                 <div style={{ userSelect: 'none' }}>
                   {renderTree(projectTree)}
