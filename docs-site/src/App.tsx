@@ -236,10 +236,6 @@ export default function App() {
             }
             if (isFsdLayer) {
               setSelectedFsdLayer(node.fsdLayer!);
-              const el = document.getElementById('fsd-details-section');
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
             }
           }}
           style={{
@@ -684,10 +680,46 @@ export default function App() {
 
 
               <div id="fsd-details-section" className="fsd-layer-details" style={{ scrollMarginTop: '2rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--primary)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
-                  <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
-                    {fsdLayers[selectedFsdLayer].name}
-                  </h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--primary)', paddingBottom: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                    <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                      {fsdLayers[selectedFsdLayer].name}
+                    </h3>
+                    {fsdLayers[selectedFsdLayer].screenshots && (
+                      <button
+                        onClick={() => {
+                          const el = document.getElementById('fsd-layer-screenshots');
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
+                        }}
+                        style={{
+                          fontSize: '0.8rem',
+                          background: 'var(--primary-light)',
+                          color: 'var(--primary)',
+                          border: '1px solid rgba(16, 185, 129, 0.3)',
+                          borderRadius: '8px',
+                          padding: '0.35rem 0.75rem',
+                          cursor: 'pointer',
+                          fontWeight: 600,
+                          transition: 'all var(--transition-fast)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.25rem'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = 'var(--primary)';
+                          e.currentTarget.style.color = '#fff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'var(--primary-light)';
+                          e.currentTarget.style.color = 'var(--primary)';
+                        }}
+                      >
+                        Перейти до скріншотів
+                      </button>
+                    )}
+                  </div>
                   <span className="badge" style={{ backgroundColor: 'var(--primary-light)', color: 'var(--primary)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
                     Рівень {7 - Object.keys(fsdLayers).indexOf(selectedFsdLayer)}
                   </span>
@@ -709,8 +741,8 @@ export default function App() {
                   ))}
                 </div>
 
-                {fsdLayers[selectedFsdLayer].screenshots && (
-                  <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
+                 {fsdLayers[selectedFsdLayer].screenshots && (
+                  <div id="fsd-layer-screenshots" style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', scrollMarginTop: '2.5rem' }}>
                     <h4 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '1rem' }}>Скріншоти та реалізація цього шару:</h4>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
                       {fsdLayers[selectedFsdLayer].screenshots?.map((shot, idx) => (
