@@ -278,12 +278,10 @@ export default function App() {
             {node.name}
           </span>
 
-          {isFsdLayer && fsdLayers[node.fsdLayer!]?.screenshots && (
+          {isFsdLayer && isSelected && fsdLayers[node.fsdLayer!]?.screenshots && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setSelectedFsdLayer(node.fsdLayer!);
-                setExpandedFolders(prev => ({ ...prev, [path]: true }));
                 const el = document.getElementById('fsd-layer-screenshots');
                 if (el) {
                   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -720,46 +718,10 @@ export default function App() {
 
 
               <div id="fsd-details-section" className="fsd-layer-details" style={{ scrollMarginTop: '2rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--primary)', paddingBottom: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
-                      {fsdLayers[selectedFsdLayer].name}
-                    </h3>
-                    {fsdLayers[selectedFsdLayer].screenshots && (
-                      <button
-                        onClick={() => {
-                          const el = document.getElementById('fsd-layer-screenshots');
-                          if (el) {
-                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
-                        }}
-                        style={{
-                          fontSize: '0.8rem',
-                          background: 'var(--primary-light)',
-                          color: 'var(--primary)',
-                          border: '1px solid rgba(16, 185, 129, 0.3)',
-                          borderRadius: '8px',
-                          padding: '0.35rem 0.75rem',
-                          cursor: 'pointer',
-                          fontWeight: 600,
-                          transition: 'all var(--transition-fast)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.25rem'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'var(--primary)';
-                          e.currentTarget.style.color = '#fff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'var(--primary-light)';
-                          e.currentTarget.style.color = 'var(--primary)';
-                        }}
-                      >
-                        Перейти до скріншотів
-                      </button>
-                    )}
-                  </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--primary)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                    {fsdLayers[selectedFsdLayer].name}
+                  </h3>
                   <span className="badge" style={{ backgroundColor: 'var(--primary-light)', color: 'var(--primary)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
                     Рівень {7 - Object.keys(fsdLayers).indexOf(selectedFsdLayer)}
                   </span>
