@@ -200,13 +200,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
-    'src': true,
-    'src/app': true,
-    'src/pages-flat': true,
-    'src/widgets': true,
-    'src/features': true,
-    'src/entities': true,
-    'src/shared': true
+    'src': true
   });
 
   const renderTree = (node: FileTreeNode, path: string = 'src'): React.ReactNode => {
