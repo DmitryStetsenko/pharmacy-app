@@ -232,7 +232,11 @@ export default function App() {
           onClick={(e) => {
             e.stopPropagation();
             if (isFolder) {
-              setExpandedFolders(prev => ({ ...prev, [path]: !isOpen }));
+              if (isFsdLayer) {
+                setExpandedFolders(prev => ({ ...prev, [path]: true }));
+              } else {
+                setExpandedFolders(prev => ({ ...prev, [path]: !isOpen }));
+              }
             }
             if (isFsdLayer) {
               setSelectedFsdLayer(node.fsdLayer!);
@@ -277,6 +281,46 @@ export default function App() {
           }}>
             {node.name}
           </span>
+
+          {isFsdLayer && fsdLayers[node.fsdLayer!]?.screenshots && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedFsdLayer(node.fsdLayer!);
+                setExpandedFolders(prev => ({ ...prev, [path]: true }));
+                const el = document.getElementById('fsd-layer-screenshots');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              style={{
+                marginLeft: '8px',
+                fontSize: '0.65rem',
+                background: 'rgba(16, 185, 129, 0.15)',
+                color: 'var(--primary)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                borderRadius: '4px',
+                padding: '2px 6px',
+                cursor: 'pointer',
+                fontWeight: 600,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '2px',
+                transition: 'all var(--transition-fast)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'var(--primary)';
+                e.currentTarget.style.color = '#fff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)';
+                e.currentTarget.style.color = 'var(--primary)';
+              }}
+              title="Перейти до скріншотів"
+            >
+              📷 Скріншоти
+            </button>
+          )}
 
           {isFsdLayer && layerStyle && (
             <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px' }}>
