@@ -282,7 +282,7 @@ export default function App() {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                const el = document.getElementById('fsd-layer-screenshots');
+                const el = document.getElementById('fsd-details-section');
                 if (el) {
                   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
