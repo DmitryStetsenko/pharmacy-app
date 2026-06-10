@@ -205,7 +205,7 @@ export default function App() {
 
   const renderTree = (node: FileTreeNode, path: string = 'src'): React.ReactNode => {
     const isFolder = node.type === 'folder';
-    const isOpen = expandedFolders[path] !== false;
+    const isOpen = !!expandedFolders[path];
     const isFsdLayer = !!node.fsdLayer;
     const isSelected = selectedFsdLayer === node.fsdLayer;
 
