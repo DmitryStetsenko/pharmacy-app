@@ -749,8 +749,8 @@ export default function App() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
                       {fsdLayers[selectedFsdLayer].screenshots?.map((shot, idx) => (
                         <div key={idx} style={{ border: '1px solid var(--border-color)', borderRadius: '12px', overflow: 'hidden', background: 'var(--bg-tertiary)' }}>
-                          <div style={{ aspectRatio: '16/10', overflow: 'hidden' }}>
-                            <img src={shot.src} alt={shot.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+                          <div style={{ overflow: 'hidden' }}>
+                            <img src={shot.src} alt={shot.title} style={{ width: '100%', height: 'auto', display: 'block' }} onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
                           </div>
                           <div style={{ padding: '0.75rem 1rem', borderTop: '1px solid var(--border-color)' }}>
                             <strong style={{ fontSize: '0.9rem', display: 'block', color: 'var(--text-primary)' }}>{shot.title}</strong>

@@ -567,17 +567,16 @@ pre code {
 }
 
 .screenshot-img-wrapper {
-  aspect-ratio: 16/10;
   overflow: hidden;
   border-bottom: 1px solid var(--border-color);
-  background-color: #f1f5f9;
+  background-color: var(--bg-tertiary);
   position: relative;
 }
 
 .screenshot-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
   transition: transform var(--transition-normal);
 }
 
