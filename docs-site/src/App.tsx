@@ -10,10 +10,11 @@ import {
   Activity,
   ChevronRight,
   FileCode,
-  CheckCircle2
+  CheckCircle2,
+  HelpCircle
 } from 'lucide-react';
 
-type Tab = 'overview' | 'frontend' | 'backend' | 'database' | 'deployment';
+type Tab = 'overview' | 'user-guide' | 'frontend' | 'backend' | 'database' | 'deployment';
 
 interface FsdLayer {
   name: string;
@@ -134,6 +135,15 @@ export default function App() {
               >
                 <LayoutDashboard size={18} />
                 Огляд проєкту
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-button ${activeTab === 'user-guide' ? 'active' : ''}`}
+                onClick={() => setActiveTab('user-guide')}
+              >
+                <HelpCircle size={18} style={{ color: 'var(--primary)' }} />
+                Запуск (для новачків)
               </button>
             </li>
             <li className="nav-item">
@@ -281,12 +291,62 @@ export default function App() {
               <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
                 <CheckCircle2 /> Швидкий старт
               </h3>
-              <p className="card-text" style={{ color: 'var(--text-primary)', marginTop: '0.5rem' }}>
+              <p className="card-text" style={{ color: 'var(--text-primary)', marginTop: '0.5rem', marginBottom: '1rem' }}>
                 Проєкт повністю контейнеризовано. Для миттєвого запуску всього стеку достатньо мати встановлений Docker Desktop та виконати в корені:
               </p>
-              <pre style={{ background: 'var(--bg-secondary)', marginBottom: 0 }}>
+              <pre style={{ background: 'var(--bg-secondary)', marginBottom: '1.25rem' }}>
                 docker compose up --build
               </pre>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '1.25rem', borderTop: '1px solid rgba(16, 185, 129, 0.15)', paddingTop: '1.25rem' }}>
+                <a
+                  href="https://github.com/DmitryStetsenko/pharmacy-app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="nav-button active"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.6rem 1.2rem',
+                    textDecoration: 'none',
+                    borderRadius: 'var(--radius)',
+                    fontWeight: 600,
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  <svg
+                    height="18"
+                    width="18"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    style={{ verticalAlign: 'middle' }}
+                  >
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                  </svg>
+                  Перейти до GitHub Репозиторію
+                </a>
+
+                <button
+                  onClick={() => setActiveTab('user-guide')}
+                  className="nav-button"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.6rem 1.2rem',
+                    borderRadius: 'var(--radius)',
+                    fontWeight: 600,
+                    fontSize: '0.9rem',
+                    backgroundColor: 'var(--bg-secondary)',
+                    border: '1px solid var(--border-color)',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <HelpCircle size={18} style={{ color: 'var(--primary)' }} />
+                  Покрокова інструкція для новачків
+                </button>
+              </div>
             </div>
           </section>
         )}
@@ -589,6 +649,146 @@ npm run dev
 # Сайт стартує на порту 3000 (або 3001)`}
                 </pre>
               </div>
+            </div>
+          </section>
+        )}
+
+        {activeTab === 'user-guide' && (
+          <section>
+            <div className="header-section">
+              <span className="header-tag" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>Покрокова інструкція</span>
+              <h1 className="header-title">Інструкція з запуску для новачків</h1>
+              <p className="header-subtitle">
+                Детальний покроковий посібник, орієнтований на користувачів без досвіду в розробці. Тут описано, як підготувати комп'ютер, завантажити файли та успішно запустити застосунок.
+              </p>
+            </div>
+
+            <div className="card" style={{ marginBottom: '2rem', borderColor: 'rgba(59, 130, 246, 0.2)', background: 'rgba(59, 130, 246, 0.02)' }}>
+              <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#3b82f6' }}>
+                <HelpCircle /> Що це за проєкт і що ми запускаємо?
+              </h3>
+              <p className="card-text" style={{ marginTop: '0.5rem' }}>
+                Цей проєкт є повноцінним інтернет-магазином ліків (Аптека). Він складається з двох основних частин:
+              </p>
+              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-primary)', marginTop: '0.5rem' }}>
+                <li><strong>Фронтенд (інтерфейс)</strong> — сайт, який користувач бачить у браузері, де можна шукати товари, додавати їх до кошика тощо.</li>
+                <li><strong>Бекенд (сервер та база даних)</strong> — невидима частина, яка обробляє замовлення, зберігає списки ліків у пам'яті та керує логікою.</li>
+              </ul>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              🛠️ Крок 1. Підготовка комп'ютера (Що встановити)
+            </h2>
+            <p className="card-text" style={{ marginBottom: '1.5rem' }}>
+              Вам знадобиться всього <strong>одна програма</strong>, яка автоматично налаштує та запустить весь проєкт у контейнерах:
+            </p>
+
+            <div className="card" style={{ marginBottom: '2.5rem' }}>
+              <h3 className="card-title">1. Docker Desktop (Рекомендований та найпростіший шлях)</h3>
+              <p className="card-text" style={{ marginTop: '0.5rem' }}>
+                Він створює віртуальні "контейнери", які самостійно встановлюють всі потрібні бібліотеки та налаштовують мережу. Вам не доведеться нічого налаштовувати вручну.
+              </p>
+              <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: '0.5rem', lineHeight: '1.6' }}>
+                <li>Перейдіть на офіційний сайт <a href="https://www.docker.com/products/docker-desktop/" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)' }}>Docker Desktop</a>.</li>
+                <li>Завантажте версію для вашої операційної системи (Windows, Mac або Linux).</li>
+                <li>Встановіть програму, слідуючи інструкціям на екрані (якщо встановлюєте на Windows, погодьтеся на встановлення WSL 2, якщо програма запропонує це).</li>
+                <li>Запустіть встановлений <strong>Docker Desktop</strong>. Переконайтеся, що в лівому нижньому кутку програми світиться зелений значок (це означає, що Docker запущений та готовий до роботи).</li>
+              </ol>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem' }}>📥 Крок 2. Як завантажити проєкт з GitHub</h2>
+            <div className="card" style={{ marginBottom: '2.5rem' }}>
+              <h3 className="card-title">Отримання файлів проєкту (ZIP-архів)</h3>
+              <p className="card-text" style={{ marginTop: '0.5rem' }}>
+                Якщо ви не вмієте користуватися Git через термінал, виконайте ці прості кроки:
+              </p>
+              <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: '0.5rem', lineHeight: '1.6' }}>
+                <li>Відкрийте сторінку репозиторію: <a href="https://github.com/DmitryStetsenko/pharmacy-app" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>https://github.com/DmitryStetsenko/pharmacy-app</a>.</li>
+                <li>Знайдіть зелену кнопку <strong>"Code"</strong> у правій частині сторінки та натисніть її.</li>
+                <li>У меню, що з'явилося, виберіть пункт <strong>"Download ZIP"</strong> (Завантажити ZIP-архів).</li>
+                <li>Збережіть архів на комп'ютер (наприклад, у папку "Завантаження").</li>
+                <li>Розархівуйте завантажений файл. Натисніть правою кнопкою миші на архів та виберіть <em>"Видобути все..."</em> (Extract All). Бажано видобути його в просту директорію, наприклад, <code>C:\Projects\pharmacy-app</code> або <code>D:\pharmacy-app</code>.</li>
+              </ol>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem' }}>🚀 Крок 3. Запуск проєкту за 3 кроки (Через Docker)</h2>
+            <div className="card" style={{ marginBottom: '2.5rem', borderLeft: '4px solid var(--primary)' }}>
+              <p className="card-text" style={{ fontSize: '1rem', fontWeight: 500 }}>
+                Переконайтеся, що програма <strong>Docker Desktop</strong> відкрита й працює.
+              </p>
+              <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: '0.75rem', lineHeight: '1.6' }}>
+                <li><strong>Відкрийте папку з проєктом</strong>, яку ви щойно розархівували.</li>
+                <li>
+                  <strong>Запустіть термінал (командний рядок) у цій папці:</strong>
+                  <ul style={{ paddingLeft: '1.25rem', marginTop: '0.25rem', listStyleType: 'circle' }}>
+                    <li><em>На Windows:</em> Клікніть у адресний рядок зверху провідника (де вказано шлях до папки), зітріть текст, введіть <code>cmd</code> та натисніть <strong>Enter</strong>. Відкриється чорне вікно консолі.</li>
+                    <li><em>На Mac:</em> Натисніть правою кнопкою миші на папку з проєктом, виберіть "Служби" (Services) -&gt; "Новий термінал у папці" (New Terminal at Folder).</li>
+                  </ul>
+                </li>
+                <li>
+                  У вікні консолі, яке відкрилося, введіть наступну команду та натисніть <strong>Enter</strong>:
+                  <pre style={{ margin: '0.5rem 0', background: 'var(--bg-secondary)', padding: '0.5rem' }}>docker compose up --build</pre>
+                </li>
+                <li>
+                  <strong>Зачекайте 1-2 хвилини</strong>. Docker автоматично скачає потрібні версії Node.js, збере фронтенд, запустить бекенд-сервер та зв'яже їх разом.
+                </li>
+                <li>
+                  Коли збірка завершиться, у консолі почнуть з'являтися логи запуску. Тепер ваш сайт працює!
+                </li>
+              </ol>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem' }}>🔗 Крок 4. Перевірка роботи сайту в браузері</h2>
+            <div className="card" style={{ marginBottom: '2.5rem' }}>
+              <p className="card-text">
+                Після запуску відкрийте браузер та перейдіть за цими посиланнями:
+              </p>
+              <table style={{ marginTop: '1rem' }}>
+                <thead>
+                  <tr>
+                    <th>Адреса</th>
+                    <th>Що там знаходиться</th>
+                    <th>Як користуватися</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="http://localhost:3000" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>http://localhost:3000</a></td>
+                    <td><strong>Сайт Аптеки (Фронтенд)</strong></td>
+                    <td>Головна сторінка з пошуком ліків. Можна купувати ліки, додавати у кошик та оформлювати замовлення.</td>
+                  </tr>
+                  <tr>
+                    <td><a href="http://localhost:5000/api-docs" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>http://localhost:5000/api-docs</a></td>
+                    <td><strong>Swagger Документація (Бекенд)</strong></td>
+                    <td>Технічна сторінка, де можна переглянути та протестувати всі запити до серверної бази даних.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem' }}>🔐 Корисні дані для перевірки (Тестовий акаунт)</h2>
+            <div className="card" style={{ marginBottom: '2.5rem' }}>
+              <p className="card-text">
+                Для перевірки функцій входу та замовлення, на сайті вже заздалегідь створений демонстраційний обліковий запис адміністратора:
+              </p>
+              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: '0.5rem', lineHeight: '1.6' }}>
+                <li><strong>Логін (Email):</strong> <code>admin@admin.com</code></li>
+                <li><strong>Пароль:</strong> <code>admin123</code></li>
+              </ul>
+              <p className="card-text" style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                Ви можете увійти під цим акаунтом у правому верхньому кутку сайту Аптеки.
+              </p>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem' }}>🛑 Як вимкнути проєкт?</h2>
+            <div className="card">
+              <p className="card-text">
+                Щоб зупинити роботу серверів:
+              </p>
+              <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: '0.5rem', lineHeight: '1.6' }}>
+                <li>Перейдіть у вікно консолі, де працює запуск, і натисніть клавіші <strong>Ctrl + C</strong> на клавіатурі.</li>
+                <li>Або відкрийте програму <strong>Docker Desktop</strong>, перейдіть у вкладку <strong>Containers</strong> та натисніть на іконку контейнера з назвою <code>pharmacy-app</code> кнопкою Stop (або видаліть контейнер).</li>
+              </ol>
             </div>
           </section>
         )}
