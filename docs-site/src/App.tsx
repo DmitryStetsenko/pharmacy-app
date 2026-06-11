@@ -15,8 +15,7 @@ import {
   FolderOpen,
   CheckCircle2,
   HelpCircle,
-  Container,
-  BookOpen
+  Container
 } from 'lucide-react';
 
 type Tab = 'overview' | 'user-guide' | 'frontend' | 'backend' | 'database' | 'deployment' | 'labs';
@@ -544,7 +543,7 @@ export default function App() {
                 className={`nav-button ${activeTab === 'labs' ? 'active' : ''}`}
                 onClick={() => setActiveTab('labs')}
               >
-                <BookOpen size={18} />
+                <FileCode size={18} />
                 Лабораторні роботи
               </button>
             </li>
@@ -1287,7 +1286,7 @@ npm run dev
                       <td><span className="badge public">Виконано</span></td>
                       <td>
                         <ul>
-                          <li>Використано <strong>Next.js (App Router)</strong> & TypeScript.</li>
+                          <li>Використано <strong>Next.js (App Router)</strong> та TypeScript.</li>
                           <li>Структура розбита по шарах **Feature-Sliced Design (FSD)**: `app`, `pages-flat`, `widgets`, `features`, `entities`, `shared`.</li>
                         </ul>
                       </td>
