@@ -18,7 +18,7 @@ import {
   Container
 } from 'lucide-react';
 
-type Tab = 'overview' | 'user-guide' | 'frontend' | 'backend' | 'database' | 'deployment' | 'labs';
+type Tab = 'overview' | 'user-guide' | 'admin-panel' | 'frontend' | 'backend' | 'database' | 'deployment' | 'labs';
 
 interface FsdLayer {
   name: string;
@@ -73,6 +73,11 @@ const projectTree: FileTreeNode = {
             { name: 'AntdRegistry.tsx', type: 'file' }
           ]
         },
+        {
+          name: 'admin',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
         { name: 'globals.css', type: 'file' },
         { name: 'layout.tsx', type: 'file' },
         { name: 'page.tsx', type: 'file' },
@@ -118,6 +123,11 @@ const projectTree: FileTreeNode = {
           name: 'register',
           type: 'folder',
           children: [{ name: 'ui', type: 'folder', children: [{ name: 'RegisterPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'admin',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'AdminPage.tsx', type: 'file' }] }]
         }
       ]
     },
@@ -180,7 +190,7 @@ const projectTree: FileTreeNode = {
           type: 'folder',
           children: [
             { name: 'model', type: 'folder', children: [{ name: 'userSlice.ts', type: 'file' }] },
-            { name: 'api', type: 'folder', children: [{ name: 'userApi.ts', type: 'file' }] }
+            { name: 'api', type: 'folder', children: [{ name: 'userApi.ts', type: 'file' }, { name: 'adminApi.ts', type: 'file' }] }
           ]
         }
       ]
@@ -409,8 +419,8 @@ export default function App() {
     'pages-flat': {
       name: 'Pages Flat (Шар сторінок за FSD)',
       purpose: 'Компоненти сторінок, які містять основну логіку та збирають докупи віджети і фічі. Next.js App Router роути лише імпортують ці компоненти, що усуває зайве дублювання логіки.',
-      contents: ['`HomePage` — Головна сторінка з промо-блоками', '`CatalogPage` — Каталог медикаментів з пошуком та фільтрами', '`CartPage` — Кошик товарів', '`CheckoutPage` — Форма оформлення замовлення'],
-      examples: ['src/pages-flat/catalog/ui/CatalogPage.tsx', 'src/pages-flat/home/ui/HomePage.tsx'],
+      contents: ['`HomePage` — Головна сторінка з промо-блоками', '`CatalogPage` — Каталог медикаментів з пошуком та фільтрами', '`CartPage` — Кошик товарів', '`CheckoutPage` — Форма оформлення замовлення', '`AdminPage` — Адмін-панель для повного CRUD-керування користувачами, ліками та замовленнями'],
+      examples: ['src/pages-flat/catalog/ui/CatalogPage.tsx', 'src/pages-flat/admin/ui/AdminPage.tsx'],
       screenshots: [
         { src: 'screenshots/home.png', title: 'Головна сторінка (HomePage)', desc: 'Основна сторінка аптеки з промо-банерами та категоріями ліків.' },
         { src: 'screenshots/catalog.png', title: 'Сторінка каталогу (CatalogPage)', desc: 'Список товарів, пошук з debounce та бічні фільтри за ціною.' }
@@ -460,6 +470,7 @@ export default function App() {
       fields: [
         { name: 'id', type: 'string', desc: 'Унікальний UUID користувача' },
         { name: 'email', type: 'string', desc: 'Електронна пошта (унікальна)' },
+        { name: 'name', type: 'string', desc: 'Ім\'я користувача' },
         { name: 'passwordHash', type: 'string', desc: 'Хешований пароль через bcrypt' },
         { name: 'role', type: "'user' | 'admin'", desc: 'Роль користувача для розмежування прав' }
       ]
@@ -487,7 +498,7 @@ export default function App() {
         { name: 'email', type: 'string', desc: 'Email замовника' },
         { name: 'items', type: 'OrderItem[]', desc: 'Список товарів із ціною та кількістю' },
         { name: 'totalAmount', type: 'number', desc: 'Загальна сума до сплати' },
-        { name: 'status', type: "'pending'|'completed'|'cancelled'", desc: 'Статус замовлення' },
+        { name: 'status', type: "'pending' | 'processing' | 'completed' | 'cancelled'", desc: 'Статус замовлення' },
         { name: 'createdAt', type: 'string', desc: 'Час створення замовлення' }
       ]
     }
@@ -496,13 +507,24 @@ export default function App() {
   const apiEndpoints = [
     { method: 'POST', path: '/api/auth/register', desc: 'Реєстрація нового акаунту користувача', auth: 'public' },
     { method: 'POST', path: '/api/auth/login', desc: 'Автентифікація користувача, повернення JWT-токену', auth: 'public' },
+    { method: 'GET', path: '/api/auth/me', desc: 'Отримання профілю поточного користувача', auth: 'user' },
+    { method: 'POST', path: '/api/auth/refresh', desc: 'Оновлення сесії (Access Token) за допомогою Refresh Token', auth: 'public' },
+    { method: 'GET', path: '/api/auth/users', desc: 'Отримання списку всіх користувачів сайту', auth: 'admin' },
+    { method: 'POST', path: '/api/auth/users', desc: 'Створення нового користувача або адміністратора', auth: 'admin' },
+    { method: 'PUT', path: '/api/auth/users/:id', desc: 'Редагування профілю користувача за його ID', auth: 'admin' },
+    { method: 'DELETE', path: '/api/auth/users/:id', desc: 'Видалення акаунту користувача за його ID', auth: 'admin' },
+    
     { method: 'GET', path: '/api/medicines', desc: 'Отримання списку ліків (з фільтрацією, пошуком та сортуванням)', auth: 'public' },
     { method: 'GET', path: '/api/medicines/:id', desc: 'Детальна інформація про конкретний препарат', auth: 'public' },
     { method: 'POST', path: '/api/medicines', desc: 'Додавання нових ліків до каталогу', auth: 'admin' },
     { method: 'PUT', path: '/api/medicines/:id', desc: 'Оновлення параметрів і залишків ліків за ID', auth: 'admin' },
     { method: 'DELETE', path: '/api/medicines/:id', desc: 'Видалення препарату з бази даних', auth: 'admin' },
-    { method: 'POST', path: '/api/orders', desc: 'Створення замовлення (список товарів, перевірка складського залишку)', auth: 'user' },
-    { method: 'GET', path: '/api/orders', desc: 'Перегляд замовлень: користувачі бачать свої, адміни — усі', auth: 'user' }
+    
+    { method: 'POST', path: '/api/orders', desc: 'Створення замовлення (перевірка залишків, списання зі складу)', auth: 'public' },
+    { method: 'GET', path: '/api/orders', desc: 'Перегляд замовлень: користувачі бачать свої, адміни — усі', auth: 'user' },
+    { method: 'GET', path: '/api/orders/:id', desc: 'Отримання детальної інформації про замовлення за ID', auth: 'user' },
+    { method: 'PUT', path: '/api/orders/:id', desc: 'Оновлення статусу замовлення (обробляється, виконано тощо)', auth: 'admin' },
+    { method: 'DELETE', path: '/api/orders/:id', desc: 'Видалення замовлення з бази даних за ID', auth: 'admin' }
   ];
 
   return (
@@ -532,6 +554,15 @@ export default function App() {
               >
                 <HelpCircle size={18} style={{ color: 'var(--primary)' }} />
                 Запуск (для новачків)
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-button ${activeTab === 'admin-panel' ? 'active' : ''}`}
+                onClick={() => setActiveTab('admin-panel')}
+              >
+                <Shield size={18} />
+                Панель адміністратора
               </button>
             </li>
             <li className="nav-item">
@@ -856,7 +887,7 @@ export default function App() {
               <span className="header-tag">Overview</span>
               <h1 className="header-title">Клієнт-серверний застосунок Аптека</h1>
               <p className="header-subtitle">
-                Сучасне SPA-рішення для замовлення медикаментів, розроблене на Next.js та Express. Проєкт об'єднує надійний бекенд на TypeScript та масштабовану архітектуру FSD на фронтенді.
+                Сучасне SPA-рішення для замовлення медикаментів та адміністрування аптечної мережі, розроблене на Next.js та Express. Проєкт об'єднує надійний бекенд на TypeScript (з REST API та Swagger) та масштабовану архітектуру FSD на фронтенді разом із закритою адмін-панеллю.
               </p>
             </div>
 
@@ -934,13 +965,22 @@ export default function App() {
                 <div className="stat-lbl">Архітектурних шарів</div>
               </div>
               <div className="stat-card">
-                <div className="stat-val">9</div>
+                <div className="stat-val">18</div>
                 <div className="stat-lbl">API Ендпоінтів</div>
               </div>
               <div className="stat-card">
                 <div className="stat-val">100%</div>
                 <div className="stat-lbl">У пам'яті (In-Memory)</div>
               </div>
+            </div>
+
+            <div className="card" style={{ marginBottom: '2.5rem' }}>
+              <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
+                <Shield /> Адміністрування та Безпека
+              </h3>
+              <p className="card-text" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                У проєкт інтегровано повноцінний адміністративний інтерфейс (роут <code>/admin</code>), який дозволяє управляти користувачами, медикаментами та замовленнями в реальному часі. Доступ захищено за допомогою JWT токенів та авторизаційного Middleware (перевірка ролі <code>admin</code>), що гарантує безпеку конфіденційних даних та дій.
+              </p>
             </div>
 
             {/* Tech Stack Breakdown */}
@@ -1498,6 +1538,95 @@ npm run dev
                 <li>Перейдіть у вікно консолі, де працює запуск, і натисніть клавіші <strong>Ctrl + C</strong> на клавіатурі.</li>
                 <li>Або відкрийте програму <strong>Docker Desktop</strong>, перейдіть у вкладку <strong>Containers</strong> та натисніть на іконку контейнера з назвою <code>pharmacy-app</code> кнопкою Stop (або видаліть контейнер).</li>
               </ol>
+            </div>
+          </section>
+        )}
+
+        {activeTab === 'admin-panel' && (
+          <section>
+            <div className="header-section">
+              <span className="header-tag" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--primary)' }}>Адміністрування</span>
+              <h1 className="header-title">Панель адміністратора</h1>
+              <p className="header-subtitle">
+                Повний набір інструментів для керування користувачами, каталогом ліків та статусами замовлень в реальному часі з рольовим доступом (RBAC).
+              </p>
+            </div>
+
+            <div className="card" style={{ marginBottom: '2.5rem', borderLeft: '4px solid var(--primary)' }}>
+              <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Lock style={{ color: 'var(--primary)' }} /> Рольовий доступ та Безпека
+              </h3>
+              <p className="card-text" style={{ marginTop: '0.5rem', fontSize: '0.95rem' }}>
+                Доступ до сторінки <code>/admin</code> обмежений як на рівні інтерфейсу Next.js, так і на рівні API Express.
+              </p>
+              <ul style={{ paddingLeft: '1.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <li><strong>Клієнтський захист:</strong> Сторінка перевіряє стан авторизації у Redux Store. Якщо користувач не увійшов або не має ролі <code>admin</code>, Next.js автоматично перенаправляє його на головну сторінку <code>/</code>.</li>
+                <li><strong>Серверний захист:</strong> Всі адміністративні ендпоінти API захищені проміжним обробником <code>adminMiddleware</code>, який декодує JWT токен та перевіряє роль. Спроби несанкціонованого доступу повертають статус <code>403 Forbidden</code>.</li>
+              </ul>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Функціональні модулі адмін-панелі</h2>
+            
+            <div className="grid-cols-3" style={{ marginBottom: '3rem' }}>
+              <div className="card">
+                <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  👥 Керування користувачами
+                </h3>
+                <p className="card-text" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
+                  Модуль для повного контролю облікових записів у системі. Забезпечує:
+                </p>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  <li>Створення нових користувачів та адміністраторів.</li>
+                  <li>Редагування профілів (зміна імені, пошти, ролі, пароля).</li>
+                  <li>Видалення користувачів з валідацією запобігання самовидаленню активного адміністратора.</li>
+                </ul>
+              </div>
+
+              <div className="card">
+                <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  💊 Керування медикаментами
+                </h3>
+                <p className="card-text" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
+                  Модуль оновлення асортименту інтернет-аптеки. Дозволяє:
+                </p>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  <li>Додавати нові лікарські препарати з описом, ціною, категорією та кількістю.</li>
+                  <li>Редагувати параметри наявних ліків та змінювати залишки на складі.</li>
+                  <li>Видаляти препарати з каталогу за підтвердженням у модальному вікні.</li>
+                </ul>
+              </div>
+
+              <div className="card">
+                <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  📦 Управління замовленнями
+                </h3>
+                <p className="card-text" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
+                  Моніторинг та обробка замовлень клієнтів. Функціонал:
+                </p>
+                <ul style={{ paddingLeft: '1.25rem', fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  <li>Перегляд повного списку замовлень усіх користувачів аптеки.</li>
+                  <li>Зміна статусу замовлення: <code>pending</code> (очікує), <code>processing</code> (в обробці), <code>completed</code> (виконано), <code>cancelled</code> (скасовано).</li>
+                  <li>Детальний перегляд складу кожного замовлення та видалення замовлень.</li>
+                </ul>
+              </div>
+            </div>
+
+            <h2 style={{ marginBottom: '1.5rem', fontWeight: 700 }}>Технічна імплементація та Стан (Redux RTK Query)</h2>
+            <div className="card" style={{ marginBottom: '2rem' }}>
+              <p className="card-text" style={{ fontSize: '0.95rem' }}>
+                Вся взаємодія з сервером відбувається через Redux Toolkit Query API (<code>adminApi.ts</code> та <code>medicineApi.ts</code>), що забезпечує автоматичне кешування, оновлення UI (шляхом інвалідації тегів <code>'User'</code>, <code>'Medicine'</code>, <code>'Order'</code>) та обробку станів завантаження/помилок.
+              </p>
+              <pre style={{ marginTop: '1rem', background: 'var(--bg-secondary)', padding: '1rem', borderRadius: 'var(--radius)' }}>
+{`// Приклад RTK Query мутації для оновлення статусу замовлення в adminApi.ts:
+updateOrderStatus: build.mutation<AdminOrder, { id: string; status: string }>({
+  query: ({ id, status }) => ({
+    url: \\\`/orders/\\\${id}\\\`,
+    method: 'PUT',
+    body: { status }
+  }),
+  invalidatesTags: ['Order'], // Автоматичне перезавантаження списку замовлень в UI
+})`}
+              </pre>
             </div>
           </section>
         )}
