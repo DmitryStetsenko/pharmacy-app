@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { createOrder, getOrders } from '../controllers/order.controller';
-import { authMiddleware } from '../middleware/auth.middleware';
+import { createOrder, getOrders, getOrderById, updateOrderStatus, deleteOrder } from '../controllers/order.controller';
+import { authMiddleware, adminMiddleware } from '../middleware/auth.middleware';
 import jwt from 'jsonwebtoken';
 
 const router = Router();
@@ -101,5 +101,17 @@ router.post(
  *         description: Unauthorized
  */
 router.get('/', authMiddleware, getOrders);
+
+router.get('/:id', authMiddleware, getOrderById);
+
+router.put(
+  '/:id',
+  authMiddleware,
+  adminMiddleware,
+  [body('status').notEmpty().withMessage('Status is required')],
+  updateOrderStatus
+);
+
+router.delete('/:id', authMiddleware, adminMiddleware, deleteOrder);
 
 export default router;

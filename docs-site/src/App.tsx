@@ -242,7 +242,7 @@ const getAllFolderPaths = (node: FileTreeNode, currentPath: string = 'src'): str
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
-  const [activeLabTab, setActiveLabTab] = useState<string>('lab7');
+  const [activeLabTab, setActiveLabTab] = useState<string>('lab9');
   const [labsOpen, setLabsOpen] = useState<boolean>(true);
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
@@ -786,6 +786,29 @@ export default function App() {
                         backgroundColor: activeLabTab === 'lab8' ? 'var(--primary)' : 'var(--text-muted)'
                       }} />
                       Лаб 8
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab9' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab9')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab9' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 9
                     </button>
                   </li>
                 </ul>
@@ -1609,6 +1632,21 @@ npm run dev
                 }}
               >
                 Лабораторна робота №8
+              </button>
+              <button 
+                onClick={() => setActiveLabTab('lab9')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab9' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab9' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab9' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №9
               </button>
             </div>
 
@@ -2689,6 +2727,166 @@ res.status(200).json(userOrders);`}
                   <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
                     У ході лабораторної роботи розроблено повноцінний REST API-сервер на Node.js та Express з TypeScript. Реалізовано CRUD-операції для ресурсів «Ліки» та «Замовлення», систему управління користувачами через JWT-авторизацію. Завдяки <code>express-validator</code> забезпечено серверну валідацію даних, а Swagger UI надає зручний інструмент тестування без додаткового ПЗ. Зв'язок замовлень із користувачами через поле <code>userId</code> дозволяє реалізувати рольовий доступ до даних на рівні бізнес-логіки.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeLabTab === 'lab9' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: '#8b5cf6', borderLeft: '4px solid #8b5cf6' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №9. Імплементація аутентифікації та валідації у Node.js-додатку</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> сформувати практичні навички захисту серверних вебдодатків; навчитися реалізовувати аутентифікацію користувачів за допомогою JWT, застосовувати middleware для перевірки доступу та виконувати валідацію даних для підвищення безпеки API.
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 9)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td><strong>1. Реєстрація та вхід користувачів</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>POST /auth/register та POST /auth/login, bcrypt хешування паролів.</span></td>
+                        <td><span className="status-badge status-success">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li><code>backend/src/controllers/auth.controller.ts</code></li>
+                            <li><code>backend/src/routes/auth.routes.ts</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td><strong>2. Використання JWT для аутентифікації</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Генерація токенів, зберігання на клієнті, authMiddleware.</span></td>
+                        <td><span className="status-badge status-success">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li><code>backend/src/middleware/auth.middleware.ts</code></li>
+                            <li><code>frontend/src/entities/user/model/userSlice.ts</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td><strong>3. Захист маршрутів API та рольова авторизація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Перевірка токена для захищених роутів, admin privileges.</span></td>
+                        <td><span className="status-badge status-success">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li><code>backend/src/routes/order.routes.ts</code> (GET /orders)</li>
+                            <li><code>backend/src/routes/auth.routes.ts</code> (GET/DELETE /users)</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td><strong>4. Валідація, безпека (Helmet + Rate Limiting)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Валідація за допомогою express-validator, захист від атак.</span></td>
+                        <td><span className="status-badge status-success">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li><code>backend/src/app.ts</code> (helmet, express-rate-limit)</li>
+                            <li><code>backend/src/middleware/error.middleware.ts</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>5. Самостійна робота: Refresh Token & Логування</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Оновлення токенів, логування спроб невдалого входу.</span></td>
+                        <td><span className="status-badge status-success">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Логування невдалих логінів: <code>auth.controller.ts</code></li>
+                            <li>Теоретична доповідь: Порівняння JWT та OAuth 2.0.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на завдання самостійної роботи</h3>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Порівняння JWT vs OAuth 2.0</h4>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px', fontSize: '0.85rem' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                        <th style={{ padding: '8px', width: '25%' }}>Характеристика</th>
+                        <th style={{ padding: '8px', width: '38%' }}>JWT (JSON Web Token)</th>
+                        <th style={{ padding: '8px', width: '37%' }}>OAuth 2.0</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Тип технології</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Стандарт формату токенів (RFC 7519)</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Протокол авторизації (делегування доступу)</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Стан (Stateful)</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Stateless — містить дані про користувача всередині</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Може бути Stateful (вимагає запиту до сервера авторизації)</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Сфера застосування</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Передача авторизаційних даних між клієнтом та сервером у SPA/мікросервісах</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Інтеграція сторонніх сервісів ("Увійти через Google/GitHub")</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Логіка Refresh Token (Оновлення сесії)</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Для безпеки час життя Access Token встановлюється коротким (наприклад, 15 хв). Refresh Token зберігається у безпечних куках (<code>httpOnly, secure</code>) і використовується клієнтом для отримання нової пари токенів без повторного введення пароля:
+                  </p>
+                  <pre style={{ padding: '12px', background: 'var(--bg-secondary)', borderRadius: '8px', fontSize: '0.8rem', marginTop: '8px', overflowX: 'auto' }}>
+{`// Концептуальний код роуту оновлення токенів:
+app.post('/api/auth/refresh', async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) return res.status(401).json({ message: 'Refresh Token required' });
+
+  try {
+    const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
+    // перевірка токена у БД/клієнтській сесії...
+    const newAccessToken = jwt.sign({ id: decoded.id, role: decoded.role }, JWT_SECRET, { expiresIn: '15m' });
+    res.json({ accessToken: newAccessToken });
+  } catch (err) {
+    res.status(403).json({ message: 'Invalid Refresh Token' });
+  }
+});`}
+                  </pre>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Логування підозрілої активності</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Реалізовано підрахунок невдалих спроб входу по кожній email-адресі. У випадку 3 або більше невдалих спроб сервер пише попередження у лог:
+                  </p>
+                  <pre style={{ padding: '12px', background: 'var(--bg-secondary)', borderRadius: '8px', fontSize: '0.8rem', marginTop: '8px', overflowX: 'auto' }}>
+{`// Контроль невдалих логінів:
+const failedLogins = new Map<string, number>();
+
+export const login = async (req, res) => {
+  const { email } = req.body;
+  // ...якщо пароль неправильний:
+  const attempts = (failedLogins.get(email) || 0) + 1;
+  failedLogins.set(email, attempts);
+
+  if (attempts >= 3) {
+    console.warn(\`[SECURITY WARNING] Multiple failed login attempts (\${attempts}) for email: \${email} from IP: \${req.ip}\`);
+  }
+};`}
+                  </pre>
+                </div>
+
+                <div className="card">
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    У ході лабораторної роботи №9 було створено безпечне середовище для серверного додатку. Реалізовано захист API від брутфорс атак за допомогою лімітера запитів, налаштовано безпечні заголовки за допомогою Helmet, та організовано безпечну аутентифікацію клієнтських запитів за допомогою JWT. Валідація вхідних даних запобігає несанкціонованій зміні даних і підвищує загальну стійкість системи до вразливостей.
                   </p>
                 </div>
               </div>

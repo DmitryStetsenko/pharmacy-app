@@ -123,3 +123,38 @@ export const getMe = async (req: AuthenticatedRequest, res: Response): Promise<v
     res.status(500).json({ message: 'Failed to get user profile' });
   }
 };
+
+// Admin: list all users (without password hashes)
+export const getUsers = async (_req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const safeUsers = db.users.map(u => ({
+      id: u.id,
+      email: u.email,
+      name: u.name,
+      role: u.role,
+      createdAt: u.createdAt
+    }));
+    res.status(200).json(safeUsers);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to retrieve users' });
+  }
+};
+
+// Admin: delete a user by id
+export const deleteUser = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const { id } = req.params;
+
+  if (req.user?.id === id) {
+    res.status(400).json({ message: 'Cannot delete your own account' });
+    return;
+  }
+
+  const index = db.users.findIndex(u => u.id === id);
+  if (index === -1) {
+    res.status(404).json({ message: 'User not found' });
+    return;
+  }
+
+  const deleted = db.users.splice(index, 1)[0];
+  res.status(200).json({ message: 'User deleted', id: deleted.id });
+};

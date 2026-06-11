@@ -79,7 +79,6 @@ export const getOrders = async (req: AuthenticatedRequest, res: Response): Promi
   }
 
   try {
-    // If admin, they can view all orders, or filter by userId
     if (req.user.role === 'admin') {
       const { userId } = req.query;
       if (userId) {
@@ -91,10 +90,63 @@ export const getOrders = async (req: AuthenticatedRequest, res: Response): Promi
       return;
     }
 
-    // Normal users can only see their own orders
     const userOrders = db.orders.filter(o => o.userId === req.user?.id);
     res.status(200).json(userOrders);
   } catch (error) {
     res.status(500).json({ message: 'Failed to retrieve orders' });
   }
+};
+
+// GET /orders/:id
+export const getOrderById = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const order = db.orders.find(o => o.id === id);
+
+  if (!order) {
+    res.status(404).json({ message: 'Order not found' });
+    return;
+  }
+
+  // Allow only owner or admin
+  if (req.user?.role !== 'admin' && order.userId !== req.user?.id) {
+    res.status(403).json({ message: 'Forbidden' });
+    return;
+  }
+
+  res.status(200).json(order);
+};
+
+// PUT /orders/:id — update status (admin only)
+export const updateOrderStatus = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const allowed = ['pending', 'processing', 'completed', 'cancelled'];
+  if (!allowed.includes(status)) {
+    res.status(400).json({ message: `Invalid status. Allowed: ${allowed.join(', ')}` });
+    return;
+  }
+
+  const order = db.orders.find(o => o.id === id);
+  if (!order) {
+    res.status(404).json({ message: 'Order not found' });
+    return;
+  }
+
+  order.status = status;
+  res.status(200).json(order);
+};
+
+// DELETE /orders/:id (admin only)
+export const deleteOrder = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const index = db.orders.findIndex(o => o.id === id);
+
+  if (index === -1) {
+    res.status(404).json({ message: 'Order not found' });
+    return;
+  }
+
+  db.orders.splice(index, 1);
+  res.status(200).json({ message: 'Order deleted', id });
 };

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { register, login, getMe } from '../controllers/auth.controller';
-import { authMiddleware } from '../middleware/auth.middleware';
+import { register, login, getMe, getUsers, deleteUser } from '../controllers/auth.controller';
+import { authMiddleware, adminMiddleware } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -138,5 +138,49 @@ router.post(
  *         description: Unauthorized
  */
 router.get('/me', authMiddleware, getMe);
+
+/**
+ * @swagger
+ * /api/auth/users:
+ *   get:
+ *     summary: Get all users (Admin only)
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all users (without password hashes)
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (Admin only)
+ */
+router.get('/users', authMiddleware, adminMiddleware, getUsers);
+
+/**
+ * @swagger
+ * /api/auth/users/{id}:
+ *   delete:
+ *     summary: Delete a user by ID (Admin only)
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       400:
+ *         description: Cannot delete your own account
+ *       404:
+ *         description: User not found
+ *       403:
+ *         description: Forbidden (Admin only)
+ */
+router.delete('/users/:id', authMiddleware, adminMiddleware, deleteUser);
 
 export default router;

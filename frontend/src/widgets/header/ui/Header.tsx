@@ -84,6 +84,11 @@ export const Header = () => {
       label: <Link href="/profile">Мій Профіль</Link>,
       icon: <UserOutlined />,
     },
+    ...(user?.role === 'admin' ? [{
+      key: 'admin-link',
+      label: <Link href="/admin">⚙️ Адмінпанель</Link>,
+      icon: <AppstoreOutlined />,
+    }] : []),
     {
       type: 'divider' as const,
     },
