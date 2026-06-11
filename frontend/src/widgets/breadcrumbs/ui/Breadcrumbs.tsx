@@ -15,6 +15,7 @@ const routeNameMap: Record<string, string> = {
   about: 'Про нас',
   login: 'Вхід',
   register: 'Реєстрація',
+  profile: 'Профіль',
 };
 
 export const Breadcrumbs = () => {

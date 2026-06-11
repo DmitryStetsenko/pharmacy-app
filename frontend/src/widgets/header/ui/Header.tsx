@@ -25,9 +25,25 @@ export const Header = () => {
   const { user, isAuthenticated } = useSelector((state: RootState) => state.user);
   const themeMode = useSelector((state: RootState) => state.theme.mode);
 
+  const [sessionStatus, setSessionStatus] = React.useState<string>('Гість');
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let currentSessionStatus = sessionStorage.getItem('user_session_status');
+      if (isAuthenticated && user) {
+        currentSessionStatus = 'Ви увійшли в систему';
+        sessionStorage.setItem('user_session_status', currentSessionStatus);
+      } else if (!currentSessionStatus) {
+        currentSessionStatus = 'Гість';
+        sessionStorage.setItem('user_session_status', currentSessionStatus);
+      }
+      setSessionStatus(currentSessionStatus);
+    }
+  }, [isAuthenticated, user]);
+
   const menuItems = [
     {
-      key: 'profile',
+      key: 'profile-info',
       label: (
         <div style={{ padding: '4px 8px' }}>
           <div style={{ fontWeight: 600, color: themeMode === 'dark' ? '#ffffff' : '#2d3436' }}>{user?.name}</div>
@@ -43,12 +59,24 @@ export const Header = () => {
       type: 'divider' as const,
     },
     {
+      key: 'profile-link',
+      label: <Link href="/profile">Мій Профіль (Lab 4)</Link>,
+      icon: <UserOutlined />,
+    },
+    {
+      type: 'divider' as const,
+    },
+    {
       key: 'logout',
       label: 'Вийти з акаунту',
       icon: <LogoutOutlined />,
       danger: true,
       onClick: () => {
         dispatch(logout());
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('user_session_status', 'Гість');
+          setSessionStatus('Гість');
+        }
         message.success('Ви вийшли з акаунту');
       },
     },
@@ -164,15 +192,28 @@ export const Header = () => {
           </Badge>
         </Link>
 
-        {/* Профіль */}
+        {/* Кнопка Профіль */}
+        <Link href="/profile">
+          <Button
+            type="default"
+            icon={<UserOutlined />}
+            style={{ 
+              borderRadius: '8px',
+              fontWeight: 500
+            }}
+          >
+            Профіль
+          </Button>
+        </Link>
+
+        {/* Авторизація (Увійти / Ім'я користувача) */}
         {isAuthenticated && user ? (
           <Dropdown menu={{ items: menuItems }} placement="bottomRight" arrow>
             <Button
-              type="default"
-              icon={<UserOutlined />}
+              type="primary"
               style={{ 
+                backgroundColor: '#00b894', 
                 borderColor: '#00b894', 
-                color: '#00b894', 
                 fontWeight: 600,
                 borderRadius: '8px'
               }}
@@ -184,7 +225,6 @@ export const Header = () => {
           <Link href="/login">
             <Button
               type="primary"
-              icon={<UserOutlined />}
               style={{ backgroundColor: '#00b894', borderColor: '#00b894', borderRadius: '8px' }}
             >
               Увійти

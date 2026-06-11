@@ -36,6 +36,7 @@ export const CheckoutPage = () => {
   
   const { items, totalAmount } = useSelector((state: RootState) => state.cart);
   const themeMode = useSelector((state: RootState) => state.theme.mode);
+  const { user, isAuthenticated } = useSelector((state: RootState) => state.user);
   const isDark = themeMode === 'dark';
   const discountThreshold = 1000;
   const discountRate = 0.1; // 10%
@@ -46,6 +47,38 @@ export const CheckoutPage = () => {
   const [createOrder, { isLoading, data: createdOrder, isSuccess, error }] = useCreateOrderMutation();
   const [deliveryType, setDeliveryType] = useState<'pickup' | 'delivery'>('pickup');
   const [form] = Form.useForm();
+
+  // Prefill form from localStorage or Redux user credentials
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedContacts = localStorage.getItem('user_contact_data');
+      let initialData = { customerName: '', email: '', phone: '', address: '', deliveryType: 'pickup' };
+
+      if (savedContacts) {
+        try {
+          const parsed = JSON.parse(savedContacts);
+          initialData.customerName = parsed.name || '';
+          initialData.email = parsed.email || '';
+          initialData.phone = parsed.phone || '';
+          initialData.address = parsed.address || '';
+        } catch (e) {
+          console.error('Failed to parse saved contact data', e);
+        }
+      }
+
+      // If user is authenticated, override name and email with official account details
+      if (isAuthenticated && user) {
+        initialData.customerName = user.name || initialData.customerName;
+        initialData.email = user.email || initialData.email;
+      }
+
+      form.setFieldsValue(initialData);
+      if (initialData.address) {
+        setDeliveryType('delivery');
+        form.setFieldValue('deliveryType', 'delivery');
+      }
+    }
+  }, [isAuthenticated, user, form]);
 
   // Redirect if cart is empty and order wasn't successfully placed
   useEffect(() => {
@@ -72,6 +105,17 @@ export const CheckoutPage = () => {
   }, [error, message]);
 
   const onFinish = async (values: any) => {
+    // Save contact info to localStorage for future use
+    if (typeof window !== 'undefined') {
+      const contactData = {
+        name: values.customerName,
+        email: values.email,
+        phone: values.phone,
+        address: values.address || ''
+      };
+      localStorage.setItem('user_contact_data', JSON.stringify(contactData));
+    }
+
     const orderItems = items.map(item => ({
       medicineId: item.medicine.id,
       quantity: item.quantity

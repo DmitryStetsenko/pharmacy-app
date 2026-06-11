@@ -629,6 +629,29 @@ export default function App() {
                       Лаб 3
                     </button>
                   </li>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab4' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab4')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab4' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 4
+                    </button>
+                  </li>
                 </ul>
               )}
             </li>
@@ -1376,6 +1399,21 @@ npm run dev
               >
                 Лабораторна робота №3
               </button>
+              <button 
+                onClick={() => setActiveLabTab('lab4')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab4' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab4' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab4' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №4
+              </button>
             </div>
 
             {activeLabTab === 'lab1' && (
@@ -1764,6 +1802,118 @@ npm run dev
                   </p>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
                     На клієнтській стороні в кошику (<code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code>) та на сторінці оформлення (<code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code>) додано візуальний блок із сумою знижки та оновлено кінцеву вартість. З метою запобігання фальсифікації даних на стороні клієнта, фінальний розрахунок суми замовлення з аналогічною знижкою повторно проводиться на сервері (<code>backend/src/controllers/order.controller.ts</code>) перед записом замовлення до бази даних.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeLabTab === 'lab4' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--primary)', borderLeft: '4px solid var(--primary)' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №4. Робота з локальним сховищем</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> сформувати практичні навички використання локального сховища браузера для збереження даних користувача; навчитися зберігати та відновлювати стан додатку після перезавантаження сторінки.
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 4)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Форма та localStorage</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Введення імені, email, телефону та їх збереження</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Форма на сторінці профілю: <code>frontend/src/pages-flat/profile/ui/ProfilePage.tsx</code></li>
+                            <li>Збереження у <code>localStorage</code> за ключем <code>'user_contact_data'</code></li>
+                            <li>Автоматичне відновлення даних у полях форми при монтуванні сторінки</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Збереження стану кошика</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Кошик у localStorage, очищення кошика</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Збереження кошика: <code>frontend/src/entities/cart/model/cartSlice.ts</code> за ключем <code>'pharmacy_cart'</code></li>
+                            <li>Дані кошика автоматично очищуються після успішного оформлення замовлення або видалення товарів</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Робота з sessionStorage</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Сесійні токени/прапорці, статус входу на reload</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Статус сесії та унікальний <code>session_id</code> зберігаються у <code>sessionStorage</code> для внутрішнього відстеження сеансу</li>
+                            <li>Збережений стан входу автоматично відновлюється при перезавантаженні сторінки або повторному відкритті</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+                
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Порівняння технологій збереження даних на клієнті</h4>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Характеристика</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>localStorage</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>sessionStorage</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Cookies</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Обсяг даних</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>~5-10 МБ</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>~5 МБ</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>~4 КБ</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Час зберігання</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Безстроково (поки не буде видалено кодом чи користувачем)</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>До закриття вкладки або вікна браузера</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Встановлюється розробником (Expires / Max-Age)</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Доступність на сервері</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Тільки на стороні клієнта (не передаються серверу)</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Тільки на стороні клієнта (не передаються серверу)</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Автоматично надсилаються на сервер з кожним HTTP-запитом</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Безпека</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Вразливий до XSS-атак (JS має прямий доступ)</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Вразливий до XSS-атак (JS має прямий доступ)</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Можна захистити прапорцями <code>HttpOnly</code> та <code>Secure</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Для збереження глобальних користувацьких налаштувань, контактів чи стану кошика, які мають зберігатися протягом тривалого часу, найкраще підходить <strong>localStorage</strong>.
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    Для тимчасових токенів сесії чи прапорців входу, які мають бути видалені після завершення сеансу роботи з сайтом, раціонально використовувати <strong>sessionStorage</strong>.
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    Для збереження авторизаційних токенів (JWT) у комерційних застосунках безпечніше використовувати <strong>HTTP-only Cookies</strong>, що повністю нівелює можливість крадіжки токену через зловмисні скрипти.
                   </p>
                 </div>
               </div>

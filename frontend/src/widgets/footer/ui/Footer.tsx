@@ -48,10 +48,31 @@ export const Footer = () => {
               </a>
             </li>
             <li style={{ marginBottom: '8px' }}>
+              <a href="/about" style={{ color: '#b2bec3', textDecoration: 'none', transition: 'color 0.2s' }}
+                 onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
+                 onMouseLeave={(e) => (e.currentTarget.style.color = '#b2bec3')}>
+                Про нас
+              </a>
+            </li>
+            <li style={{ marginBottom: '8px' }}>
               <a href="/cart" style={{ color: '#b2bec3', textDecoration: 'none', transition: 'color 0.2s' }}
                  onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
                  onMouseLeave={(e) => (e.currentTarget.style.color = '#b2bec3')}>
                 Кошик покупця
+              </a>
+            </li>
+            <li style={{ marginBottom: '8px' }}>
+              <a href="/profile" style={{ color: '#b2bec3', textDecoration: 'none', transition: 'color 0.2s' }}
+                 onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
+                 onMouseLeave={(e) => (e.currentTarget.style.color = '#b2bec3')}>
+                Профіль
+              </a>
+            </li>
+            <li style={{ marginBottom: '8px' }}>
+              <a href="/login" style={{ color: '#b2bec3', textDecoration: 'none', transition: 'color 0.2s' }}
+                 onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
+                 onMouseLeave={(e) => (e.currentTarget.style.color = '#b2bec3')}>
+                Увійти
               </a>
             </li>
           </ul>
@@ -86,6 +107,33 @@ export const Footer = () => {
               </a>
             </li>
           </ul>
+        </div>
+
+        {/* Демо-авторизація */}
+        <div>
+          <h3 style={{ color: '#ffffff', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>
+            Демо-дані для входу
+          </h3>
+          <div style={{ fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div>
+              <span style={{ color: '#00b894', fontWeight: 600 }}>Покупець:</span>
+              <div style={{ color: '#dfe6e9', marginTop: '2px' }}>
+                Email: <code style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '2px 4px', borderRadius: '4px', color: '#fff' }}>user@pharmacy.com</code>
+              </div>
+              <div style={{ color: '#dfe6e9' }}>
+                Пароль: <code style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '2px 4px', borderRadius: '4px', color: '#fff' }}>user123</code>
+              </div>
+            </div>
+            <div>
+              <span style={{ color: '#00b894', fontWeight: 600 }}>Адміністратор:</span>
+              <div style={{ color: '#dfe6e9', marginTop: '2px' }}>
+                Email: <code style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '2px 4px', borderRadius: '4px', color: '#fff' }}>admin@pharmacy.com</code>
+              </div>
+              <div style={{ color: '#dfe6e9' }}>
+                Пароль: <code style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '2px 4px', borderRadius: '4px', color: '#fff' }}>admin123</code>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Контакти та інфо */}
