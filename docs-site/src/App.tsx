@@ -697,6 +697,29 @@ export default function App() {
                       Лаб 5
                     </button>
                   </li>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab6' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab6')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab6' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 6
+                    </button>
+                  </li>
                 </ul>
               )}
             </li>
