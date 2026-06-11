@@ -1296,12 +1296,12 @@ npm run dev
                       <td><span className="badge public">Виконано</span></td>
                       <td>
                         <ul>
-                          <li>Головна сторінка: [HomePage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/home/ui/HomePage.tsx)</li>
-                          <li>Каталог: [CatalogPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/catalog/ui/CatalogPage.tsx)</li>
-                          <li>Кошик: [CartPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/cart/ui/CartPage.tsx)</li>
-                          <li>Оформлення: [CheckoutPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx)</li>
-                          <li>Про нас: [AboutPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/about/ui/AboutPage.tsx)</li>
-                          <li>Роутинг: Next.js файлова система в [src/app](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/app)</li>
+                          <li>Головна сторінка: <code>frontend/src/pages-flat/home/ui/HomePage.tsx</code></li>
+                          <li>Каталог: <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code></li>
+                          <li>Кошик: <code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code></li>
+                          <li>Оформлення: <code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code></li>
+                          <li>Про нас: <code>frontend/src/pages-flat/about/ui/AboutPage.tsx</code></li>
+                          <li>Роутинг: Next.js App Router в <code>frontend/src/app/</code></li>
                         </ul>
                       </td>
                     </tr>
@@ -1309,28 +1309,28 @@ npm run dev
                       <td><strong>Компонент MedicineCard</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Картка ліків: назва, ціна, наявність, кнопка додавання</span></td>
                       <td><span className="badge public">Виконано</span></td>
                       <td>
-                        Компонент [MedicineCard.tsx](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx) відображає назву, виробника, ціну, залишок на складі та кнопку додавання.
+                        Компонент <code>frontend/src/entities/medicine/ui/MedicineCard.tsx</code> відображає назву, виробника, ціну, залишок на складі та кнопку додавання.
                       </td>
                     </tr>
                     <tr>
                       <td><strong>Пошук та фільтрація ліків</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Пошук, фільтр за категорією, Debounce 300мс</span></td>
                       <td><span className="badge public">Виконано</span></td>
                       <td>
-                        У [CatalogPage.tsx](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/catalog/ui/CatalogPage.tsx) реалізовано фільтрацію за формами випуску (Radio) та пошуковий рядок з debounce ефектом в 300мс через `useEffect`.
+                        У <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code> реалізовано фільтрацію за формами випуску (Radio) та пошуковий рядок з debounce ефектом в 300мс через <code>useEffect</code>.
                       </td>
                     </tr>
                     <tr>
                       <td><strong>Глобальний стан кошика та localStorage</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Context+useReducer або альтернатива, збереження стану</span></td>
                       <td><span className="badge public">Виконано</span></td>
                       <td>
-                        Замість простішого Context+Reducer використано професійний **Redux Toolkit** у [cartSlice.ts](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/cart/model/cartSlice.ts). Здійснюється автоматичне збереження стану кошика в `localStorage` та відновлення стану на стороні клієнта.
+                        Замість простішого Context+Reducer використано професійний **Redux Toolkit** у <code>frontend/src/entities/cart/model/cartSlice.ts</code>. Здійснюється автоматичне збереження стану кошика в <code>localStorage</code> та відновлення стану на стороні клієнта.
                       </td>
                     </tr>
                     <tr>
                       <td><strong>Форма Checkout та валідація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Збір даних, маска телефону, email валідація</span></td>
                       <td><span className="badge public">Виконано</span></td>
                       <td>
-                        Форма в [CheckoutPage.tsx](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx). Валідація полів ПІБ, email (вбудована валідація AntD) та перевірка регулярним виразом для українських мобільних номерів: `^\+?3?8?(0\d{9})$`.
+                        Форма в <code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code>. Валідація полів ПІБ, email (вбудована валідація AntD) та перевірка регулярним виразом для українських мобільних номерів: <code>^\+?3?8?(0\d{9})$</code>.
                       </td>
                     </tr>
                     <tr>
@@ -1341,7 +1341,7 @@ npm run dev
                         - Спінер завантаження `Spin` при завантаженні.
                         - `Result status="success"` при успішному замовленні із виводом номера замовлення.
                         - Спливаючі сповіщення `message.error` при помилці.
-                        - Списання товару зі складу при замовленні на бекенді в [order.controller.ts](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/backend/src/controllers/order.controller.ts).
+                        - Списання товару зі складу при замовленні на бекенді в <code>backend/src/controllers/order.controller.ts</code>.
                       </td>
                     </tr>
                     <tr>
@@ -1364,10 +1364,10 @@ npm run dev
                   <strong>Реалізація:</strong>
                 </p>
                 <ol style={{ paddingLeft: '1.25rem', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                  <li>У файлі [MedicineCard.tsx:L27](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx#L27) визначається прапорець <code>isOutOfStock = medicine.inStock &lt;= 0</code>.</li>
-                  <li>Якщо товару немає в наявності, картка огортається у `Badge.Ribbon` з текстом **"Немає в наявності"** та червоним кольором (`red`).</li>
-                  <li>Кнопка додавання до кошика отримує властивість <code>{"disabled={isOutOfStock}"}</code> ([MedicineCard.tsx:L159](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx#L159)) та змінює свій текст на **"Немає в наявності"**.</li>
-                  <li>Додатково підтримується перевірка `isMaxStockReached`, яка блокує кнопку та виводить помаранчевий бейдж **"Макс. у кошику"**, якщо користувач намагається додати більше одиниць товару, ніж є в наявності на складі.</li>
+                  <li>У файлі <code>frontend/src/entities/medicine/ui/MedicineCard.tsx:27</code> визначається прапорець <code>isOutOfStock = medicine.inStock &lt;= 0</code>.</li>
+                  <li>Якщо товару немає в наявності, картка огортається в <code>Badge.Ribbon</code> з текстом <strong>"Немає в наявності"</strong> та червоним кольором (<code>red</code>).</li>
+                  <li>Кнопка додавання до кошика отримує властивість <code>{"disabled={isOutOfStock}"}</code> (<code>frontend/src/entities/medicine/ui/MedicineCard.tsx:159</code>) та змінює свій текст на <strong>"Немає в наявності"</strong>.</li>
+                  <li>Додатково підтримується перевірка <code>isMaxStockReached</code>, яка блокує кнопку та виводить помаранчевий бейдж <strong>"Макс. у кошику"</strong>, якщо користувач намагається додати більше одиниць товару, ніж є в наявності на складі.</li>
                 </ol>
               </div>
 
