@@ -174,6 +174,14 @@ const projectTree: FileTreeNode = {
           name: 'theme',
           type: 'folder',
           children: [{ name: 'model', type: 'folder', children: [{ name: 'themeSlice.ts', type: 'file' }] }]
+        },
+        {
+          name: 'user',
+          type: 'folder',
+          children: [
+            { name: 'model', type: 'folder', children: [{ name: 'userSlice.ts', type: 'file' }] },
+            { name: 'api', type: 'folder', children: [{ name: 'userApi.ts', type: 'file' }] }
+          ]
         }
       ]
     },
@@ -234,7 +242,7 @@ const getAllFolderPaths = (node: FileTreeNode, currentPath: string = 'src'): str
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
-  const [activeLabTab, setActiveLabTab] = useState<string>('lab6');
+  const [activeLabTab, setActiveLabTab] = useState<string>('lab7');
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
     'src': true
@@ -566,7 +574,7 @@ export default function App() {
                 className={`nav-button ${activeTab === 'labs' ? 'active' : ''}`}
                 onClick={() => {
                   setActiveTab('labs');
-                  setActiveLabTab('lab1');
+                  setActiveLabTab('lab7');
                 }}
               >
                 <FileCode size={18} />
@@ -718,6 +726,29 @@ export default function App() {
                         backgroundColor: activeLabTab === 'lab6' ? 'var(--primary)' : 'var(--text-muted)'
                       }} />
                       Лаб 6
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab7' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab7')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab7' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 7
                     </button>
                   </li>
                 </ul>
@@ -2280,6 +2311,133 @@ npm run dev
                   <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
                     Впровадження кастомних компонентів Modal та Toast, а також переробка Header під адаптивне Drawer-меню значно покращили користувацький досвід (UX). Додаток отримав більш професійний вигляд, надійну систему зворотного зв'язку на дії користувача та повністю підтримує роботу на пристроях з будь-якими екранами, зберігаючи високі стандарти доступності.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeLabTab === 'lab7' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--primary)', borderLeft: '4px solid var(--primary)' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №7. Аутентифікація та авторизація у React-застосунку</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> сформувати у студентів практичні навички реалізації аутентифікації та авторизації у вебдодатках; навчитися створювати реєстрацію та вхід користувачів, реалізовувати вихід із системи та захищати маршрути у React/Next.js Router.
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 7)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Реєстрація користувачів</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Форма реєстрації, валідація, збереження в API</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Сторінка та форма реєстрації: <code>frontend/src/pages-flat/register/ui/RegisterPage.tsx</code></li>
+                            <li>Клієнтська валідація (правильність email, довжина пароля, порівняння паролів) через форму Ant Design.</li>
+                            <li>Збереження через мутацію <code>useRegisterMutation</code> у <code>frontend/src/entities/user/api/userApi.ts</code>.</li>
+                            <li>Бекенд валідація та збереження в DB: <code>backend/src/routes/auth.routes.ts</code> та <code>backend/src/controllers/auth.controller.ts</code>.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Вхід та вихід користувача</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Перевірка пошти/паролю, localStorage, logout</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Форма входу з валідацією полів: <code>frontend/src/pages-flat/login/ui/LoginPage.tsx</code>.</li>
+                            <li>Використання <code>next-auth</code> провайдера для авторизації та перевірки токена.</li>
+                            <li>Збереження токена у <code>localStorage</code> та стану в Redux: <code>frontend/src/entities/user/model/userSlice.ts</code> (екшн <code>setCredentials</code>).</li>
+                            <li>Очищення даних при виході: екшн <code>logout</code> у <code>userSlice.ts</code>, який видаляє ключі з <code>localStorage</code> та скидає стан.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Захищені маршрути (Private Routes)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Блокування доступу, перенаправлення на вхід</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Захист маршрутів реалізовано через проміжне ПЗ Next.js у файлі <code>frontend/src/middleware.ts</code> за допомогою <code>next-auth/middleware</code>.</li>
+                            <li>Маршрут оформлення замовлення (<code>/checkout</code>) повністю захищений — при спробі неавторизованого доступу відбувається редирект на <code>/login</code> з параметром <code>callbackUrl</code>.</li>
+                            <li>Особистий кабінет (<code>/profile</code>) динамічно реагує на стан авторизації — ховає чутливий вміст (історію замовлень) та показує гостьовий режим з кнопками входу.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Відмінності між аутентифікацією та авторизацією у вебзастосунках</h4>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Характеристика</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Аутентифікація (Authentication)</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Авторизація (Authorization)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Головне питання</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}><em>«Хто ви такий?»</em> (перевірка особи користувача).</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}><em>«Що вам дозволено робити?»</em> (перевірка права доступу).</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Основний процес</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Введення пароля, SMS, біометрії або OAuth вхід.</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Перевірка ролей (admin, user), дозволів (read, write).</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Результат успіху</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Створення сесії або видача токена доступу (JWT Access Token).</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Надання доступу до певного ресурсу, сторінки чи API роуту.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Відновлення сесії користувача при перезавантаженні сторінки</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Для відновлення стану входу використовується екшн <code>initializeAuth</code> у Redux зрізі <code>userSlice.ts</code>.
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    При завантаженні сторінки провайдер <code>StoreProvider.tsx</code> монтується на клієнті та запускає ефект ініціалізації:
+                    <pre style={{ padding: '10px', background: 'var(--bg-secondary)', borderRadius: '6px', fontSize: '0.8rem', marginTop: '5px' }}>
+{`useEffect(() => {
+  store.dispatch(initializeCart());
+  store.dispatch(initializeAuth());
+}, []);`}
+                    </pre>
+                    Редуктор зчитує <code>token</code> та <code>user</code> з <code>localStorage</code>, парсить їх та встановлює стан <code>isAuthenticated = true</code> без необхідності повторного запиту логіна.
+                  </p>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Повідомлення про помилки при неправильному введенні даних</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Помилки входу обробляються у формі входу <code>LoginPage.tsx</code> та відображаються користувачеві у вигляді спливаючих повідомлень (Toast) за допомогою компонента <code>App.useApp()</code> від Ant Design:
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    Якщо користувач вводить неправильний пароль або неіснуючий e-mail, NextAuth повертає об'єкт помилки, який виводиться через <code>message.error(res.error)</code>. На бекенді діє обмеження (обробляється контролером <code>auth.controller.ts</code>), що повертає статус <code>400 Bad Request</code> з відповідним текстовим описом проблеми.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Під час лабораторної роботи було створено надійну систему керування сесіями користувачів. Використання JWT токенів дозволило безпечно передавати інформацію про користувача між клієнтом та API бекенду. Роути додатку захищено на рівні Middleware Next.js, а сесії автоматично відновлюються з локального сховища при перезавантаженні сторінки, що забезпечує безшовний та безпечний UX.
                   </p>
                 </div>
               </div>
