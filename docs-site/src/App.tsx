@@ -842,7 +842,7 @@ export default function App() {
             {/* Screenshots Gallery */}
             <h2 style={{ marginTop: '3.5rem', marginBottom: '1rem' }}>Скріншоти інтерфейсу</h2>
             <p className="card-text">
-              Візуальна демонстрація роботи сторінок нашого додатку Next.js:
+              Візуальна демонстрація роботи сторінок додатку Next.js:
             </p>
 
             <div className="screenshot-grid">
@@ -1107,7 +1107,7 @@ npm run dev
 
             <div className="card" style={{ marginBottom: '2rem', borderColor: 'rgba(59, 130, 246, 0.2)', background: 'rgba(59, 130, 246, 0.02)' }}>
               <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#3b82f6' }}>
-                <HelpCircle /> Що це за проєкт і що ми запускаємо?
+                <HelpCircle /> Що це за проєкт і що саме запускається?
               </h3>
               <p className="card-text" style={{ marginTop: '0.5rem' }}>
                 Цей проєкт є повноцінним інтернет-магазином ліків (Аптека). Він складається з двох основних частин:
@@ -1241,7 +1241,7 @@ npm run dev
               <span className="header-tag" style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}>Звіти з навчання</span>
               <h1 className="header-title">Лабораторні роботи</h1>
               <p className="header-subtitle">
-                Аналіз виконання лабораторних робіт та демонстрація реалізованого функціоналу в нашому проєкті Аптека.
+                Аналіз виконання лабораторних робіт та демонстрація реалізованого функціоналу в проєкті Аптека.
               </p>
             </div>
 
@@ -1376,7 +1376,7 @@ npm run dev
               <div className="card" style={{ marginBottom: '1.5rem' }}>
                 <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Патерни керування станом у React: Context/Reducer vs. Zustand/Redux</h4>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                  Для невеликого інтернет-магазину ліків ми обрали **Redux Toolkit**. Хоча **Context + useReducer** є вбудованим механізмом, він страждає від проблеми *непотрібного рендерингу (unnecessary re-renders)*: при зміні будь-какого поля в кошику, всі компоненти, що використовують Context, перемальовуються, якщо не розбивати контексти на частини.
+                  Для невеликого інтернет-магазину ліків було обрано **Redux Toolkit**. Хоча **Context + useReducer** є вбудованим механізмом, він страждає від проблеми *непотрібного рендерингу (unnecessary re-renders)*: при зміні будь-какого поля в кошику, всі компоненти, що використовують Context, перемальовуються, якщо не розбивати контексти на частини.
                 </p>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
                   **Redux Toolkit** вирішує це завдяки селекторам (`useSelector`), які автоматично оптимізують оновлення UI. Окрім того, Redux Toolkit надає потужні засоби розробника (Redux DevTools), що робить процес відлагодження значно простішим, та інтегрується з RTK Query для кешування мережевих запитів, що зменшує навантаження на API.
