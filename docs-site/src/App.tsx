@@ -212,6 +212,7 @@ const getAllFolderPaths = (node: FileTreeNode, currentPath: string = 'src'): str
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const [activeLabTab, setActiveLabTab] = useState<string>('lab1');
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
     'src': true
@@ -541,11 +542,72 @@ export default function App() {
             <li className="nav-item">
               <button
                 className={`nav-button ${activeTab === 'labs' ? 'active' : ''}`}
-                onClick={() => setActiveTab('labs')}
+                onClick={() => {
+                  setActiveTab('labs');
+                  setActiveLabTab('lab1');
+                }}
               >
                 <FileCode size={18} />
                 Лабораторні роботи
               </button>
+              {activeTab === 'labs' && (
+                <ul className="submenu-links" style={{
+                  listStyle: 'none',
+                  paddingLeft: '1.75rem',
+                  marginTop: '0.25rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.25rem',
+                  width: '100%'
+                }}>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab1' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab1')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab1' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 1
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab2' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab2')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab2' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 2
+                    </button>
+                  </li>
+                </ul>
+              )}
             </li>
           </ul>
         </nav>
@@ -1245,154 +1307,183 @@ npm run dev
               </p>
             </div>
 
-            <div style={{ display: 'flex', gap: '16px', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
               <button 
-                onClick={() => {}} 
+                onClick={() => setActiveLabTab('lab1')} 
                 style={{
                   padding: '8px 16px',
                   borderRadius: '8px',
-                  border: '1px solid var(--primary)',
-                  background: 'var(--primary-light)',
-                  color: 'var(--primary)',
+                  border: activeLabTab === 'lab1' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab1' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab1' ? 'var(--primary)' : 'var(--text-secondary)',
                   fontWeight: 600,
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
                 }}
               >
                 Лабораторна робота №1
               </button>
+              <button 
+                onClick={() => setActiveLabTab('lab2')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab2' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab2' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab2' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №2
+              </button>
             </div>
 
-            <div>
-              <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--primary)', borderLeft: '4px solid var(--primary)' }}>
-                <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №1. Основи React. Створення веб-додатку для замовлення ліків</h2>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                  <strong>Мета роботи:</strong> формування навичок розробки односторінкового веб-додатку (SPA) на React: компоненти та пропси, стан і контекст, маршрутизація, робота з формами та валідацією, взаємодія з API, управління «кошиком» і збереження стану.
-                </p>
-              </div>
+            {activeLabTab === 'lab1' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--primary)', borderLeft: '4px solid var(--primary)' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №1. Основи React. Створення веб-додатку для замовлення ліків</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> формування навичок розробки односторінкового веб-додатку (SPA) на React: компоненти та пропси, стан і контекст, маршрутизація, робота з формами та валідацією, взаємодія з API, управління «кошиком» і збереження стану.
+                  </p>
+                </div>
 
-              <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
-              <div className="table-container" style={{ marginBottom: '3rem' }}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th style={{ width: '40%' }}>Завдання (Лабораторна 1)</th>
-                      <th style={{ width: '15%' }}>Статус</th>
-                      <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Ініціалізація та структура</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Vite/CRA, структура /src, FSD архітектура</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        <ul>
-                          <li>Використано <strong>Next.js (App Router)</strong> та TypeScript.</li>
-                          <li>Структура розбита по шарах **Feature-Sliced Design (FSD)**: `app`, `pages-flat`, `widgets`, `features`, `entities`, `shared`.</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Базові сторінки та маршрутизація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Home, Catalog, Cart, Checkout, About + роутинг</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        <ul>
-                          <li>Головна сторінка: <code>frontend/src/pages-flat/home/ui/HomePage.tsx</code></li>
-                          <li>Каталог: <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code></li>
-                          <li>Кошик: <code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code></li>
-                          <li>Оформлення: <code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code></li>
-                          <li>Про нас: <code>frontend/src/pages-flat/about/ui/AboutPage.tsx</code></li>
-                          <li>Роутинг: Next.js App Router в <code>frontend/src/app/</code></li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Компонент MedicineCard</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Картка ліків: назва, ціна, наявність, кнопка додавання</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        Компонент <code>frontend/src/entities/medicine/ui/MedicineCard.tsx</code> відображає назву, виробника, ціну, залишок на складі та кнопку додавання.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Пошук та фільтрація ліків</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Пошук, фільтр за категорією, Debounce 300мс</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        У <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code> реалізовано фільтрацію за формами випуску (Radio) та пошуковий рядок з debounce ефектом в 300мс через <code>useEffect</code>.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Глобальний стан кошика та localStorage</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Context+useReducer або альтернатива, збереження стану</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        Замість простішого Context+Reducer використано професійний **Redux Toolkit** у <code>frontend/src/entities/cart/model/cartSlice.ts</code>. Здійснюється автоматичне збереження стану кошика в <code>localStorage</code> та відновлення стану на стороні клієнта.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Форма Checkout та валідація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Збір даних, маска телефону, email валідація</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        Форма в <code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code>. Валідація полів ПІБ, email (вбудована валідація AntD) та перевірка регулярним виразом для українських мобільних номерів: <code>^\+?3?8?(0\d{9})$</code>.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Взаємодія з API та індикатори станів</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Запити GET/POST, loading, error, success індикатори</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        Реалізовано через **RTK Query** (`useGetMedicinesQuery`, `useCreateOrderMutation`).
-                        - Спінер завантаження `Spin` при завантаженні.
-                        - `Result status="success"` при успішному замовленні із виводом номера замовлення.
-                        - Спливаючі сповіщення `message.error` при помилці.
-                        - Списання товару зі складу при замовленні на бекенді в <code>backend/src/controllers/order.controller.ts</code>.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>Доступність (Accessibility)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>ARIA-атрибути, керування фокусом</span></td>
-                      <td><span className="badge public">Виконано</span></td>
-                      <td>
-                        Компоненти Ant Design генерують повністю доступну розмітку з підтримкою ARIA-атрибутів та коректним фокусуванням елементів форм при навігації клавіатурою.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 1)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Ініціалізація та структура</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Vite/CRA, структура /src, FSD архітектура</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Використано <strong>Next.js (App Router)</strong> та TypeScript.</li>
+                            <li>Структура розбита по шарах **Feature-Sliced Design (FSD)**: `app`, `pages-flat`, `widgets`, `features`, `entities`, `shared`.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Базові сторінки та маршрутизація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Home, Catalog, Cart, Checkout, About + роутинг</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Головна сторінка: <code>frontend/src/pages-flat/home/ui/HomePage.tsx</code></li>
+                            <li>Каталог: <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code></li>
+                            <li>Кошик: <code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code></li>
+                            <li>Оформлення: <code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code></li>
+                            <li>Про нас: <code>frontend/src/pages-flat/about/ui/AboutPage.tsx</code></li>
+                            <li>Роутинг: Next.js App Router в <code>frontend/src/app/</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Компонент MedicineCard</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Картка ліків: назва, ціна, наявність, кнопка додавання</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Компонент <code>frontend/src/entities/medicine/ui/MedicineCard.tsx</code> відображає назву, виробника, ціну, залишок на складі та кнопку додавання.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Пошук та фільтрація ліків</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Пошук, фільтр за категорією, Debounce 300мс</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          У <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code> реалізовано фільтрацію за формами випуску (Radio) та пошуковий рядок з debounce ефектом в 300мс через <code>useEffect</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Глобальний стан кошика та localStorage</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Context+useReducer або альтернатива, збереження стану</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Замість простішого Context+Reducer використано професійний **Redux Toolkit** у <code>frontend/src/entities/cart/model/cartSlice.ts</code>. Здійснюється автоматичне збереження стану кошика в <code>localStorage</code> та відновлення стану на стороні клієнта.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Форма Checkout та валідація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Збір даних, маска телефону, email валідація</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Форма в <code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code>. Валідація полів ПІБ, email (вбудована валідація AntD) та перевірка регулярним виразом для українських мобільних номерів: <code>^\+?3?8?(0\d{9})$</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Взаємодія з API та індикатори станів</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Запити GET/POST, loading, error, success індикатори</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Реалізовано через **RTK Query** (`useGetMedicinesQuery`, `useCreateOrderMutation`).
+                          - Спінер завантаження `Spin` при завантаженні.
+                          - `Result status="success"` при успішному замовленні із виводом номера замовлення.
+                          - Спливаючі сповіщення `message.error` при помилці.
+                          - Списання товару зі складу при замовленні на бекенді в <code>backend/src/controllers/order.controller.ts</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Доступність (Accessibility)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>ARIA-атрибути, керування фокусом</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Компоненти Ant Design генерують повністю доступну розмітку з підтримкою ARIA-атрибутів та коректним фокусуванням елементів форм при навігації клавіатурою.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-              <div className="card" style={{ marginBottom: '2.5rem', background: 'rgba(0, 184, 148, 0.05)', borderColor: 'rgba(0, 184, 148, 0.2)' }}>
-                <h3 style={{ color: '#00b894', marginTop: 0 }}>🎁 Індивідуальний варіант (закінчується на 8-9)</h3>
-                <p>
-                  <strong>Завдання:</strong> Реалізувати режим «тільки перегляд» при відсутності на складі (disabled кнопка, бейдж «Немає»).
-                </p>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                  <strong>Реалізація:</strong>
-                </p>
-                <ol style={{ paddingLeft: '1.25rem', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                  <li>У файлі <code>frontend/src/entities/medicine/ui/MedicineCard.tsx:27</code> визначається прапорець <code>isOutOfStock = medicine.inStock &lt;= 0</code>.</li>
-                  <li>Якщо товару немає в наявності, картка огортається в <code>Badge.Ribbon</code> з текстом <strong>"Немає в наявності"</strong> та червоним кольором (<code>red</code>).</li>
-                  <li>Кнопка додавання до кошика отримує властивість <code>{"disabled={isOutOfStock}"}</code> (<code>frontend/src/entities/medicine/ui/MedicineCard.tsx:159</code>) та змінює свій текст на <strong>"Немає в наявності"</strong>.</li>
-                  <li>Додатково підтримується перевірка <code>isMaxStockReached</code>, яка блокує кнопку та виводить помаранчевий бейдж <strong>"Макс. у кошику"</strong>, якщо користувач намагається додати більше одиниць товару, ніж є в наявності на складі.</li>
-                </ol>
-              </div>
+                <div className="card" style={{ marginBottom: '2.5rem', background: 'rgba(0, 184, 148, 0.05)', borderColor: 'rgba(0, 184, 148, 0.2)' }}>
+                  <h3 style={{ color: '#00b894', marginTop: 0 }}>🎁 Індивідуальний варіант (закінчується на 8-9)</h3>
+                  <p>
+                    <strong>Завдання:</strong> Реалізувати режим «тільки перегляд» при відсутності на складі (disabled кнопка, бейдж «Немає»).
+                  </p>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Реалізація:</strong>
+                  </p>
+                  <ol style={{ paddingLeft: '1.25rem', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <li>У файлі <code>frontend/src/entities/medicine/ui/MedicineCard.tsx:27</code> визначається прапорець <code>isOutOfStock = medicine.inStock &lt;= 0</code>.</li>
+                    <li>Якщо товару немає в наявності, картка огортається в <code>Badge.Ribbon</code> з текстом <strong>"Немає в наявності"</strong> та червоним кольором (<code>red</code>).</li>
+                    <li>Кнопка додавання до кошика отримує властивість <code>{"disabled={isOutOfStock}"}</code> (<code>frontend/src/entities/medicine/ui/MedicineCard.tsx:159</code>) та змінює свій текст на <strong>"Немає в наявності"</strong>.</li>
+                    <li>Додатково підтримується перевірка <code>isMaxStockReached</code>, яка блокує кнопку та виводить помаранчевий бейдж <strong>"Макс. у кошику"</strong>, якщо користувач намагається додати більше одиниць товару, ніж є в наявності на складі.</li>
+                  </ol>
+                </div>
 
-              <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
-              
-              <div className="card" style={{ marginBottom: '1.5rem' }}>
-                <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Патерни керування станом у React: Context/Reducer vs. Zustand/Redux</h4>
-                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                  Для невеликого інтернет-магазину ліків було обрано **Redux Toolkit**. Хоча **Context + useReducer** є вбудованим механізмом, він страждає від проблеми *непотрібного рендерингу (unnecessary re-renders)*: при зміні будь-какого поля в кошику, всі компоненти, що використовують Context, перемальовуються, якщо не розбивати контексти на частини.
-                </p>
-                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                  **Redux Toolkit** вирішує це завдяки селекторам (`useSelector`), які автоматично оптимізують оновлення UI. Окрім того, Redux Toolkit надає потужні засоби розробника (Redux DevTools), що робить процес відлагодження значно простішим, та інтегрується з RTK Query для кешування мережевих запитів, що зменшує навантаження на API.
-                </p>
-              </div>
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+                
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Патерни керування станом у React: Context/Reducer vs. Zustand/Redux</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                    Для невеликого інтернет-магазину ліків було обрано **Redux Toolkit**. Хоча **Context + useReducer** є вбудованим механізмом, він страждає від проблеми *непотрібного рендерингу (unnecessary re-renders)*: при зміні будь-какого поля в кошику, всі компоненти, що використовують Context, перемальовуються, якщо не розбивати контексти на частини.
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                    **Redux Toolkit** вирішує це завдяки селекторам (`useSelector`), які автоматично оновлення UI. Окрім того, Redux Toolkit надає потужні засоби розробника (Redux DevTools), що робить процес відлагодження значно простішим, та інтегрується з RTK Query для кешування мережевих запитів, що зменшує навантаження на API.
+                  </p>
+                </div>
 
-              <div className="card" style={{ marginBottom: '1.5rem' }}>
-                <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Вимоги до доступності форми замовлення (WCAG 2.1 AA)</h4>
-                <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6' }}>
-                  <li><strong>Контрастність (Contrast):</strong> Коефіцієнт контрасту між текстом та фоном у полях вводу становить більше 4.5:1.</li>
-                  <li><strong>Мітки полів (Labels):</strong> Кожне текстове поле має чітку мітку (<code>&lt;label&gt;</code>), пов'язану з <code>input</code> через ID. Це дозволяє екранним зчитувачам (Screen Readers) правильно оголошувати призначення полів.</li>
-                  <li><strong>Повідомлення про помилки (Error messages):</strong> Помилки валідації виникають динамічно, підсвічуються червоним та мають асоційовані ARIA-повідомлення, що попереджають користувача про невірний формат введення.</li>
-                  <li><strong>Навігація з клавіатури (Keyboard Navigation):</strong> Всі поля форми та кнопки доступні для фокусування за допомогою клавіші `Tab`, а підтвердження форми можливе натисканням клавіші `Enter`.</li>
-                </ul>
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Вимоги до доступності форми замовлення (WCAG 2.1 AA)</h4>
+                  <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6' }}>
+                    <li><strong>Контрастність (Contrast):</strong> Коефіцієнт контрасту між текстом та фоном у полях вводу становить більше 4.5:1.</li>
+                    <li><strong>Мітки полів (Labels):</strong> Кожне текстове поле має чітку мітку (<code>&lt;label&gt;</code>), пов'язану з <code>input</code> через ID. Це дозволяє екранним зчитувачам (Screen Readers) правильно оголошувати призначення полів.</li>
+                    <li><strong>Повідомлення про помилки (Error messages):</strong> Помилки валідації виникають динамічно, підсвічуються червоним та мають асоційовані ARIA-повідомлення, що попереджають користувача про невірний формат введення.</li>
+                    <li><strong>Навігація з клавіатури (Keyboard Navigation):</strong> Всі поля форми та кнопки доступні для фокусування за допомогою клавіші `Tab`, а підтвердження форми можливе натисканням клавіші `Enter`.</li>
+                  </ul>
+                </div>
               </div>
-            </div>
+            )}
+
+            {activeLabTab === 'lab2' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--accent-purple)', borderLeft: '4px solid var(--accent-purple)' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №2</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Статус:</strong> У процесі розробки / Очікує на завдання від викладача.
+                  </p>
+                </div>
+              </div>
+            )}
           </section>
         )}
       </main>
