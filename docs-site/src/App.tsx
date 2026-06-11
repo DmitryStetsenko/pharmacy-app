@@ -1365,7 +1365,7 @@ npm run dev
                   <strong>Реалізація:</strong>
                 </p>
                 <ol style={{ paddingLeft: '1.25rem', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                  <li>У файлі [MedicineCard.tsx:L27](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx#L27) визначається прапорець `isOutOfStock = medicine.inStock <= 0`.</li>
+                  <li>У файлі [MedicineCard.tsx:L27](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx#L27) визначається прапорець <code>isOutOfStock = medicine.inStock &lt;= 0</code>.</li>
                   <li>Якщо товару немає в наявності, картка огортається у `Badge.Ribbon` з текстом **"Немає в наявності"** та червоним кольором (`red`).</li>
                   <li>Кнопка додавання до кошика отримує властивість `disabled={isOutOfStock}` ([MedicineCard.tsx:L159](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx#L159)) та змінює свій текст на **"Немає в наявності"**.</li>
                   <li>Додатково підтримується перевірка `isMaxStockReached`, яка блокує кнопку та виводить помаранчевий бейдж **"Макс. у кошику"**, якщо користувач намагається додати більше одиниць товару, ніж є в наявності на складі.</li>
