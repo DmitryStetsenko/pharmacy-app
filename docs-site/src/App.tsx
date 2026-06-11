@@ -15,10 +15,11 @@ import {
   FolderOpen,
   CheckCircle2,
   HelpCircle,
-  Container
+  Container,
+  BookOpen
 } from 'lucide-react';
 
-type Tab = 'overview' | 'user-guide' | 'frontend' | 'backend' | 'database' | 'deployment';
+type Tab = 'overview' | 'user-guide' | 'frontend' | 'backend' | 'database' | 'deployment' | 'labs';
 
 interface FsdLayer {
   name: string;
@@ -536,6 +537,15 @@ export default function App() {
               >
                 <Terminal size={18} />
                 Розгортання
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-button ${activeTab === 'labs' ? 'active' : ''}`}
+                onClick={() => setActiveTab('labs')}
+              >
+                <BookOpen size={18} />
+                Лабораторні роботи
               </button>
             </li>
           </ul>
@@ -1222,6 +1232,167 @@ npm run dev
                 <li>Перейдіть у вікно консолі, де працює запуск, і натисніть клавіші <strong>Ctrl + C</strong> на клавіатурі.</li>
                 <li>Або відкрийте програму <strong>Docker Desktop</strong>, перейдіть у вкладку <strong>Containers</strong> та натисніть на іконку контейнера з назвою <code>pharmacy-app</code> кнопкою Stop (або видаліть контейнер).</li>
               </ol>
+            </div>
+          </section>
+        )}
+
+        {activeTab === 'labs' && (
+          <section>
+            <div className="header-section">
+              <span className="header-tag" style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}>Звіти з навчання</span>
+              <h1 className="header-title">Лабораторні роботи</h1>
+              <p className="header-subtitle">
+                Аналіз виконання лабораторних робіт та демонстрація реалізованого функціоналу в нашому проєкті Аптека.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
+              <button 
+                onClick={() => {}} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--primary)',
+                  background: 'var(--primary-light)',
+                  color: 'var(--primary)',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                Лабораторна робота №1
+              </button>
+            </div>
+
+            <div>
+              <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--primary)', borderLeft: '4px solid var(--primary)' }}>
+                <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №1. Основи React. Створення веб-додатку для замовлення ліків</h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                  <strong>Мета роботи:</strong> формування навичок розробки односторінкового веб-додатку (SPA) на React: компоненти та пропси, стан і контекст, маршрутизація, робота з формами та валідацією, взаємодія з API, управління «кошиком» і збереження стану.
+                </p>
+              </div>
+
+              <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+              <div className="table-container" style={{ marginBottom: '3rem' }}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th style={{ width: '40%' }}>Завдання (Лабораторна 1)</th>
+                      <th style={{ width: '15%' }}>Статус</th>
+                      <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Ініціалізація та структура</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Vite/CRA, структура /src, FSD архітектура</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        <ul>
+                          <li>Використано <strong>Next.js (App Router)</strong> & TypeScript.</li>
+                          <li>Структура розбита по шарах **Feature-Sliced Design (FSD)**: `app`, `pages-flat`, `widgets`, `features`, `entities`, `shared`.</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Базові сторінки та маршрутизація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Home, Catalog, Cart, Checkout, About + роутинг</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        <ul>
+                          <li>Головна сторінка: [HomePage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/home/ui/HomePage.tsx)</li>
+                          <li>Каталог: [CatalogPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/catalog/ui/CatalogPage.tsx)</li>
+                          <li>Кошик: [CartPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/cart/ui/CartPage.tsx)</li>
+                          <li>Оформлення: [CheckoutPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx)</li>
+                          <li>Про нас: [AboutPage](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/about/ui/AboutPage.tsx)</li>
+                          <li>Роутинг: Next.js файлова система в [src/app](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/app)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Компонент MedicineCard</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Картка ліків: назва, ціна, наявність, кнопка додавання</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        Компонент [MedicineCard.tsx](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx) відображає назву, виробника, ціну, залишок на складі та кнопку додавання.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Пошук та фільтрація ліків</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Пошук, фільтр за категорією, Debounce 300мс</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        У [CatalogPage.tsx](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/catalog/ui/CatalogPage.tsx) реалізовано фільтрацію за формами випуску (Radio) та пошуковий рядок з debounce ефектом в 300мс через `useEffect`.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Глобальний стан кошика та localStorage</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Context+useReducer або альтернатива, збереження стану</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        Замість простішого Context+Reducer використано професійний **Redux Toolkit** у [cartSlice.ts](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/cart/model/cartSlice.ts). Здійснюється автоматичне збереження стану кошика в `localStorage` та відновлення стану на стороні клієнта.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Форма Checkout та валідація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Збір даних, маска телефону, email валідація</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        Форма в [CheckoutPage.tsx](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx). Валідація полів ПІБ, email (вбудована валідація AntD) та перевірка регулярним виразом для українських мобільних номерів: `^\+?3?8?(0\d{9})$`.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Взаємодія з API та індикатори станів</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Запити GET/POST, loading, error, success індикатори</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        Реалізовано через **RTK Query** (`useGetMedicinesQuery`, `useCreateOrderMutation`).
+                        - Спінер завантаження `Spin` при завантаженні.
+                        - `Result status="success"` при успішному замовленні із виводом номера замовлення.
+                        - Спливаючі сповіщення `message.error` при помилці.
+                        - Списання товару зі складу при замовленні на бекенді в [order.controller.ts](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/backend/src/controllers/order.controller.ts).
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Доступність (Accessibility)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>ARIA-атрибути, керування фокусом</span></td>
+                      <td><span className="badge public">Виконано</span></td>
+                      <td>
+                        Компоненти Ant Design генерують повністю доступну розмітку з підтримкою ARIA-атрибутів та коректним фокусуванням елементів форм при навігації клавіатурою.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="card" style={{ marginBottom: '2.5rem', background: 'rgba(0, 184, 148, 0.05)', borderColor: 'rgba(0, 184, 148, 0.2)' }}>
+                <h3 style={{ color: '#00b894', marginTop: 0 }}>🎁 Індивідуальний варіант (закінчується на 8-9)</h3>
+                <p>
+                  <strong>Завдання:</strong> Реалізувати режим «тільки перегляд» при відсутності на складі (disabled кнопка, бейдж «Немає»).
+                </p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                  <strong>Реалізація:</strong>
+                </p>
+                <ol style={{ paddingLeft: '1.25rem', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                  <li>У файлі [MedicineCard.tsx:L27](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx#L27) визначається прапорець `isOutOfStock = medicine.inStock <= 0`.</li>
+                  <li>Якщо товару немає в наявності, картка огортається у `Badge.Ribbon` з текстом **"Немає в наявності"** та червоним кольором (`red`).</li>
+                  <li>Кнопка додавання до кошика отримує властивість `disabled={isOutOfStock}` ([MedicineCard.tsx:L159](file:///d:/PROJECTS/1-course-univer/web/pharmacy-app/frontend/src/entities/medicine/ui/MedicineCard.tsx#L159)) та змінює свій текст на **"Немає в наявності"**.</li>
+                  <li>Додатково підтримується перевірка `isMaxStockReached`, яка блокує кнопку та виводить помаранчевий бейдж **"Макс. у кошику"**, якщо користувач намагається додати більше одиниць товару, ніж є в наявності на складі.</li>
+                </ol>
+              </div>
+
+              <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+              
+              <div className="card" style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Патерни керування станом у React: Context/Reducer vs. Zustand/Redux</h4>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  Для невеликого інтернет-магазину ліків ми обрали **Redux Toolkit**. Хоча **Context + useReducer** є вбудованим механізмом, він страждає від проблеми *непотрібного рендерингу (unnecessary re-renders)*: при зміні будь-какого поля в кошику, всі компоненти, що використовують Context, перемальовуються, якщо не розбивати контексти на частини.
+                </p>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  **Redux Toolkit** вирішує це завдяки селекторам (`useSelector`), які автоматично оптимізують оновлення UI. Окрім того, Redux Toolkit надає потужні засоби розробника (Redux DevTools), що робить процес відлагодження значно простішим, та інтегрується з RTK Query для кешування мережевих запитів, що зменшує навантаження на API.
+                </p>
+              </div>
+
+              <div className="card" style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Вимоги до доступності форми замовлення (WCAG 2.1 AA)</h4>
+                <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6' }}>
+                  <li><strong>Контрастність (Contrast):</strong> Коефіцієнт контрасту між текстом та фоном у полях вводу становить більше 4.5:1.</li>
+                  <li><strong>Мітки полів (Labels):</strong> Кожне текстове поле має чітку мітку (`<label>`), пов'язану з `input` через ID. Це дозволяє екранним зчитувачам (Screen Readers) правильно оголошувати призначення полів.</li>
+                  <li><strong>Повідомлення про помилки (Error messages):</strong> Помилки валідації виникають динамічно, підсвічуються червоним та мають асоційовані ARIA-повідомлення, що попереджають користувача про невірний формат введення.</li>
+                  <li><strong>Навігація з клавіатури (Keyboard Navigation):</strong> Всі поля форми та кнопки доступні для фокусування за допомогою клавіші `Tab`, а підтвердження форми можливе натисканням клавіші `Enter`.</li>
+                </ul>
+              </div>
             </div>
           </section>
         )}
