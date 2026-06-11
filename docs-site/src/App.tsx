@@ -1477,9 +1477,106 @@ npm run dev
             {activeLabTab === 'lab2' && (
               <div>
                 <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--accent-purple)', borderLeft: '4px solid var(--accent-purple)' }}>
-                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №2</h2>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №2. Робота з HTTP-запитами та формами у вебдодатку</h2>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                    <strong>Статус:</strong> У процесі розробки / Очікує на завдання від викладача.
+                    <strong>Мета роботи:</strong> формування практичних навичок роботи з HTTP-запитами (GET, POST, PUT, DELETE) у React-застосунку, а також створення та обробки форм із клієнтською валідацією і передачею даних на сервер.
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 2)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Вибір інструменту запитів</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Axios або Fetch API</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Для запитів до API було обрано **Redux Toolkit Query (RTK Query)**, який використовує вбудований <code>fetch API</code> під капотом.
+                          Конфігурація знаходиться в <code>frontend/src/shared/api/baseApi.ts</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Отримання каталогу ліків (GET /medicines)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Отримання списку ліків з API</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Метод <code>getMedicines</code> визначений у <code>frontend/src/entities/medicine/api/medicineApi.ts</code> та використовується через хук <code>useGetMedicinesQuery</code> в <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Відображення у вигляді карток</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Картки або таблиця з даними</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Картки ліків рендерить компонент <code>frontend/src/entities/medicine/ui/MedicineCard.tsx</code>. Вони виводяться у вигляді адаптивної сітки (Grid) у каталозі.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Індикатори станів (loading, error, success)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Стан завантаження, помилки, успіху</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          У <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code> реалізовано відображення спінера <code>&lt;Spin&gt;</code> при завантаженні та вивід сповіщень про помилку при збої запиту.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Детальна інформація (GET /medicines/:id)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Перегляд конкретного товару за ID</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Метод <code>getMedicineById</code> у <code>frontend/src/entities/medicine/api/medicineApi.ts</code>. Саму сторінку деталей реалізовано в <code>frontend/src/pages-flat/medicine-details/ui/MedicineDetailsPage.tsx</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Форма додавання товару та POST /medicines</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Створення нового товару через POST</span></td>
+                        <td><span className="badge info">Частково (Бекенд)</span></td>
+                        <td>
+                          Маршрут та обробник запиту POST <code>/api/medicines</code> повністю реалізовано на бекенді в <code>backend/src/routes/medicine.routes.ts</code> та <code>backend/src/controllers/medicine.controller.ts</code>. Інтерфейс додавання для адміністратора на фронтенді заплановано до реалізації.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Редагування (PUT) та Видалення (DELETE)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Редагування та видалення за ID</span></td>
+                        <td><span className="badge info">Частково (Бекенд)</span></td>
+                        <td>
+                          Обробники PUT <code>/api/medicines/:id</code> та DELETE <code>/api/medicines/:id</code> реалізовано на бекенді в <code>backend/src/controllers/medicine.controller.ts</code>. Клієнтська адмін-панель для редагування запланована в майбутніх релізах.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Порівняння методів HTTP (GET, POST, PUT, PATCH, DELETE)</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5', marginBottom: '0.5rem' }}>
+                    У вебдодатках було використано такі HTTP-методи для взаємодії з API:
+                  </p>
+                  <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6' }}>
+                    <li><strong>GET:</strong> Запит на отримання ресурсів. Безпечний та ідемпотентний. Наприклад, <code>GET /api/medicines</code> повертає каталог ліків.</li>
+                    <li><strong>POST:</strong> Створення нового ресурсу. Небезпечний та неідемпотентний. Наприклад, <code>POST /api/orders</code> створює нове замовлення.</li>
+                    <li><strong>PUT:</strong> Оновлення ресурсу або створення нового з повним заміщенням тіла. Ідемпотентний. Використовується для повного перезапису ліків.</li>
+                    <li><strong>PATCH:</strong> Часткове оновлення ресурсу. Не обов'язково ідемпотентний. Використовується для точкової зміни полів (наприклад, зміна залишку на складі).</li>
+                    <li><strong>DELETE:</strong> Видалення ресурсу. Ідемпотентний. Видаляє товар за ідентифікатором.</li>
+                  </ul>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Вимоги безпеки при роботі з формами та HTTP-запитами</h4>
+                  <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6' }}>
+                    <li><strong>XSS (Cross-Site Scripting):</strong> Захист від впровадження шкідливого HTML/JS. React автоматично екранує всі вирази в JSX. Додатково на бекенді впроваджено очищення вхідних текстових даних.</li>
+                    <li><strong>CSRF (Cross-Site Request Forgery):</strong> Для захисту сесійних запитів авторизація побудована на базі HTTP-заголовків (Bearer JWT-токени), що робить запити захищеними від автоматичного надсилання браузером міжсайтових cookie.</li>
+                    <li><strong>Валідація на клієнті та сервері:</strong> Клієнтська валідація побудована на базі правил <code>antd Form</code> для покращення користувацького досвіду, проте серверна валідація в <code>backend/src/controllers/medicine.controller.ts</code> є основним рубежем безпеки та перевіряє цілісність типів та обов'язковість полів.</li>
+                  </ul>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Пошук товарів за ключовим словом (GET /medicines?search=...)</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                    Реалізовано надсилання параметра <code>search</code> при GET-запиті. При зміні значення у полі пошуку оновлюється URL, що викликає повторний запит через RTK Query з параметром фільтрації на сервері в файлі <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code>.
                   </p>
                 </div>
               </div>
