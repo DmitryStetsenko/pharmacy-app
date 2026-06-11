@@ -273,7 +273,7 @@ export const Header = () => {
         placement="right"
         onClose={() => setMobileMenuOpen(false)}
         open={mobileMenuOpen}
-        width={280}
+        style={{ width: 280 }}
         styles={{
           body: {
             backgroundColor: themeMode === 'dark' ? '#1f1f1f' : '#ffffff',
