@@ -243,6 +243,7 @@ const getAllFolderPaths = (node: FileTreeNode, currentPath: string = 'src'): str
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [activeLabTab, setActiveLabTab] = useState<string>('lab7');
+  const [labsOpen, setLabsOpen] = useState<boolean>(true);
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
     'src': true
@@ -507,7 +508,7 @@ export default function App() {
   return (
     <div className="app-container">
       {/* Sidebar Navigation */}
-      <aside className="sidebar">
+      <aside className="sidebar" style={{ overflowY: 'auto' }}>
         <div className="logo-container">
           <Layers className="logo-icon" />
           <span className="logo-text">Pharmacy Docs</span>
@@ -573,14 +574,27 @@ export default function App() {
               <button
                 className={`nav-button ${activeTab === 'labs' ? 'active' : ''}`}
                 onClick={() => {
-                  setActiveTab('labs');
-                  setActiveLabTab('lab7');
+                  if (activeTab === 'labs') {
+                    setLabsOpen(prev => !prev);
+                  } else {
+                    setActiveTab('labs');
+                    setLabsOpen(true);
+                  }
                 }}
+                style={{ justifyContent: 'space-between' }}
               >
-                <FileCode size={18} />
-                Лабораторні роботи
+                <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <FileCode size={18} />
+                  Лабораторні роботи
+                </span>
+                <span style={{
+                  fontSize: '0.7rem',
+                  transition: 'transform 0.2s',
+                  transform: labsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  display: 'inline-block'
+                }}>▼</span>
               </button>
-              {activeTab === 'labs' && (
+              {activeTab === 'labs' && labsOpen && (
                 <ul className="submenu-links" style={{
                   listStyle: 'none',
                   paddingLeft: '1.75rem',
@@ -1475,7 +1489,7 @@ npm run dev
               </p>
             </div>
 
-            <div style={{ display: 'flex', gap: '12px', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
               <button 
                 onClick={() => setActiveLabTab('lab1')} 
                 style={{
