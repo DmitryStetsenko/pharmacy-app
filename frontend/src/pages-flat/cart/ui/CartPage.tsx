@@ -23,6 +23,8 @@ export const CartPage = () => {
   const dispatch = useDispatch();
   const { message } = App.useApp();
   const { items, totalAmount } = useSelector((state: RootState) => state.cart);
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+  const isDark = themeMode === 'dark';
 
   const discountThreshold = 1000;
   const discountRate = 0.1; // 10%
@@ -225,6 +227,36 @@ export const CartPage = () => {
             <Title level={4} style={{ marginBottom: '20px', fontWeight: 700 }}>
               Підсумок замовлення
             </Title>
+            
+            {!hasDiscount ? (
+              <div style={{
+                backgroundColor: isDark ? '#11211b' : '#f6ffed',
+                border: isDark ? '1px solid #1c3d32' : '#b7eb8f',
+                borderRadius: '8px',
+                padding: '10px 12px',
+                marginBottom: '16px',
+                fontSize: '12px',
+                color: isDark ? '#39e5c2' : '#389e0d',
+                fontWeight: 500,
+                textAlign: 'center'
+              }}>
+                Додайте товарів ще на <strong>{(1000 - totalAmount).toFixed(2)} грн</strong>, щоб отримати знижку <strong>10%</strong>!
+              </div>
+            ) : (
+              <div style={{
+                backgroundColor: isDark ? '#11211b' : '#f6ffed',
+                border: isDark ? '1px solid #1c3d32' : '#b7eb8f',
+                borderRadius: '8px',
+                padding: '10px 12px',
+                marginBottom: '16px',
+                fontSize: '12px',
+                color: isDark ? '#39e5c2' : '#389e0d',
+                fontWeight: 600,
+                textAlign: 'center'
+              }}>
+                🎉 Вітаємо! Ви отримали знижку <strong>10%</strong> на замовлення!
+              </div>
+            )}
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
               <Text type="secondary">Кількість товарів</Text>

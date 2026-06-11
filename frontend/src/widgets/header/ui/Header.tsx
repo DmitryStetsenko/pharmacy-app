@@ -54,22 +54,44 @@ export const Header = () => {
   ];
 
   return (
-    <header style={{
+    <div style={{
       position: 'sticky',
       top: 0,
       zIndex: 1000,
       width: '100%',
-      backgroundColor: themeMode === 'dark' ? '#1f1f1f' : '#ffffff',
-      borderBottom: themeMode === 'dark' ? '1px solid #303030' : '1px solid #f0f0f0',
-      boxShadow: themeMode === 'dark' ? '0 2px 8px rgba(0, 0, 0, 0.2)' : '0 2px 8px rgba(0, 0, 0, 0.05)',
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 24px',
-      height: '64px',
-      boxSizing: 'border-box',
-      transition: 'background-color 0.3s, border-bottom 0.3s, box-shadow 0.3s'
+      flexDirection: 'column'
     }}>
+      {/* Промо-банер про знижку */}
+      <div style={{
+        backgroundColor: themeMode === 'dark' ? '#0b3c32' : '#e8f8f5',
+        color: themeMode === 'dark' ? '#39e5c2' : '#00b894',
+        textAlign: 'center',
+        padding: '6px 24px',
+        fontSize: '13px',
+        fontWeight: 600,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '8px',
+        borderBottom: themeMode === 'dark' ? '1px solid #303030' : '1px solid #e2f5f1',
+        transition: 'background-color 0.3s, color 0.3s, border-bottom 0.3s'
+      }}>
+        <span>🎉 Отримайте знижку 10% на всі замовлення від 1000 грн!</span>
+      </div>
+      <header style={{
+        width: '100%',
+        backgroundColor: themeMode === 'dark' ? '#1f1f1f' : '#ffffff',
+        borderBottom: themeMode === 'dark' ? '1px solid #303030' : '1px solid #f0f0f0',
+        boxShadow: themeMode === 'dark' ? '0 2px 8px rgba(0, 0, 0, 0.2)' : '0 2px 8px rgba(0, 0, 0, 0.05)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 24px',
+        height: '64px',
+        boxSizing: 'border-box',
+        transition: 'background-color 0.3s, border-bottom 0.3s, box-shadow 0.3s'
+      }}>
       {/* Логотип */}
       <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
         <MedicineBoxOutlined style={{ fontSize: '28px', color: '#00b894' }} />
@@ -169,5 +191,6 @@ export const Header = () => {
         )}
       </div>
     </header>
+  </div>
   );
 };
