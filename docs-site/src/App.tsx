@@ -1338,6 +1338,21 @@ npm run dev
               >
                 Лабораторна робота №2
               </button>
+              <button 
+                onClick={() => setActiveLabTab('lab3')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab3' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab3' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab3' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №3
+              </button>
             </div>
 
             {activeLabTab === 'lab1' && (
@@ -1577,6 +1592,155 @@ npm run dev
                   <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Пошук товарів за ключовим словом (GET /medicines?search=...)</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
                     Реалізовано надсилання параметра <code>search</code> при GET-запиті. При зміні значення у полі пошуку оновлюється URL, що викликає повторний запит через RTK Query з параметром фільтрації на сервері в файлі <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code>.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeLabTab === 'lab3' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--accent-purple)', borderLeft: '4px solid var(--accent-purple)' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №3. Стан і контекст у React (useState, useEffect, Context API; управління кошиком у додатку)</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> формування практичних навичок використання стану й контексту в React-застосунках; оволодіння методами управління локальним та глобальним станом; реалізація функціоналу кошика у вебдодатку.
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 3)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Каталог товарів та локальний стан</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Картка ліків, useState для кількості</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Відображення каталогу: <code>frontend/src/pages-flat/catalog/ui/CatalogPage.tsx</code></li>
+                            <li>Картка ліків: <code>frontend/src/entities/medicine/ui/MedicineCard.tsx</code></li>
+                            <li>Локальний стан кількості в картці деталей: <code>frontend/src/pages-flat/medicine-details/ui/MedicineDetailsPage.tsx</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Ефекти та localStorage</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>useEffect для збереження стану, повідомлення про зміну</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Збереження у localStorage: <code>frontend/src/entities/cart/model/cartSlice.ts</code></li>
+                            <li>Клієнтська гідрація без Hydration Mismatch: <code>frontend/src/app/providers/StoreProvider.tsx</code></li>
+                            <li>Спливаючі повідомлення <code>message.success</code> при змінах кошика.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Глобальний стан кошика (Redux)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Redux RTK як альтернатива Context API</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Для глобального стану було обрано **Redux Toolkit**.
+                          <ul>
+                            <li>Сховище та Slices: <code>frontend/src/entities/cart/model/cartSlice.ts</code></li>
+                            <li>Глобальний провайдер: <code>frontend/src/app/providers/StoreProvider.tsx</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Кількість товарів у хедері</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Вивід лічильника у верхній панелі</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          У компоненті <code>frontend/src/widgets/header/ui/Header.tsx</code> підраховується сумарна кількість одиниць товарів у кошику та виводиться поверх іконки кошика.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Сторінка кошика</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Список обраного, кількість, загальна вартість</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Сторінка кошика реалізована у <code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code>. Відображає перелік ліків із підрахунком вартості для кожного найменування.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Редагування кількості та очищення кошика</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Кнопки зміни кількості, очищення кошика</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Редагування кількості та видалення/очищення кошика реалізовано за допомогою dispatch відповідних екшенів (<code>updateQuantity</code>, <code>removeItem</code>, <code>clearCart</code>) з файлу <code>frontend/src/entities/cart/model/cartSlice.ts</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Індівидуальний варіант (Знижка 10%)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>10% знижки при сумі від 1000 грн</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Реалізовано автоматичний перерахунок суми замовлення:
+                          <ul>
+                            <li>На фронтенді у кошику: <code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code></li>
+                            <li>При оформленні замовлення: <code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code></li>
+                            <li>На стороні сервера (остаточний розрахунок): <code>backend/src/controllers/order.controller.ts</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Локальний vs Глобальний стан у React</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    <strong>Локальний стан (Local State)</strong> призначений для керування даними, які потрібні лише одному конкретному компоненту або його безпосереднім нащадкам (наприклад, стан відкриття випадаючого списку, введені дані форми, активна вкладка). Створюється за допомогою хука <code>useState</code> чи <code>useReducer</code>.
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    <strong>Глобальний стан (Global State)</strong> потрібен, коли дані мають бути доступні багатьом компонентам у різних гілках дерева інтерфейсу (наприклад, кошик товарів, інформація про поточного користувача, налаштування теми). Зберігання таких даних у глобальному сховищі запобігає проблемі <em>prop drilling</em> (передачі параметрів через багато рівнів вкладеності).
+                  </p>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Порівняння Context API та Redux (Redux Toolkit)</h4>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Критерій порівняння</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Context API</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Redux Toolkit (RTK)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Продуктивність</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Гірша при частих оновленнях. Зміна контексту перерендерить всіх споживачів.</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Висока. Селектори (useSelector) оновлюють лише ті компоненти, які споживають змінене поле.</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Налаштування</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Низька складність, вбудований інструмент React.</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Вимагає встановлення додаткових бібліотек та конфігурації Store.</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Відлагодження</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Ускладнене відстежування історії оновлень стану.</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Відмінне завдяки Redux DevTools (підтримка Time Travel Debugging).</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Масштабованість</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Підходить для рідко оновлюваних даних (тема, мова).</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Ідеально для динамічного та великого стану (кошик, замовлення).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Опис реалізації системи знижок</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Для виконання індивідуального завдання було реалізовано автоматичне надання знижки розміром <strong>10%</strong> при перевищенні загальної суми товарів у кошику порогу в <strong>1000 грн</strong>.
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    На клієнтській стороні в кошику (<code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code>) та на сторінці оформлення (<code>frontend/src/pages-flat/checkout/ui/CheckoutPage.tsx</code>) додано візуальний блок із сумою знижки та оновлено кінцеву вартість. З метою запобігання фальсифікації даних на стороні клієнта, фінальний розрахунок суми замовлення з аналогічною знижкою повторно проводиться на сервері (<code>backend/src/controllers/order.controller.ts</code>) перед записом замовлення до бази даних.
                   </p>
                 </div>
               </div>
