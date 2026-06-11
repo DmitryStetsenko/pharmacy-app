@@ -98,6 +98,18 @@ export const Header = () => {
         >
           Каталог ліків
         </Link>
+        <Link href="/about" style={{
+          fontSize: '15px',
+          fontWeight: 500,
+          color: themeMode === 'dark' ? '#f5f5f5' : '#2d3436',
+          textDecoration: 'none',
+          transition: 'color 0.2s'
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
+        onMouseLeave={(e) => (e.currentTarget.style.color = themeMode === 'dark' ? '#f5f5f5' : '#2d3436')}
+        >
+          Про нас
+        </Link>
       </nav>
 
       {/* Користувачі та кошик */}
