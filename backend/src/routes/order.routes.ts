@@ -102,8 +102,71 @@ router.post(
  */
 router.get('/', authMiddleware, getOrders);
 
+/**
+ * @swagger
+ * /api/orders/{id}:
+ *   get:
+ *     summary: Get order details by ID
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Order details retrieved successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (Not the owner of the order and not an Admin)
+ *       404:
+ *         description: Order not found
+ */
 router.get('/:id', authMiddleware, getOrderById);
 
+/**
+ * @swagger
+ * /api/orders/{id}:
+ *   put:
+ *     summary: Update order status (Admin only)
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - status
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [pending, processing, completed, cancelled]
+ *                 example: completed
+ *     responses:
+ *       200:
+ *         description: Order status updated successfully
+ *       400:
+ *         description: Invalid status value
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (Admin only)
+ *       404:
+ *         description: Order not found
+ */
 router.put(
   '/:id',
   authMiddleware,
@@ -112,6 +175,30 @@ router.put(
   updateOrderStatus
 );
 
+/**
+ * @swagger
+ * /api/orders/{id}:
+ *   delete:
+ *     summary: Delete order (Admin only)
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Order deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (Admin only)
+ *       404:
+ *         description: Order not found
+ */
 router.delete('/:id', authMiddleware, adminMiddleware, deleteOrder);
 
 export default router;
