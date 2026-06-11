@@ -1543,6 +1543,21 @@ npm run dev
               >
                 Лабораторна робота №6
               </button>
+              <button 
+                onClick={() => setActiveLabTab('lab7')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab7' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab7' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab7' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №7
+              </button>
             </div>
 
             {activeLabTab === 'lab1' && (
