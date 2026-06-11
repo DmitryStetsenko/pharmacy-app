@@ -81,7 +81,7 @@ export const Header = () => {
     },
     {
       key: 'profile-link',
-      label: <Link href="/profile">Мій Профіль (Lab 4)</Link>,
+      label: <Link href="/profile">Мій Профіль</Link>,
       icon: <UserOutlined />,
     },
     {
