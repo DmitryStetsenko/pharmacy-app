@@ -169,6 +169,17 @@ export const Header = () => {
           }}>
             Каталог ліків
           </Link>
+          <Link href="/symptoms" style={{
+            fontSize: '15px',
+            fontWeight: 550,
+            color: isLinkActive('/symptoms') ? '#00b894' : (themeMode === 'dark' ? '#f5f5f5' : '#2d3436'),
+            textDecoration: 'none',
+            borderBottom: isLinkActive('/symptoms') ? '2px solid #00b894' : '2px solid transparent',
+            padding: '4px 0',
+            transition: 'color 0.2s, border-bottom-color 0.2s'
+          }}>
+            Аналізатор симптомів
+          </Link>
           <Link href="/about" style={{
             fontSize: '15px',
             fontWeight: 550,
@@ -335,6 +346,26 @@ export const Header = () => {
             >
               <AppstoreOutlined style={{ fontSize: '18px' }} />
               <span>Каталог ліків</span>
+            </Link>
+            
+            <Link 
+              href="/symptoms" 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                fontSize: '15px',
+                fontWeight: 600,
+                color: isLinkActive('/symptoms') ? '#00b894' : (themeMode === 'dark' ? '#f5f5f5' : '#2d3436'),
+                padding: '10px 12px',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                backgroundColor: isLinkActive('/symptoms') ? (themeMode === 'dark' ? 'rgba(0, 184, 148, 0.15)' : 'rgba(0, 184, 148, 0.08)') : 'transparent',
+                transition: 'all 0.2s'
+              }}
+            >
+              <MedicineBoxOutlined style={{ fontSize: '18px' }} />
+              <span>Аналізатор симптомів</span>
             </Link>
             
             <Link 

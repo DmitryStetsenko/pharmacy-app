@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
 import medicineRoutes from './routes/medicine.routes';
 import orderRoutes from './routes/order.routes';
+import symptomRoutes from './routes/symptom.routes';
 import { errorHandler } from './middleware/error.middleware';
 
 dotenv.config();
@@ -96,6 +97,7 @@ app.get('/', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/medicines', medicineRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/symptoms', symptomRoutes);
 
 // Error Handler Middleware
 app.use(errorHandler);

@@ -55,6 +55,13 @@ export const Footer = () => {
               </a>
             </li>
             <li style={{ marginBottom: '8px' }}>
+              <a href="/symptoms" style={{ color: '#b2bec3', textDecoration: 'none', transition: 'color 0.2s' }}
+                 onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
+                 onMouseLeave={(e) => (e.currentTarget.style.color = '#b2bec3')}>
+                Аналізатор симптомів
+              </a>
+            </li>
+            <li style={{ marginBottom: '8px' }}>
               <a href="/cart" style={{ color: '#b2bec3', textDecoration: 'none', transition: 'color 0.2s' }}
                  onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
                  onMouseLeave={(e) => (e.currentTarget.style.color = '#b2bec3')}>
