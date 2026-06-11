@@ -405,7 +405,7 @@ export const SymptomsPage = () => {
       {/* Спінер завантаження */}
       {loading && (
         <div style={{ textAlign: 'center', margin: '48px 0' }}>
-          <Spin size="large" tip="Штучний інтелект аналізує симптоми..." style={{ color: '#00b894' }} />
+          <Spin size="large" description="Штучний інтелект аналізує симптоми..." style={{ color: '#00b894' }} />
         </div>
       )}
 
