@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Card, Form, Input, Button, Typography, Row, Col, Space, Badge, App, Alert, List, Tag, Divider, Spin } from 'antd';
+import { Card, Form, Input, Button, Typography, Row, Col, Space, Badge, App, Alert, Tag, Divider, Spin } from 'antd';
 import { 
   UserOutlined, 
   MailOutlined, 
@@ -411,10 +411,8 @@ export const ProfilePage = () => {
               </Link>
             </div>
           ) : (
-            <List
-              itemLayout="vertical"
-              dataSource={orders}
-              renderItem={(order) => (
+            <div>
+              {orders.map((order) => (
                 <div key={order.id} style={{ 
                   padding: '16px', 
                   border: isDark ? '1px solid #303030' : '1px solid #f0f0f0',
@@ -442,7 +440,7 @@ export const ProfilePage = () => {
                       </div>
                     ))}
                   </div>
-                  
+
                   <Divider style={{ margin: '8px 0' }} />
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -452,8 +450,8 @@ export const ProfilePage = () => {
                     </Text>
                   </div>
                 </div>
-              )}
-            />
+              ))}
+            </div>
           )}
         </Card>
 
