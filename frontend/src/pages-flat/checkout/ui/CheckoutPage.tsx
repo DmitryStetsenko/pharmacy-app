@@ -13,8 +13,7 @@ import {
   Radio, 
   Typography, 
   Divider, 
-  Result, 
-  App 
+  Result 
 } from 'antd';
 import { 
   ArrowLeftOutlined, 
@@ -26,13 +25,14 @@ import {
 import { RootState } from '@/app/store';
 import { clearCart } from '@/entities/cart/model/cartSlice';
 import { useCreateOrderMutation } from '@/entities/order/api/orderApi';
+import { useToast } from '@/shared/ui/toast/ToastContext';
 
 const { Title, Text, Paragraph } = Typography;
 
 export const CheckoutPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { message } = App.useApp();
+  const { showToast } = useToast();
   
   const { items, totalAmount } = useSelector((state: RootState) => state.cart);
   const themeMode = useSelector((state: RootState) => state.theme.mode);
@@ -91,18 +91,18 @@ export const CheckoutPage = () => {
   useEffect(() => {
     if (isSuccess && createdOrder) {
       dispatch(clearCart());
-      message.success('Замовлення успішно оформлено!');
+      showToast('Замовлення успішно оформлено!', 'success');
     }
-  }, [isSuccess, createdOrder, dispatch, message]);
+  }, [isSuccess, createdOrder, dispatch, showToast]);
 
   // Handle server errors
   useEffect(() => {
     if (error) {
       const errorData = error as any;
       const errorMsg = errorData.data?.message || 'Помилка при створенні замовлення. Спробуйте ще раз.';
-      message.error(errorMsg);
+      showToast(errorMsg, 'error');
     }
-  }, [error, message]);
+  }, [error, showToast]);
 
   const onFinish = async (values: any) => {
     // Save contact info to localStorage for future use
@@ -131,6 +131,10 @@ export const CheckoutPage = () => {
     } catch (e) {
       // Errors are handled in useEffect above
     }
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    showToast('Будь ласка, перевірте правильність заповнення форми!', 'error');
   };
 
   // If order was successfully created, show success screen
@@ -218,6 +222,7 @@ export const CheckoutPage = () => {
               layout="vertical"
               name="checkout_form"
               onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
               requiredMark={false}
               initialValues={{ deliveryType: 'pickup' }}
             >

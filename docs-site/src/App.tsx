@@ -212,7 +212,7 @@ const getAllFolderPaths = (node: FileTreeNode, currentPath: string = 'src'): str
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
-  const [activeLabTab, setActiveLabTab] = useState<string>('lab1');
+  const [activeLabTab, setActiveLabTab] = useState<string>('lab6');
   const [selectedFsdLayer, setSelectedFsdLayer] = useState<string>('pages-flat');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
     'src': true
@@ -1452,6 +1452,21 @@ npm run dev
               >
                 Лабораторна робота №5
               </button>
+              <button 
+                onClick={() => setActiveLabTab('lab6')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab6' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab6' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab6' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №6
+              </button>
             </div>
 
             {activeLabTab === 'lab1' && (
@@ -2102,6 +2117,124 @@ npm run dev
                   <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
                     Завдяки використанню клієнтської SPA-маршрутизації було забезпечено високу швидкість роботи інтерфейсу та згладжені анімовані переходи без перезавантаження сторінки. Організація динамічних та захищених роутів надала можливість гнучко керувати відображенням даних залежно від сесії користувача та вибраного товару.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeLabTab === 'lab6' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--primary)', borderLeft: '4px solid var(--primary)' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №6. UI/UX та компоненти інтерфейсу</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> сформувати у студентів практичні навички розробки зручних та зрозумілих інтерфейсів користувача у React-додатках; навчитися реалізовувати модальні вікна, повідомлення про події, адаптивний дизайн і навігаційні елементи для покращення користувацького досвіду (UX).
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 6)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Навігаційне меню (Navbar / Header)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Посилання, active state, адаптивне меню</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Посилання на основні сторінки та active state (usePathname) реалізовано у <code>frontend/src/widgets/header/ui/Header.tsx</code>.</li>
+                            <li>Адаптивність забезпечується медіа-запитами та класами <code>.desktop-only</code> та <code>.mobile-only</code> в <code>frontend/src/app/globals.css</code>.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Модальне вікно (Modal)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Універсальне вікно підтвердження дій</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Створено кастомний компонент модального вікна:
+                          <ul>
+                            <li>Компонент: <code>frontend/src/shared/ui/modal/Modal.tsx</code></li>
+                            <li>Стилі: <code>frontend/src/shared/ui/modal/Modal.css</code></li>
+                            <li>Коректно обробляє кліки поза вікном (overlay), клавішу <code>Escape</code>, містить focus trap та блокування скролу body.</li>
+                            <li>Інтегровано у кошик: <code>frontend/src/pages-flat/cart/ui/CartPage.tsx</code> для підтвердження видалення товару та очищення кошика.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Повідомлення про події (Alert/Toast)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Toast сповіщення з таймером автозникнення</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Реалізовано систему глобальних спливаючих сповіщень:
+                          <ul>
+                            <li>Context провайдер: <code>frontend/src/shared/ui/toast/ToastContext.tsx</code></li>
+                            <li>Стилі та анімації: <code>frontend/src/shared/ui/toast/Toast.css</code></li>
+                            <li>Ініціалізовано у кореневому макеті <code>layout.tsx</code>.</li>
+                            <li>Використовується на сторінці кошика (CartPage) та оформлення замовлення (CheckoutPage) при успішних діях або помилках валідації.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Індивідуальне завдання (Варіанти 8-9)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Мобільний Drawer з повним меню</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Реалізовано адаптивне Drawer-меню для мобільних пристроїв на основі Ant Design <code>Drawer</code>:
+                          <ul>
+                            <li>Кнопка-бургер та Drawer знаходяться у <code>frontend/src/widgets/header/ui/Header.tsx</code>.</li>
+                            <li>Drawer містить усі посилання, індикатор авторизованого користувача та кнопку швидкого виходу (Logout).</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Принципи проектування доступних модальних вікон (Focus trapping, Escape close, Overlay)</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Для того, щоб модальне вікно було доступним для користувачів з обмеженими можливостями та відповідало WCAG 2.1, необхідно реалізувати такі механізми:
+                  </p>
+                  <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    <li><strong>Утримання фокусу (Focus Trapping):</strong> Фокус клавіатури (Tab) повинен циркулювати виключно всередині модального вікна. Користувач не повинен випадково вийти фокусом на інтерактивні елементи фонової сторінки. При закритті модального вікна фокус обов'язково має повертатися на той елемент, який його відкрив.</li>
+                    <li><strong>Закриття за допомогою Escape:</strong> Натискання на клавішу `Escape` має негайно закривати модальне вікно без виконання будь-яких дій. Це стандартна очікувана поведінка.</li>
+                    <li><strong>Закриття по кліку на Overlay:</strong> Клік по напівпрозорому задньому фону (overlay/backdrop) також повинен ініціювати закриття, якщо тільки це не модальне вікно з критично важливим вибором.</li>
+                    <li><strong>Блокування прокрутки фону:</strong> Коли модальне вікно відкрито, скролінг сторінки (body) має блокуватися (напр., через <code>overflow: hidden</code>), щоб запобігти дезорієнтації користувача при прокручуванні контенту позаду.</li>
+                  </ul>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Патерни сповіщень: Toast/Snackbar vs. Dialog/Modal</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Вибір між Toast та Modal залежить від ступеня важливості інформації та необхідності взаємодії з нею:
+                  </p>
+                  <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    <li><strong>Toast/Snackbar:</strong> Використовується для некритичних, швидких повідомлень про статус системи чи результат дії (успішно додано товар, змінено тему, успішно оформлено замовлення). Вони з'являються збоку, не блокують роботу з сайтом і зникають самостійно.</li>
+                    <li><strong>Dialog/Modal:</strong> Використовується, коли система потребує негайної уваги користувача та явного вибору (підтвердження видалення товару, очищення всього кошика, попередження про вихід без збереження даних). Блокує решту інтерфейсу доти, доки користувач не зробить вибір.</li>
+                  </ul>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Адаптивний дизайн: Техніки створення інтерфейсів, які пристосовуються до розміру екрану</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    У нашому проєкті використано три ключові підходи до забезпечення чуйності інтерфейсу:
+                  </p>
+                  <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    <li><strong>CSS Media Queries (Медіа-запити):</strong> Використання брейкпойнтів (breakpoints) для ховання, відображення та перекомпонування елементів. Наприклад, класи <code>.desktop-only</code> та <code>.mobile-only</code> регулюють видимість десктопного меню та мобільної кнопки бургер-меню.</li>
+                    <li><strong>Гнучка сітка (Grid / Flexbox):</strong> Використання сіток Ant Design (Row/Col) з адаптивними параметрами <code>xs</code>, <code>sm</code>, <code>md</code>, <code>lg</code> дозволяє автоматично переходити від трьох колонок до однієї на мобільних пристроях.</li>
+                    <li><strong>Drawer-компоненти для мобільних:</strong> Перенесення всього сайдбар-контенту чи навігаційного меню у висувний Drawer на мобільних екранах для збереження корисної площі екрану.</li>
+                  </ul>
+                </div>
+
+                <div className="card">
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Впровадження кастомних компонентів Modal та Toast, а також переробка Header під адаптивне Drawer-меню значно покращили користувацький досвід (UX). Додаток отримав більш професійний вигляд, надійну систему зворотного зв'язку на дії користувача та повністю підтримує роботу на пристроях з будь-якими екранами, зберігаючи високі стандарти доступності.
                   </p>
                 </div>
               </div>

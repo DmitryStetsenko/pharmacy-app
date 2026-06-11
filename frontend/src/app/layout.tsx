@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { StoreProvider } from "@/app/providers/StoreProvider";
 import { ThemeProvider } from "@/app/providers/ThemeProvider";
+import { ToastProvider } from "@/shared/ui/toast/ToastContext";
 import { Header } from "@/widgets/header/ui/Header";
 import { Breadcrumbs } from "@/widgets/breadcrumbs/ui/Breadcrumbs";
 import { Footer } from "@/widgets/footer/ui/Footer";
@@ -34,12 +35,14 @@ export default function RootLayout({
         <StoreProvider>
           <AntdRegistry>
             <ThemeProvider>
-              <Header />
-              <Breadcrumbs />
-              <main style={{ flex: 1 }}>
-                {children}
-              </main>
-              <Footer />
+              <ToastProvider>
+                <Header />
+                <Breadcrumbs />
+                <main style={{ flex: 1 }}>
+                  {children}
+                </main>
+                <Footer />
+              </ToastProvider>
             </ThemeProvider>
           </AntdRegistry>
         </StoreProvider>

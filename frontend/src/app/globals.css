@@ -47,3 +47,22 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Responsive utilities for layout */
+.desktop-only {
+  display: flex !important;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: flex !important;
+  }
+}

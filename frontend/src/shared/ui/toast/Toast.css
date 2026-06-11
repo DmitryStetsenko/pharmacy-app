@@ -1,0 +1,138 @@
+.toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 3000;
+  max-width: 400px;
+  width: 90%;
+  pointer-events: none;
+}
+
+.toast-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--toast-bg, rgba(255, 255, 255, 0.98));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--toast-border, #f0f0f0);
+  pointer-events: auto;
+  animation: toast-slide-in 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.toast-item.leaving {
+  animation: toast-fade-out 0.25s forwards;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.toast-icon {
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.toast-message {
+  font-size: 0.9rem;
+  font-weight: 550;
+  color: var(--toast-text, #2d3436);
+  line-height: 1.4;
+}
+
+.toast-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--toast-muted-text, #8c8c8c);
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.toast-close-btn:hover {
+  background-color: var(--toast-hover-bg, #f5f5f5);
+  color: var(--toast-text, #2d3436);
+}
+
+/* Toast types styling */
+.toast-success {
+  border-left: 4px solid #00b894;
+}
+.toast-success .toast-icon {
+  color: #00b894;
+}
+
+.toast-error {
+  border-left: 4px solid #ff7675;
+}
+.toast-error .toast-icon {
+  color: #ff7675;
+}
+
+.toast-warning {
+  border-left: 4px solid #ffeaa7;
+}
+.toast-warning .toast-icon {
+  color: #f1c40f;
+}
+
+.toast-info {
+  border-left: 4px solid #0984e3;
+}
+.toast-info .toast-icon {
+  color: #0984e3;
+}
+
+/* Animations */
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-fade-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Dark theme overrides */
+[data-theme='dark'] {
+  --toast-bg: #1e1e1e;
+  --toast-text: #ffffff;
+  --toast-border: #303030;
+  --toast-muted-text: #8c8c8c;
+  --toast-hover-bg: #2d2d2d;
+}

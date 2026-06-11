@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Row, Col, Card, Button, Typography, Divider, Empty, App } from 'antd';
+import { Row, Col, Card, Button, Typography, Divider, Empty } from 'antd';
 import { 
   DeleteOutlined, 
   PlusOutlined, 
@@ -17,16 +17,22 @@ import {
 import { RootState } from '@/app/store';
 import { removeItem, updateQuantity, clearCart } from '@/entities/cart/model/cartSlice';
 import { MedicineBoxOutlined } from '@ant-design/icons';
+import { Modal } from '@/shared/ui/modal/Modal';
+import { useToast } from '@/shared/ui/toast/ToastContext';
 
 const { Title, Text, Paragraph } = Typography;
 
 export const CartPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { message } = App.useApp();
+  const { showToast } = useToast();
   const { items, totalAmount } = useSelector((state: RootState) => state.cart);
   const themeMode = useSelector((state: RootState) => state.theme.mode);
   const isDark = themeMode === 'dark';
+
+  const [isRemoveItemModalOpen, setIsRemoveItemModalOpen] = React.useState(false);
+  const [itemToRemove, setItemToRemove] = React.useState<string | null>(null);
+  const [isClearCartModalOpen, setIsClearCartModalOpen] = React.useState(false);
 
   const discountThreshold = 1000;
   const discountRate = 0.1; // 10%
@@ -37,25 +43,42 @@ export const CartPage = () => {
   const handleQuantityChange = (id: string, currentQty: number, change: number, maxStock: number) => {
     const newQty = currentQty + change;
     if (newQty <= 0) {
-      dispatch(removeItem(id));
-      message.success('Товар видалено з кошика');
+      confirmRemoveItem(id);
       return;
     }
     if (newQty > maxStock) {
-      message.warning(`Недостатньо товару на складі. Максимальна кількість: ${maxStock} шт.`);
+      showToast(`Недостатньо товару на складі. Максимальна кількість: ${maxStock} шт.`, 'warning');
       return;
     }
     dispatch(updateQuantity({ id, quantity: newQty }));
   };
 
-  const handleRemoveItem = (id: string) => {
-    dispatch(removeItem(id));
-    message.success('Товар видалено з кошика');
+  const confirmRemoveItem = (id: string) => {
+    setItemToRemove(id);
+    setIsRemoveItemModalOpen(true);
   };
 
-  const handleClearCart = () => {
+  const handleRemoveItemConfirm = () => {
+    if (itemToRemove) {
+      dispatch(removeItem(itemToRemove));
+      showToast('Товар видалено з кошика', 'success');
+      setItemToRemove(null);
+    }
+  };
+
+  const confirmClearCart = () => {
+    setIsClearCartModalOpen(true);
+  };
+
+  const handleClearCartConfirm = () => {
     dispatch(clearCart());
-    message.success('Кошик очищено');
+    showToast('Кошик очищено', 'success');
+  };
+
+  const getMedicineName = (id: string | null) => {
+    if (!id) return '';
+    const item = items.find((i) => i.medicine.id === id);
+    return item ? item.medicine.name : '';
   };
 
   if (items.length === 0) {
@@ -202,7 +225,7 @@ export const CartPage = () => {
                         type="text" 
                         danger 
                         icon={<DeleteOutlined />} 
-                        onClick={() => handleRemoveItem(item.medicine.id)}
+                        onClick={() => confirmRemoveItem(item.medicine.id)}
                         style={{ padding: 0, height: 'auto', display: 'flex', alignItems: 'center', gap: '4px' }}
                       >
                         Видалити
@@ -322,7 +345,7 @@ export const CartPage = () => {
               type="default" 
               danger 
               block 
-              onClick={handleClearCart}
+              onClick={confirmClearCart}
               style={{ borderRadius: '8px', height: '40px' }}
             >
               Очистити кошик
@@ -330,6 +353,39 @@ export const CartPage = () => {
           </Card>
         </Col>
       </Row>
+
+      {/* Модальне вікно для підтвердження видалення окремого товару */}
+      <Modal
+        isOpen={isRemoveItemModalOpen}
+        onClose={() => {
+          setIsRemoveItemModalOpen(false);
+          setItemToRemove(null);
+        }}
+        title="Підтвердження видалення"
+        confirmText="Видалити"
+        cancelText="Скасувати"
+        confirmType="danger"
+        onConfirm={handleRemoveItemConfirm}
+      >
+        <p style={{ margin: 0 }}>
+          Ви впевнені, що хочете видалити <strong>{getMedicineName(itemToRemove)}</strong> з вашого кошика?
+        </p>
+      </Modal>
+
+      {/* Модальне вікно для підтвердження очищення кошика */}
+      <Modal
+        isOpen={isClearCartModalOpen}
+        onClose={() => setIsClearCartModalOpen(false)}
+        title="Очищення кошика"
+        confirmText="Очистити все"
+        cancelText="Скасувати"
+        confirmType="danger"
+        onConfirm={handleClearCartConfirm}
+      >
+        <p style={{ margin: 0 }}>
+          Ви впевнені, що хочете повністю очистити ваш кошик? Цю дію не можна скасувати.
+        </p>
+      </Modal>
     </div>
   );
 };
