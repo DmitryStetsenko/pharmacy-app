@@ -652,6 +652,29 @@ export default function App() {
                       Лаб 4
                     </button>
                   </li>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab5' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab5')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab5' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 5
+                    </button>
+                  </li>
                 </ul>
               )}
             </li>
@@ -1414,6 +1437,21 @@ npm run dev
               >
                 Лабораторна робота №4
               </button>
+              <button 
+                onClick={() => setActiveLabTab('lab5')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab5' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab5' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab5' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №5
+              </button>
             </div>
 
             {activeLabTab === 'lab1' && (
@@ -1914,6 +1952,156 @@ npm run dev
                   </p>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
                     Для збереження авторизаційних токенів (JWT) у комерційних застосунках безпечніше використовувати <strong>HTTP-only Cookies</strong>, що повністю нівелює можливість крадіжки токену через зловмисні скрипти.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeLabTab === 'lab5' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: 'var(--primary)', borderLeft: '4px solid var(--primary)' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №5. Маршрутизація у React за допомогою React Router</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> сформувати практичні навички роботи з маршрутизацією у React-застосунках, навчитися організовувати багатосторінкову структуру вебдодатку та реалізовувати навігацію між різними сторінками.
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 5)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Налаштування роутера (BrowserRouter / App Router)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Вхідна точка роутера, оголошення маршрутів</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Проєкт використовує сучасний <strong>Next.js App Router</strong> (файлова система маршрутизації як нативний SPA-аналог <code>react-router-dom</code> для Next.js):
+                          <ul>
+                            <li>Маршрути оголошені структурою папок у <code>frontend/src/app/</code></li>
+                            <li>Кореневий макет та ініціалізація: <code>frontend/src/app/layout.tsx</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Реалізація сторінок додатку</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Catalog, Cart, Checkout, About</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Створені відповідні Next.js сторінки, які огорнуті у FSD-шари:
+                          <ul>
+                            <li>Catalog: <code>frontend/src/app/catalog/page.tsx</code></li>
+                            <li>Cart: <code>frontend/src/app/cart/page.tsx</code></li>
+                            <li>Checkout: <code>frontend/src/app/checkout/page.tsx</code></li>
+                            <li>About: <code>frontend/src/app/about/page.tsx</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Організація SPA-навігації</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Переходи без перезавантаження сторінки, підсвічування активних посилань</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Навігаційне меню у хедерах здійснює переходи без перезавантаження завдяки <code>Link</code> з <code>next/link</code>.
+                          Підсвічування активних пунктів реалізовано порівнянням поточного шляху з хука <code>usePathname()</code> у <code>frontend/src/widgets/header/ui/Header.tsx</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Динамічна маршрутизація</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Шлях /catalog/:id для деталей товару</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Реалізовано динамічний роут <code>frontend/src/app/catalog/[id]/page.tsx</code>. Компонент зчитує параметр <code>id</code> та відображає картку деталей препарату <code>frontend/src/pages-flat/medicine-details/ui/MedicineDetailsPage.tsx</code>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Обробика невідомих маршрутів (404 сторінка)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Рендеринг 404 помилки</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Для невідомих маршрутів Next.js автоматично рендерить вбудовану сторінку 404 Not Found.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Захищений маршрут («Профіль»)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Заборона доступу для гостей</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Реалізовано у <code>frontend/src/app/profile/page.tsx</code>. Кабінет користувача захищено від неавторизованого перегляду; гостям пропонується увійти, а авторизованим користувачам показується персональний кабінет з історією замовлень.
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Навігація «Breadcrumbs» (Хлібні крихти)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Навігаційний ланцюжок</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          Віджет <code>frontend/src/widgets/breadcrumbs/ui/Breadcrumbs.tsx</code> динамічно будує ланцюжок переходів на основі поточного шляху та Ant Design Breadcrumb.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Клієнтська (CSR) vs Серверна (SSR) маршрутизація</h4>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Характеристика</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Клієнтська (CSR/SPA Routing)</th>
+                        <th style={{ padding: '8px', fontWeight: 600 }}>Серверна (SSR/Traditional)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Процес навігації</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Перехоплюється клієнтським JS (History API). Оновлюється лише частина DOM без перезавантаження сторінки.</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Браузер робить повноцінний HTTP-запит. Сторінка повністю перезавантажується.</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Швидкість переходу</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Миттєва (долі секунди), оскільки завантажуються лише дані.</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Повільніша, залежить від часу відповіді сервера та парсингу HTML.</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Збереження стану UI</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Стан зберігається у пам'яті (напр., Redux/React State), оскільки контекст не втрачається.</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Стан втрачається повністю. Потребує сесій, cookies чи повторного запиту даних.</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><strong>Навантаження на сервер</strong></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Мінімальне (сервер повертає лише JSON дані).</td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Високе (сервер має рендерити та віддавати цілу HTML сторінку при кожному кліку).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Опис реалізації захищеного маршруту</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Захист маршруту реалізовано умовним рендерингом у компоненті <code>ProfilePage.tsx</code> на основі сесії <code>Redux store</code> (slice <code>userSlice</code>).
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    Коли користувач є гостем (неавторизованим), замість вмісту кабінету рендериться закрита картка із повідомленням <em>"Ви увійшли як Гість"</em> та кнопками переходу на вхід та реєстрацію. Після проходження авторизації з JWT-токеном, стан <code>isAuthenticated</code> стає <code>true</code>, і кабінет відображає персональні контактні дані користувача та його історію замовлень.
+                  </p>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Опис роботи системи хлібних крихт (Breadcrumbs)</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Система хлібних крихт у нашому SPA реалізована динамічно у файлі <code>Breadcrumbs.tsx</code>. Вона відстежує зміни URL через хук <code>usePathname()</code>.
+                  </p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '0.5rem' }}>
+                    Шлях розбивається на сегменти, які відображаються у навігаційному ланцюжку. Кожен елемент крихт є посиланням на відповідний розділ сайту, крім останнього (поточного) елемента. Для зручності сегменти підміняються зрозумілими назвами (наприклад, <code>catalog</code> перетворюється у <code>"Каталог ліків"</code>), а для деталей ліків виводиться дружній текст <code>"Деталі препарату"</code>.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Завдяки використанню клієнтської SPA-маршрутизації було забезпечено високу швидкість роботи інтерфейсу та згладжені анімовані переходи без перезавантаження сторінки. Організація динамічних та захищених роутів надала можливість гнучко керувати відображенням даних залежно від сесії користувача та вибраного товару.
                   </p>
                 </div>
               </div>
