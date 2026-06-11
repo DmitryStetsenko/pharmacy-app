@@ -583,7 +583,7 @@ export default function AdminPage() {
             Управління користувачами, замовленнями та базою товарів
           </Typography.Text>
         </div>
-        <Card size="small" bordered={false} style={{ background: 'transparent' }}>
+        <Card size="small" variant="borderless" style={{ background: 'transparent' }}>
           <Space>
             <UserOutlined />
             <Typography.Text strong>{user?.name}</Typography.Text>
@@ -595,7 +595,7 @@ export default function AdminPage() {
       {/* Stats Row */}
       <Row gutter={[16, 16]} style={{ marginBottom: '24px' }}>
         <Col xs={24} sm={12} md={6}>
-          <Card bordered={false} style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+          <Card variant="borderless" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
             <Statistic
               title="Користувачів"
               value={totalUsers}
@@ -604,7 +604,7 @@ export default function AdminPage() {
           </Card>
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <Card bordered={false} style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+          <Card variant="borderless" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
             <Statistic
               title="Замовлень"
               value={totalOrders}
@@ -613,7 +613,7 @@ export default function AdminPage() {
           </Card>
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <Card bordered={false} style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+          <Card variant="borderless" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
             <Statistic
               title="Медикаментів"
               value={totalMedicines}
@@ -622,7 +622,7 @@ export default function AdminPage() {
           </Card>
         </Col>
         <Col xs={24} sm={12} md={6}>
-          <Card bordered={false} style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+          <Card variant="borderless" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
             <Statistic
               title="Сума замовлень"
               value={totalRevenue}
@@ -635,7 +635,7 @@ export default function AdminPage() {
       </Row>
 
       {/* Main Tabs */}
-      <Card bordered={false} style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)', borderRadius: '12px' }}>
+      <Card variant="borderless" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.05)', borderRadius: '12px' }}>
         <Tabs defaultActiveKey="orders" items={tabItems} />
       </Card>
 
