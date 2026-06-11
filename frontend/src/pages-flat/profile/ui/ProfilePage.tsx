@@ -14,8 +14,10 @@ import {
   HistoryOutlined,
   EnvironmentOutlined,
   LoginOutlined,
+  LogoutOutlined,
   UserAddOutlined,
-  ShoppingOutlined
+  ShoppingOutlined,
+  LockOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -103,8 +105,14 @@ export const ProfilePage = () => {
   const handleSaveContacts = (values: any) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('user_contact_data', JSON.stringify(values));
-      message.success('Контактні дані успішно збережено в localStorage!');
+      message.success(isAuthenticated ? 'Контактні дані збережено!' : 'Контактні дані збережено в localStorage!');
     }
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    message.info('Ви вийшли з акаунту');
+    router.push('/');
   };
 
   // Handle Reset data (Self-reliance task 2)
@@ -251,9 +259,20 @@ export const ProfilePage = () => {
             boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
           }}
         >
-          <Paragraph style={{ fontSize: '13px', color: '#8c8c8c', marginBottom: '20px' }}>
-            Ці дані використовуються для автоматичного заповнення форми на сторінці оформлення замовлення. Дані надійно зберігаються на вашому пристрої у локальному сховищі (`localStorage`).
-          </Paragraph>
+          {isAuthenticated ? (
+            <Alert
+              type="success"
+              showIcon
+              icon={<LockOutlined />}
+              message="Ви авторизовані"
+              description="Ім'я та email заповнено автоматично з вашого акаунту і не можуть бути змінені тут. Заповніть телефон та адресу доставки для швидкого оформлення замовлень."
+              style={{ marginBottom: '20px', borderRadius: '10px' }}
+            />
+          ) : (
+            <Paragraph style={{ fontSize: '13px', color: '#8c8c8c', marginBottom: '20px' }}>
+              Ці дані використовуються для автоматичного заповнення форми на сторінці оформлення замовлення. Дані надійно зберігаються на вашому пристрої у локальному сховищі (`localStorage`).
+            </Paragraph>
+          )}
 
           <Form
             form={form}
@@ -326,20 +345,33 @@ export const ProfilePage = () => {
             </Form.Item>
 
             <Form.Item style={{ marginBottom: 0, marginTop: '20px' }}>
-              <Button 
-                type="primary" 
-                htmlType="submit" 
-                icon={<SaveOutlined />}
-                size="large"
-                style={{ 
-                  backgroundColor: '#00b894', 
-                  borderColor: '#00b894', 
-                  borderRadius: '8px',
-                  fontWeight: 600
-                }}
-              >
-                Зберегти без реєстрації
-              </Button>
+              <Space size={12} wrap>
+                <Button 
+                  type="primary" 
+                  htmlType="submit" 
+                  icon={<SaveOutlined />}
+                  size="large"
+                  style={{ 
+                    backgroundColor: '#00b894', 
+                    borderColor: '#00b894', 
+                    borderRadius: '8px',
+                    fontWeight: 600
+                  }}
+                >
+                  {isAuthenticated ? 'Зберегти контактні дані' : 'Зберегти без реєстрації'}
+                </Button>
+                {isAuthenticated && (
+                  <Button
+                    icon={<LogoutOutlined />}
+                    size="large"
+                    danger
+                    onClick={handleLogout}
+                    style={{ borderRadius: '8px', fontWeight: 600 }}
+                  >
+                    Вийти з акаунту
+                  </Button>
+                )}
+              </Space>
             </Form.Item>
           </Form>
         </Card>
