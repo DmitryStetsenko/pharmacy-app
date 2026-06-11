@@ -4,6 +4,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { StoreProvider } from "@/app/providers/StoreProvider";
 import { ThemeProvider } from "@/app/providers/ThemeProvider";
 import { Header } from "@/widgets/header/ui/Header";
+import { Breadcrumbs } from "@/widgets/breadcrumbs/ui/Breadcrumbs";
 import { Footer } from "@/widgets/footer/ui/Footer";
 import "./globals.css";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           <AntdRegistry>
             <ThemeProvider>
               <Header />
+              <Breadcrumbs />
               <main style={{ flex: 1 }}>
                 {children}
               </main>
