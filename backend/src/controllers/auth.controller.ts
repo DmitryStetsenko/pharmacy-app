@@ -6,7 +6,12 @@ import { db } from '../data/db';
 import { User, AuthenticatedRequest } from '../types';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'pharmacy_app_secret_key_123';
-const JWT_EXPIRES_IN = '1d';
+const JWT_EXPIRES_IN = '15m'; // Short-lived access token
+const REFRESH_JWT_EXPIRES_IN = '7d'; // Long-lived refresh token
+
+// In-memory storage for active refresh tokens and failed login tracking
+const refreshTokens = new Set<string>();
+const failedLogins = new Map<string, number>();
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
@@ -44,8 +49,17 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       { expiresIn: JWT_EXPIRES_IN }
     );
 
+    const refreshToken = jwt.sign(
+      { id: newUser.id },
+      JWT_SECRET + '_refresh',
+      { expiresIn: REFRESH_JWT_EXPIRES_IN }
+    );
+
+    refreshTokens.add(refreshToken);
+
     res.status(201).json({
       token,
+      refreshToken,
       user: {
         id: newUser.id,
         email: newUser.email,
@@ -70,15 +84,32 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
     if (!user) {
+      // Track failed attempt
+      const attempts = (failedLogins.get(email.toLowerCase()) || 0) + 1;
+      failedLogins.set(email.toLowerCase(), attempts);
+      if (attempts >= 3) {
+        console.warn(`[SECURITY WARNING] Multiple failed login attempts (${attempts}) for email: ${email} from IP: ${req.ip}`);
+      }
+
       res.status(400).json({ message: 'Invalid email or password' });
       return;
     }
 
     const isMatch = bcrypt.compareSync(password, user.passwordHash);
     if (!isMatch) {
+      // Track failed attempt
+      const attempts = (failedLogins.get(email.toLowerCase()) || 0) + 1;
+      failedLogins.set(email.toLowerCase(), attempts);
+      if (attempts >= 3) {
+        console.warn(`[SECURITY WARNING] Multiple failed login attempts (${attempts}) for email: ${email} from IP: ${req.ip}`);
+      }
+
       res.status(400).json({ message: 'Invalid email or password' });
       return;
     }
+
+    // Reset failed logins count on successful login
+    failedLogins.delete(email.toLowerCase());
 
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
@@ -86,8 +117,17 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       { expiresIn: JWT_EXPIRES_IN }
     );
 
+    const refreshToken = jwt.sign(
+      { id: user.id },
+      JWT_SECRET + '_refresh',
+      { expiresIn: REFRESH_JWT_EXPIRES_IN }
+    );
+
+    refreshTokens.add(refreshToken);
+
     res.status(200).json({
       token,
+      refreshToken,
       user: {
         id: user.id,
         email: user.email,
@@ -157,4 +197,37 @@ export const deleteUser = async (req: AuthenticatedRequest, res: Response): Prom
 
   const deleted = db.users.splice(index, 1)[0];
   res.status(200).json({ message: 'User deleted', id: deleted.id });
+};
+
+// POST /api/auth/refresh
+export const refresh = async (req: Request, res: Response): Promise<void> => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) {
+    res.status(400).json({ message: 'Refresh token is required' });
+    return;
+  }
+
+  if (!refreshTokens.has(refreshToken)) {
+    res.status(403).json({ message: 'Invalid or expired refresh token' });
+    return;
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, JWT_SECRET + '_refresh') as any;
+    const user = db.users.find(u => u.id === decoded.id);
+    if (!user) {
+      res.status(403).json({ message: 'User not found' });
+      return;
+    }
+
+    const newToken = jwt.sign(
+      { id: user.id, email: user.email, role: user.role },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
+    );
+
+    res.status(200).json({ token: newToken });
+  } catch (error) {
+    res.status(403).json({ message: 'Invalid or expired refresh token' });
+  }
 };

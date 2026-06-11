@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { register, login, getMe, getUsers, deleteUser } from '../controllers/auth.controller';
+import { register, login, getMe, getUsers, deleteUser, refresh } from '../controllers/auth.controller';
 import { authMiddleware, adminMiddleware } from '../middleware/auth.middleware';
 
 const router = Router();
@@ -138,6 +138,40 @@ router.post(
  *         description: Unauthorized
  */
 router.get('/me', authMiddleware, getMe);
+
+/**
+ * @swagger
+ * /api/auth/refresh:
+ *   post:
+ *     summary: Refresh access token using a refresh token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Token refreshed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Refresh token is required
+ *       403:
+ *         description: Invalid or expired refresh token
+ */
+router.post('/refresh', refresh);
 
 /**
  * @swagger

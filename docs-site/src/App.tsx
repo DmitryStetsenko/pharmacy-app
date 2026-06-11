@@ -2797,7 +2797,8 @@ res.status(200).json(userOrders);`}
                         <td><span className="status-badge status-success">Виконано</span></td>
                         <td>
                           <ul>
-                            <li>Логування невдалих логінів: <code>auth.controller.ts</code></li>
+                            <li>Логування невдалих логінів: <code>backend/src/controllers/auth.controller.ts</code> (failedLogins map)</li>
+                            <li>Реалізація Refresh Token: <code>backend/src/routes/auth.routes.ts</code> (роут <code>/refresh</code>)</li>
                             <li>Теоретична доповідь: Порівняння JWT та OAuth 2.0.</li>
                           </ul>
                         </td>
@@ -2841,23 +2842,41 @@ res.status(200).json(userOrders);`}
                 <div className="card" style={{ marginBottom: '1.5rem' }}>
                   <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Логіка Refresh Token (Оновлення сесії)</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                    Для безпеки час життя Access Token встановлюється коротким (наприклад, 15 хв). Refresh Token зберігається у безпечних куках (<code>httpOnly, secure</code>) і використовується клієнтом для отримання нової пари токенів без повторного введення пароля:
+                    Для безпеки час життя Access Token встановлюється коротким (наприклад, 15 хв). Refresh Token зберігається клієнтом і надсилається на ендпоінт <code>/api/auth/refresh</code> для отримання нового Access Token без повторного введення пароля:
                   </p>
                   <pre style={{ padding: '12px', background: 'var(--bg-secondary)', borderRadius: '8px', fontSize: '0.8rem', marginTop: '8px', overflowX: 'auto' }}>
-{`// Концептуальний код роуту оновлення токенів:
-app.post('/api/auth/refresh', async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-  if (!refreshToken) return res.status(401).json({ message: 'Refresh Token required' });
+{`// Реалізований код роуту оновлення токенів (auth.controller.ts):
+export const refresh = async (req: Request, res: Response): Promise<void> => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) {
+    res.status(400).json({ message: 'Refresh token is required' });
+    return;
+  }
+
+  if (!refreshTokens.has(refreshToken)) {
+    res.status(403).json({ message: 'Invalid or expired refresh token' });
+    return;
+  }
 
   try {
-    const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
-    // перевірка токена у БД/клієнтській сесії...
-    const newAccessToken = jwt.sign({ id: decoded.id, role: decoded.role }, JWT_SECRET, { expiresIn: '15m' });
-    res.json({ accessToken: newAccessToken });
-  } catch (err) {
-    res.status(403).json({ message: 'Invalid Refresh Token' });
+    const decoded = jwt.verify(refreshToken, JWT_SECRET + '_refresh') as any;
+    const user = db.users.find(u => u.id === decoded.id);
+    if (!user) {
+      res.status(403).json({ message: 'User not found' });
+      return;
+    }
+
+    const newToken = jwt.sign(
+      { id: user.id, email: user.email, role: user.role },
+      JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+
+    res.status(200).json({ token: newToken });
+  } catch (error) {
+    res.status(403).json({ message: 'Invalid or expired refresh token' });
   }
-});`}
+};`}
                   </pre>
                 </div>
 
@@ -2867,18 +2886,22 @@ app.post('/api/auth/refresh', async (req, res) => {
                     Реалізовано підрахунок невдалих спроб входу по кожній email-адресі. У випадку 3 або більше невдалих спроб сервер пише попередження у лог:
                   </p>
                   <pre style={{ padding: '12px', background: 'var(--bg-secondary)', borderRadius: '8px', fontSize: '0.8rem', marginTop: '8px', overflowX: 'auto' }}>
-{`// Контроль невдалих логінів:
+{`// Реалізований контроль невдалих логінів:
 const failedLogins = new Map<string, number>();
 
-export const login = async (req, res) => {
-  const { email } = req.body;
-  // ...якщо пароль неправильний:
-  const attempts = (failedLogins.get(email) || 0) + 1;
-  failedLogins.set(email, attempts);
-
-  if (attempts >= 3) {
-    console.warn(\`[SECURITY WARNING] Multiple failed login attempts (\${attempts}) for email: \${email} from IP: \${req.ip}\`);
+export const login = async (req: Request, res: Response): Promise<void> => {
+  // ...
+  const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+  if (!user) {
+    const attempts = (failedLogins.get(email.toLowerCase()) || 0) + 1;
+    failedLogins.set(email.toLowerCase(), attempts);
+    if (attempts >= 3) {
+      console.warn(\`[SECURITY WARNING] Multiple failed login attempts (\${attempts}) for email: \${email} from IP: \${req.ip}\`);
+    }
+    res.status(400).json({ message: 'Invalid email or password' });
+    return;
   }
+  // ...
 };`}
                   </pre>
                 </div>
