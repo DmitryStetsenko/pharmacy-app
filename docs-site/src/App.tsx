@@ -191,6 +191,28 @@ const projectTree: FileTreeNode = {
           name: 'types',
           type: 'folder',
           children: [{ name: 'index.ts', type: 'file' }]
+        },
+        {
+          name: 'ui',
+          type: 'folder',
+          children: [
+            {
+              name: 'modal',
+              type: 'folder',
+              children: [
+                { name: 'Modal.tsx', type: 'file' },
+                { name: 'Modal.css', type: 'file' }
+              ]
+            },
+            {
+              name: 'toast',
+              type: 'folder',
+              children: [
+                { name: 'ToastContext.tsx', type: 'file' },
+                { name: 'Toast.css', type: 'file' }
+              ]
+            }
+          ]
         }
       ]
     }
