@@ -13,7 +13,9 @@ import {
   SunOutlined,
   MoonOutlined,
   GiftOutlined,
-  MenuOutlined
+  MenuOutlined,
+  AppstoreOutlined,
+  InfoCircleOutlined
 } from '@ant-design/icons';
 import { RootState } from '@/app/store';
 import { logout } from '@/entities/user/model/userSlice';
@@ -309,54 +311,69 @@ export const Header = () => {
             </div>
           )}
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <Link 
               href="/catalog" 
               onClick={() => setMobileMenuOpen(false)}
               style={{
-                fontSize: '16px',
+                fontSize: '15px',
                 fontWeight: 600,
                 color: isLinkActive('/catalog') ? '#00b894' : (themeMode === 'dark' ? '#f5f5f5' : '#2d3436'),
-                padding: '8px 0',
-                display: 'block'
+                padding: '10px 12px',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                backgroundColor: isLinkActive('/catalog') ? (themeMode === 'dark' ? 'rgba(0, 184, 148, 0.15)' : 'rgba(0, 184, 148, 0.08)') : 'transparent',
+                transition: 'all 0.2s'
               }}
             >
-              💊 Каталог ліків
+              <AppstoreOutlined style={{ fontSize: '18px' }} />
+              <span>Каталог ліків</span>
             </Link>
             
             <Link 
               href="/about" 
               onClick={() => setMobileMenuOpen(false)}
               style={{
-                fontSize: '16px',
+                fontSize: '15px',
                 fontWeight: 600,
                 color: isLinkActive('/about') ? '#00b894' : (themeMode === 'dark' ? '#f5f5f5' : '#2d3436'),
-                padding: '8px 0',
-                display: 'block'
+                padding: '10px 12px',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                backgroundColor: isLinkActive('/about') ? (themeMode === 'dark' ? 'rgba(0, 184, 148, 0.15)' : 'rgba(0, 184, 148, 0.08)') : 'transparent',
+                transition: 'all 0.2s'
               }}
             >
-              ℹ️ Про нас
-            </Link>
-
-            <Link 
-              href="/profile" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                fontSize: '16px',
-                fontWeight: 600,
-                color: isLinkActive('/profile') ? '#00b894' : (themeMode === 'dark' ? '#f5f5f5' : '#2d3436'),
-                padding: '8px 0',
-                display: 'block'
-              }}
-            >
-              👤 Мій Профіль (Lab 4)
+              <InfoCircleOutlined style={{ fontSize: '18px' }} />
+              <span>Про нас</span>
             </Link>
           </div>
 
-          <Divider style={{ margin: '12px 0', borderColor: themeMode === 'dark' ? '#303030' : '#f0f0f0' }} />
+          <Divider style={{ margin: '8px 0', borderColor: themeMode === 'dark' ? '#303030' : '#f0f0f0' }} />
 
           {/* Дії входу / виходу для мобільної панелі */}
           <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <Link href="/profile" onClick={() => setMobileMenuOpen(false)} style={{ width: '100%' }}>
+              <Button
+                type={isLinkActive('/profile') ? 'primary' : 'default'}
+                icon={<UserOutlined />}
+                style={{ 
+                  width: '100%', 
+                  borderRadius: '8px', 
+                  fontWeight: 600, 
+                  height: '40px',
+                  borderColor: isLinkActive('/profile') ? '#00b894' : undefined,
+                  backgroundColor: isLinkActive('/profile') ? '#00b894' : undefined
+                }}
+              >
+                Мій Профіль
+              </Button>
+            </Link>
+
             {isAuthenticated && user ? (
               <Button
                 type="primary"
