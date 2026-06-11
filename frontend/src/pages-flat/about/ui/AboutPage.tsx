@@ -78,15 +78,15 @@ export const AboutPage = () => {
           mode="alternate"
           items={[
             {
-              children: <span style={{ color: textColor }}>2024 рік — Заснування першої офлайн аптеки та формування команди експертів.</span>,
+              content: <span style={{ color: textColor }}>2024 рік — Заснування першої офлайн аптеки та формування команди експертів.</span>,
               color: '#00b894'
             },
             {
-              children: <span style={{ color: textColor }}>2025 рік — Відкриття мережі з 10 аптек та запуск власної лабораторії контролю якості.</span>,
+              content: <span style={{ color: textColor }}>2025 рік — Відкриття мережі з 10 аптек та запуск власної лабораторії контролю якості.</span>,
               color: '#00b894'
             },
             {
-              children: <span style={{ color: textColor }}>2026 рік — Запуск сучасної онлайн платформи для замовлення ліків та інтеграція клієнт-сервісу.</span>,
+              content: <span style={{ color: textColor }}>2026 рік — Запуск сучасної онлайн платформи для замовлення ліків та інтеграція клієнт-сервісу.</span>,
               color: '#00b894'
             }
           ]}
