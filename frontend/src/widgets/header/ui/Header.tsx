@@ -10,7 +10,8 @@ import {
   UserOutlined, 
   LogoutOutlined,
   SunOutlined,
-  MoonOutlined 
+  MoonOutlined,
+  GiftOutlined 
 } from '@ant-design/icons';
 import { RootState } from '@/app/store';
 import { logout } from '@/entities/user/model/userSlice';
@@ -77,7 +78,8 @@ export const Header = () => {
         borderBottom: themeMode === 'dark' ? '1px solid #303030' : '1px solid #e2f5f1',
         transition: 'background-color 0.3s, color 0.3s, border-bottom 0.3s'
       }}>
-        <span>🎉 Отримайте знижку 10% на всі замовлення від 1000 грн!</span>
+        <GiftOutlined style={{ fontSize: '16px' }} />
+        <span>Отримайте знижку 10% на всі замовлення від 1000 грн!</span>
       </div>
       <header style={{
         width: '100%',

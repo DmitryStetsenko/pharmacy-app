@@ -10,7 +10,9 @@ import {
   PlusOutlined, 
   MinusOutlined, 
   ShoppingCartOutlined, 
-  ArrowLeftOutlined 
+  ArrowLeftOutlined,
+  GiftOutlined,
+  InfoCircleOutlined 
 } from '@ant-design/icons';
 import { RootState } from '@/app/store';
 import { removeItem, updateQuantity, clearCart } from '@/entities/cart/model/cartSlice';
@@ -238,9 +240,14 @@ export const CartPage = () => {
                 fontSize: '12px',
                 color: isDark ? '#39e5c2' : '#389e0d',
                 fontWeight: 500,
-                textAlign: 'center'
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px'
               }}>
-                Додайте товарів ще на <strong>{(1000 - totalAmount).toFixed(2)} грн</strong>, щоб отримати знижку <strong>10%</strong>!
+                <InfoCircleOutlined style={{ fontSize: '14px' }} />
+                <span>Додайте товарів ще на <strong>{(1000 - totalAmount).toFixed(2)} грн</strong>, щоб отримати знижку <strong>10%</strong>!</span>
               </div>
             ) : (
               <div style={{
@@ -252,9 +259,14 @@ export const CartPage = () => {
                 fontSize: '12px',
                 color: isDark ? '#39e5c2' : '#389e0d',
                 fontWeight: 600,
-                textAlign: 'center'
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px'
               }}>
-                🎉 Вітаємо! Ви отримали знижку <strong>10%</strong> на замовлення!
+                <GiftOutlined style={{ fontSize: '14px' }} />
+                <span>Ви отримали знижку <strong>10%</strong> на замовлення!</span>
               </div>
             )}
             
