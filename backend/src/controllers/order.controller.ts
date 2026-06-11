@@ -46,6 +46,12 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response): Pro
       });
     }
 
+    // Apply 10% discount if total order amount exceeds 1000 UAH
+    let finalAmount = totalAmount;
+    if (totalAmount >= 1000) {
+      finalAmount = totalAmount * 0.9;
+    }
+
     const newOrder: Order = {
       id: `ord_${Date.now()}`,
       userId,
@@ -53,7 +59,7 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response): Pro
       phone,
       email,
       items: orderItems,
-      totalAmount: parseFloat(totalAmount.toFixed(2)),
+      totalAmount: parseFloat(finalAmount.toFixed(2)),
       status: 'pending',
       createdAt: new Date().toISOString()
     };

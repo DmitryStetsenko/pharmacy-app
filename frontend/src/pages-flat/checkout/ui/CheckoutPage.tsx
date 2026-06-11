@@ -29,6 +29,12 @@ export const CheckoutPage = () => {
   const { message } = App.useApp();
   
   const { items, totalAmount } = useSelector((state: RootState) => state.cart);
+  const discountThreshold = 1000;
+  const discountRate = 0.1; // 10%
+  const hasDiscount = totalAmount >= discountThreshold;
+  const discountAmount = hasDiscount ? parseFloat((totalAmount * discountRate).toFixed(2)) : 0;
+  const finalAmount = totalAmount - discountAmount;
+
   const [createOrder, { isLoading, data: createdOrder, isSuccess, error }] = useCreateOrderMutation();
   const [deliveryType, setDeliveryType] = useState<'pickup' | 'delivery'>('pickup');
   const [form] = Form.useForm();
@@ -299,6 +305,13 @@ export const CheckoutPage = () => {
               <Text type="secondary">Сума за товари</Text>
               <Text strong>{totalAmount.toFixed(2)} грн</Text>
             </div>
+
+            {hasDiscount && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <Text type="secondary">Знижка (10% від 1000 грн)</Text>
+                <Text type="danger" strong>-{discountAmount.toFixed(2)} грн</Text>
+              </div>
+            )}
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
               <Text type="secondary">Доставка</Text>
@@ -310,7 +323,7 @@ export const CheckoutPage = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
               <Text style={{ fontSize: '16px', fontWeight: 600 }}>Загальна сума</Text>
               <div style={{ fontSize: '24px', fontWeight: 800, color: '#00b894' }}>
-                {totalAmount.toFixed(2)} грн
+                {finalAmount.toFixed(2)} грн
               </div>
             </div>
           </Card>
