@@ -231,3 +231,92 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
     res.status(403).json({ message: 'Invalid or expired refresh token' });
   }
 };
+
+// Admin: create a new user (with specific role)
+export const createUser = async (req: Request, res: Response): Promise<void> => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+    return;
+  }
+
+  const { email, password, name, role } = req.body;
+
+  try {
+    const existingUser = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (existingUser) {
+      res.status(400).json({ message: 'User with this email already exists' });
+      return;
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const passwordHash = bcrypt.hashSync(password, salt);
+
+    const newUser: User = {
+      id: `usr_${Date.now()}`,
+      email: email.toLowerCase(),
+      passwordHash,
+      name,
+      role: role || 'user',
+      createdAt: new Date().toISOString()
+    };
+
+    db.users.push(newUser);
+
+    res.status(201).json({
+      id: newUser.id,
+      email: newUser.email,
+      name: newUser.name,
+      role: newUser.role,
+      createdAt: newUser.createdAt
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to create user' });
+  }
+};
+
+// Admin: update an existing user
+export const updateUser = async (req: Request, res: Response): Promise<void> => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+    return;
+  }
+
+  const { id } = req.params;
+  const { email, password, name, role } = req.body;
+
+  try {
+    const user = db.users.find(u => u.id === id);
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    if (email && email.toLowerCase() !== user.email.toLowerCase()) {
+      const emailExists = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (emailExists) {
+        res.status(400).json({ message: 'User with this email already exists' });
+        return;
+      }
+      user.email = email.toLowerCase();
+    }
+
+    if (name) user.name = name;
+    if (role) user.role = role;
+    if (password) {
+      const salt = bcrypt.genSaltSync(10);
+      user.passwordHash = bcrypt.hashSync(password, salt);
+    }
+
+    res.status(200).json({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      createdAt: user.createdAt
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update user' });
+  }
+};

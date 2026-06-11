@@ -86,7 +86,7 @@ export const Header = () => {
     },
     ...(user?.role === 'admin' ? [{
       key: 'admin-link',
-      label: <Link href="/admin">⚙️ Адмінпанель</Link>,
+      label: <Link href="/admin">Адмінпанель</Link>,
       icon: <AppstoreOutlined />,
     }] : []),
     {

@@ -27,9 +27,11 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 
 app.use(cors({
   origin: (origin, callback) => {
+    console.log('[CORS Debug] Request origin:', origin);
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.warn('[CORS Debug] Blocked origin:', origin, 'Allowed origins:', allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },

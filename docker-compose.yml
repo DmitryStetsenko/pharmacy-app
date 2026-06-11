@@ -28,6 +28,7 @@ services:
       - NEXTAUTH_SECRET=next_auth_secret_key_456
       - NEXTAUTH_URL=http://localhost:3000
       - NEXT_PUBLIC_API_URL=http://localhost:5000/api
+      - BACKEND_API_URL=http://backend:5000/api
     depends_on:
       - backend
     restart: always

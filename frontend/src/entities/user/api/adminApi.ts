@@ -31,6 +31,22 @@ export const adminApi = baseApi.injectEndpoints({
       query: (id) => ({ url: `/auth/users/${id}`, method: 'DELETE' }),
       invalidatesTags: ['User'],
     }),
+    createUser: build.mutation<AdminUser, Omit<AdminUser, 'id' | 'createdAt'> & { password?: string }>({
+      query: (body) => ({
+        url: '/auth/users',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['User'],
+    }),
+    updateUser: build.mutation<AdminUser, { id: string; body: Partial<Omit<AdminUser, 'id' | 'createdAt'>> & { password?: string } }>({
+      query: ({ id, body }) => ({
+        url: `/auth/users/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['User'],
+    }),
 
     // Orders (admin)
     getAdminOrders: build.query<AdminOrder[], void>({
@@ -51,6 +67,8 @@ export const adminApi = baseApi.injectEndpoints({
 export const {
   useGetUsersQuery,
   useDeleteUserMutation,
+  useCreateUserMutation,
+  useUpdateUserMutation,
   useGetAdminOrdersQuery,
   useUpdateOrderStatusMutation,
   useDeleteOrderMutation,

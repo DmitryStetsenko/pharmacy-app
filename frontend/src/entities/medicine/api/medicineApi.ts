@@ -28,7 +28,36 @@ export const medicineApi = baseApi.injectEndpoints({
       query: (id) => `/medicines/${id}`,
       providesTags: (result, error, id) => [{ type: 'Medicine', id }],
     }),
+    createMedicine: build.mutation<Medicine, Omit<Medicine, 'id'>>({
+      query: (body) => ({
+        url: '/medicines',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Medicine'],
+    }),
+    updateMedicine: build.mutation<Medicine, { id: string; body: Partial<Omit<Medicine, 'id'>> }>({
+      query: ({ id, body }) => ({
+        url: `/medicines/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: (result, error, { id }) => ['Medicine', { type: 'Medicine', id }],
+    }),
+    deleteMedicine: build.mutation<{ message: string; id: string }, string>({
+      query: (id) => ({
+        url: `/medicines/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Medicine'],
+    }),
   }),
 });
 
-export const { useGetMedicinesQuery, useGetMedicineByIdQuery } = medicineApi;
+export const {
+  useGetMedicinesQuery,
+  useGetMedicineByIdQuery,
+  useCreateMedicineMutation,
+  useUpdateMedicineMutation,
+  useDeleteMedicineMutation,
+} = medicineApi;

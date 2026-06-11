@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { register, login, getMe, getUsers, deleteUser, refresh } from '../controllers/auth.controller';
+import { register, login, getMe, getUsers, deleteUser, refresh, createUser, updateUser } from '../controllers/auth.controller';
 import { authMiddleware, adminMiddleware } from '../middleware/auth.middleware';
 
 const router = Router();
@@ -216,5 +216,31 @@ router.get('/users', authMiddleware, adminMiddleware, getUsers);
  *         description: Forbidden (Admin only)
  */
 router.delete('/users/:id', authMiddleware, adminMiddleware, deleteUser);
+
+router.post(
+  '/users',
+  authMiddleware,
+  adminMiddleware,
+  [
+    body('email').isEmail().withMessage('Enter a valid email address'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+    body('name').notEmpty().withMessage('Name is required'),
+    body('role').isIn(['user', 'admin']).withMessage('Role must be user or admin')
+  ],
+  createUser
+);
+
+router.put(
+  '/users/:id',
+  authMiddleware,
+  adminMiddleware,
+  [
+    body('email').optional().isEmail().withMessage('Enter a valid email address'),
+    body('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+    body('name').optional().notEmpty().withMessage('Name cannot be empty'),
+    body('role').optional().isIn(['user', 'admin']).withMessage('Role must be user or admin')
+  ],
+  updateUser
+);
 
 export default router;
