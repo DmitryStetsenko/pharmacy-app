@@ -751,6 +751,29 @@ export default function App() {
                       Лаб 7
                     </button>
                   </li>
+                  <li>
+                    <button
+                      className={`nav-button ${activeLabTab === 'lab8' ? 'active' : ''}`}
+                      onClick={() => setActiveLabTab('lab8')}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.85rem',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        width: '100%'
+                      }}
+                    >
+                      <span style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        backgroundColor: activeLabTab === 'lab8' ? 'var(--primary)' : 'var(--text-muted)'
+                      }} />
+                      Лаб 8
+                    </button>
+                  </li>
                 </ul>
               )}
             </li>
@@ -1557,6 +1580,21 @@ npm run dev
                 }}
               >
                 Лабораторна робота №7
+              </button>
+              <button 
+                onClick={() => setActiveLabTab('lab8')} 
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: activeLabTab === 'lab8' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
+                  background: activeLabTab === 'lab8' ? 'var(--primary-light)' : 'transparent',
+                  color: activeLabTab === 'lab8' ? 'var(--primary)' : 'var(--text-secondary)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                Лабораторна робота №8
               </button>
             </div>
 
@@ -2453,6 +2491,190 @@ npm run dev
                   <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
                     Під час лабораторної роботи було створено надійну систему керування сесіями користувачів. Використання JWT токенів дозволило безпечно передавати інформацію про користувача між клієнтом та API бекенду. Роути додатку захищено на рівні Middleware Next.js, а сесії автоматично відновлюються з локального сховища при перезавантаженні сторінки, що забезпечує безшовний та безпечний UX.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeLabTab === 'lab8' && (
+              <div>
+                <div className="card" style={{ marginBottom: '2rem', borderColor: '#3b82f6', borderLeft: '4px solid #3b82f6' }}>
+                  <h2 style={{ color: 'var(--text-primary)', marginTop: 0 }}>Лабораторна робота №8. Розробка Node.js-додатку з CRUD-операціями</h2>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                    <strong>Мета роботи:</strong> сформувати практичні навички створення серверних вебдодатків на платформі Node.js з використанням фреймворку Express; навчитися реалізовувати CRUD-операції та організовувати REST API для роботи з даними користувачів і замовлень.
+                  </p>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📋 Статус та файли реалізації завдань</h3>
+                <div className="table-container" style={{ marginBottom: '3rem' }}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style={{ width: '40%' }}>Завдання (Лабораторна 8)</th>
+                        <th style={{ width: '15%' }}>Статус</th>
+                        <th style={{ width: '45%' }}>Де реалізовано в проєкті</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Налаштування Node.js-проєкту</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>npm init, Express, nodemon, структура</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Проєкт ініціалізовано в директорії <code>backend/</code> з <code>package.json</code>.</li>
+                            <li>Встановлено <code>express</code>, <code>typescript</code>, <code>ts-node-dev</code> (аналог nodemon для TypeScript).</li>
+                            <li>Точка входу: <code>backend/src/server.ts</code>, основний файл: <code>backend/src/app.ts</code>.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>CRUD для користувачів</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Register, Login, GetMe — через /api/auth</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li><code>POST /api/auth/register</code> — створення користувача, хешування пароля bcrypt.</li>
+                            <li><code>POST /api/auth/login</code> — аутентифікація, видача JWT-токену.</li>
+                            <li><code>GET /api/auth/me</code> — профіль авторизованого користувача.</li>
+                            <li>Файли: <code>backend/src/routes/auth.routes.ts</code>, <code>backend/src/controllers/auth.controller.ts</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>CRUD для ліків (товарів)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>GET, GET/:id, POST, PUT/:id, DELETE/:id</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li><code>GET /api/medicines</code> — список з фільтрацією, пошуком, пагінацією.</li>
+                            <li><code>GET /api/medicines/:id</code> — деталі препарату.</li>
+                            <li><code>POST /api/medicines</code> — додавання (Admin only).</li>
+                            <li><code>PUT /api/medicines/:id</code> — редагування (Admin only).</li>
+                            <li><code>DELETE /api/medicines/:id</code> — видалення (Admin only).</li>
+                            <li>Файл: <code>backend/src/routes/medicine.routes.ts</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>CRUD для замовлень із зв'язком userId</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>POST /orders, GET /orders?userId=...</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li><code>POST /api/orders</code> — оформлення замовлення, перевірка залишку, списання зі складу.</li>
+                            <li><code>GET /api/orders</code> — власні замовлення (user) або всі (admin).</li>
+                            <li><code>GET /api/orders?userId=...</code> — фільтрація за userId для admin.</li>
+                            <li>Поле <code>userId</code> береться з JWT-токену автоматично.</li>
+                            <li>Файли: <code>backend/src/routes/order.routes.ts</code>, <code>backend/src/controllers/order.controller.ts</code></li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Валідація вхідних даних</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>email, мін. кількість товарів, формат полів</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Бібліотека <code>express-validator</code> перевіряє дані до передачі в контролер.</li>
+                            <li>Замовлення: <code>email.isEmail()</code>, <code>items.isArray(min:1)</code>, <code>quantity.isInt(gt:0)</code>.</li>
+                            <li>Ліки: обов'язкові name, description, category; <code>price.isFloat(gt:0)</code>.</li>
+                            <li>Реєстрація: формат email, мін. довжина пароля 6 символів.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>Тестування API (Swagger UI)</strong><br/><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Перевірка коректних та некоректних запитів</span></td>
+                        <td><span className="badge public">Виконано</span></td>
+                        <td>
+                          <ul>
+                            <li>Swagger UI доступна за адресою <code>http://localhost:5000/api-docs</code>.</li>
+                            <li>Всі маршрути задокументовано з прикладами запитів та відповідей.</li>
+                            <li>Документація генерується автоматично з JSDoc-коментарів у файлах routes.</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h3 style={{ marginBottom: '1rem' }}>📚 Відповіді на самостійну роботу</h3>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>1. Принципи REST-архітектури та їх застосування у вебдодатках</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    REST (Representational State Transfer) — архітектурний стиль для побудови розподілених систем. У проєкті дотримано всіх ключових принципів:
+                  </p>
+                  <ul style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', paddingLeft: '1.25rem', lineHeight: '1.8', marginTop: '0.5rem' }}>
+                    <li><strong>Клієнт-серверна архітектура:</strong> Фронтенд (Next.js, порт 3000) і бекенд (Express, порт 5000) незалежні, спілкуються через HTTP.</li>
+                    <li><strong>Stateless (без стану):</strong> Кожен запит самодостатній — авторизація передається у заголовку <code>Authorization: Bearer &lt;token&gt;</code>, сервер не зберігає сесій.</li>
+                    <li><strong>Uniform Interface:</strong> Ресурси ідентифікуються URI (<code>/api/medicines/:id</code>), дії — HTTP-методами (GET, POST, PUT, DELETE).</li>
+                    <li><strong>Cacheable:</strong> GET-запити кешуються RTK Query на клієнті, зменшуючи навантаження на API.</li>
+                    <li><strong>Layered System:</strong> Між клієнтом та сервером може знаходитись Nginx як реверс-проксі.</li>
+                  </ul>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>2. Валідація при створенні користувачів та замовлень</h4>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px', fontSize: '0.85rem' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
+                        <th style={{ padding: '8px' }}>Поле</th>
+                        <th style={{ padding: '8px' }}>Правило</th>
+                        <th style={{ padding: '8px' }}>Код (express-validator)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><code>email</code></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Обов'язковий, правильний формат</td>
+                        <td style={{ padding: '8px' }}><code>body('email').isEmail()</code></td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><code>password</code></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Мін. 6 символів</td>
+                        <td style={{ padding: '8px' }}><code>body('password').isLength({'{ min: 6 }'})</code></td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><code>items</code></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Мін. 1 товар у замовленні</td>
+                        <td style={{ padding: '8px' }}><code>body('items').isArray({'{ min: 1 }'})</code></td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                        <td style={{ padding: '8px' }}><code>quantity</code></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Ціле число {'>'} 0</td>
+                        <td style={{ padding: '8px' }}><code>body('items.*.quantity').isInt({'{ gt: 0 }'})</code></td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: '8px' }}><code>price</code></td>
+                        <td style={{ padding: '8px', color: 'var(--text-secondary)' }}>Число {'>'} 0</td>
+                        <td style={{ padding: '8px' }}><code>body('price').isFloat({'{ gt: 0 }'})</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="card" style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>3. Розширений пошук замовлень (GET /orders?userId=...)</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Реалізовано у <code>order.controller.ts</code>. Адміністратор може фільтрувати замовлення за <code>userId</code>:
+                  </p>
+                  <pre style={{ padding: '12px', background: 'var(--bg-secondary)', borderRadius: '8px', fontSize: '0.8rem', marginTop: '8px', overflowX: 'auto' }}>
+{`// GET /api/orders?userId=usr_123 (тільки для admin)
+if (req.user.role === 'admin') {
+  const { userId } = req.query;
+  if (userId) {
+    const filtered = db.orders.filter(o => o.userId === userId);
+    res.status(200).json(filtered);
+    return;
+  }
+  res.status(200).json(db.orders); // всі замовлення
+}
+// Звичайний user бачить лише свої
+const userOrders = db.orders.filter(o => o.userId === req.user?.id);
+res.status(200).json(userOrders);`}
+                  </pre>
+                </div>
+
+                <div className="card">
+                  <h4 style={{ color: 'var(--text-primary)', margin: '0 0 10px 0' }}>Висновки</h4>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    У ході лабораторної роботи розроблено повноцінний REST API-сервер на Node.js та Express з TypeScript. Реалізовано CRUD-операції для ресурсів «Ліки» та «Замовлення», систему управління користувачами через JWT-авторизацію. Завдяки <code>express-validator</code> забезпечено серверну валідацію даних, а Swagger UI надає зручний інструмент тестування без додаткового ПЗ. Зв'язок замовлень із користувачами через поле <code>userId</code> дозволяє реалізувати рольовий доступ до даних на рівні бізнес-логіки.
                   </p>
                 </div>
               </div>
