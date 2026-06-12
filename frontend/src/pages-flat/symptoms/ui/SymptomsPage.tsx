@@ -102,9 +102,8 @@ export const SymptomsPage = () => {
         }}
       />
 
-      {/* Картка з формою */}
       <Card 
-        bordered
+        variant="outlined"
         style={{ 
           borderRadius: '16px', 
           backgroundColor: cardBgColor, 
