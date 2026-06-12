@@ -70,7 +70,7 @@ export const analyzeSymptomsMvp = async (req: Request, res: Response): Promise<v
 
 Не прив'язуйся до жодних ID, пиши просто зрозумілі людям назви ліків. Поверни суворо JSON без форматування markdown чи обгорток block.`;
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
