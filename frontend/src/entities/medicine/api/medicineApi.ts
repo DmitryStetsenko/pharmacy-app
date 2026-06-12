@@ -22,6 +22,17 @@ export const medicineApi = baseApi.injectEndpoints({
         url: '/medicines',
         params,
       }),
+      transformResponse: (response: {
+        medicines: Medicine[];
+        totalCount: number;
+        page: number;
+        totalPages: number;
+      }) => ({
+        medicines: response.medicines,
+        total: response.totalCount,
+        page: response.page,
+        totalPages: response.totalPages,
+      }),
       providesTags: ['Medicine'],
     }),
     getMedicineById: build.query<Medicine, string>({
