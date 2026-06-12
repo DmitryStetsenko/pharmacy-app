@@ -53,9 +53,9 @@ export const analyzeSymptomsMvp = async (req: Request, res: Response): Promise<v
     const readableDuration = durationLabels[duration] || duration || 'не вказано';
     const mappedSymptoms = symptoms.map((code: string) => symptomLabels[code] || code).join(', ') || 'немає специфічних симптомів';
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
-      res.status(500).json({ message: 'Gemini API Key is not configured on the server' });
+      res.status(500).json({ message: 'Groq API Key is not configured on the server' });
       return;
     }
 
@@ -70,38 +70,37 @@ export const analyzeSymptomsMvp = async (req: Request, res: Response): Promise<v
 
 Не прив'язуйся до жодних ID, пиши просто зрозумілі людям назви ліків. Поверни суворо JSON без форматування markdown чи обгорток block.`;
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        contents: [
+        model: 'llama-3.3-70b-versatile',
+        messages: [
           {
-            parts: [
-              {
-                text: promptText
-              }
-            ]
+            role: 'user',
+            content: promptText
           }
         ],
-        generationConfig: {
-          responseMimeType: 'application/json'
+        response_format: {
+          type: 'json_object'
         }
       })
     });
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error('Gemini API Error:', errText);
-      res.status(502).json({ message: 'Помилка звернення до сервісу ШІ' });
+      console.error('Groq API Error:', errText);
+      res.status(502).json({ message: 'Помилка звернення до сервісу ШІ Groq' });
       return;
     }
 
     const result = (await response.json()) as any;
-    const rawText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+    const rawText = result.choices?.[0]?.message?.content;
     if (!rawText) {
-      res.status(500).json({ message: 'ШІ повернув порожню відповідь' });
+      res.status(500).json({ message: 'ШІ Groq повернув порожню відповідь' });
       return;
     }
 

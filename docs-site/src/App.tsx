@@ -1359,15 +1359,15 @@ export default function App() {
             <div className="tabs-container">
               <div className="card" style={{ marginBottom: '2rem', borderLeft: '4px solid var(--primary)' }}>
                 <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Cpu size={20} /> ⚙️ Обов'язкова конфігурація ШІ (Gemini API Key)
+                  <Cpu size={20} /> ⚙️ Обов'язкова конфігурація ШІ (Groq API Key)
                 </h3>
                 <p className="card-text" style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>
-                  Для роботи модуля "Аналізатор симптомів" необхідно налаштувати API-ключ Gemini:
+                  Для роботи модуля "Аналізатор симптомів" необхідно налаштувати API-ключ Groq:
                 </p>
                 <ol style={{ paddingLeft: '1.25rem', fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.5rem', lineHeight: '1.6' }}>
-                  <li>Отримайте безкоштовний ключ на <a href="https://aistudio.google.com/" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>Google AI Studio</a> (формат ключа: <code>AIzaSy...</code>).</li>
+                  <li>Отримайте безкоштовний ключ на <a href="https://console.groq.com/" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>Groq Console API Keys</a> (формат ключа: <code>gsk_...</code>).</li>
                   <li>У каталозі <code>backend/</code> створіть або відкрийте файл <code>.env</code>.</li>
-                  <li>Запишіть туди отриманий ключ: <code>GEMINI_API_KEY=AIzaSy...</code>.</li>
+                  <li>Запишіть туди отриманий ключ: <code>GROQ_API_KEY=gsk_...</code>.</li>
                 </ol>
                 <p className="card-text" style={{ marginTop: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                   При запуску через Docker Compose ці змінні автоматично підхоплюються з <code>backend/.env</code>. Без ключа аналізатор симптомів не зможе обробляти запити.
@@ -1479,26 +1479,26 @@ npm run dev
               </ol>
             </div>
 
-            <h2 style={{ marginBottom: '1.5rem' }}>🤖 Крок 2.5. Налаштування ШІ-аналізатора (Отримання та конфігурація Gemini API Key)</h2>
+            <h2 style={{ marginBottom: '1.5rem' }}>🤖 Крок 2.5. Налаштування ШІ-аналізатора (Отримання та конфігурація Groq API Key)</h2>
             <div className="card" style={{ marginBottom: '2.5rem', borderColor: 'rgba(139, 92, 246, 0.3)', background: 'rgba(139, 92, 246, 0.02)' }}>
               <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#8b5cf6' }}>
                 <Cpu size={20} /> Штучний Інтелект та визначення хвороб
               </h3>
               <p className="card-text" style={{ marginTop: '0.5rem' }}>
-                У проєкт інтегровано функціонал <strong>Аналізатора симптомів</strong> на базі нейромережі <strong>Gemini 2.0 Flash</strong>. Щоб ШІ міг відповідати на запити користувачів, серверу потрібен безкоштовний API-ключ від Google.
+                У проєкт інтегровано функціонал <strong>Аналізатора симптомів</strong> на базі моделі <strong>Groq (llama-3.3-70b-versatile)</strong>. Щоб ШІ міг відповідати на запити користувачів, серверу потрібен безкоштовний API-ключ від Groq.
               </p>
               <h4 style={{ marginTop: '1rem', fontWeight: 600, fontSize: '0.95rem' }}>Як безкоштовно отримати ключ:</h4>
               <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: '1.6' }}>
-                <li>Перейдіть на сторінку <a href="https://aistudio.google.com/" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>Google AI Studio API Keys</a>.</li>
-                <li>Увійдіть за допомогою свого Google-акаунта та натисніть кнопку <strong>"Create API key"</strong>.</li>
-                <li>Виберіть створення ключа у новому або існуючому проєкті Google Cloud та скопіюйте згенерований ключ (він починається на <code>AIzaSy...</code>).</li>
+                <li>Перейдіть на сторінку <a href="https://console.groq.com/" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', fontWeight: 600 }}>Groq Console</a>.</li>
+                <li>Увійдіть за допомогою свого акаунта та перейдіть у розділ <strong>"API Keys"</strong>.</li>
+                <li>Натисніть кнопку <strong>"Create API Key"</strong> та скопіюйте згенерований ключ (він починається на <code>gsk_...</code>).</li>
               </ol>
               <h4 style={{ marginTop: '1rem', fontWeight: 600, fontSize: '0.95rem' }}>Де прописати ключ у проєкті:</h4>
               <ol style={{ paddingLeft: '1.25rem', fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: '1.6' }}>
                 <li>Перейдіть у папку <code>backend/</code> в розархівованій директорії проєкту.</li>
-                <li>Знайдіть та відкрийте текстовим редактором файл <code>.env</code> (якщо його немає, скопіюйте з файлу <code>.env.example</code>).</li>
-                <li>Знайдіть рядок <code>GEMINI_API_KEY=...</code> та вставте свій ключ після знаку дорівнює:
-                  <pre style={{ margin: '0.5rem 0', background: 'var(--bg-secondary)', padding: '0.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>GEMINI_API_KEY=AIzaSyYourNewApiKeyHere...</pre>
+                <li>Знайдіть та відкрийте текстовим редактором файл <code>.env</code>.</li>
+                <li>Знайдіть рядок <code>GROQ_API_KEY=...</code> та вставте свій ключ після знаку дорівнює:
+                  <pre style={{ margin: '0.5rem 0', background: 'var(--bg-secondary)', padding: '0.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>GROQ_API_KEY=gsk_YourNewApiKeyHere...</pre>
                 </li>
               </ol>
               <p className="card-text" style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
