@@ -14,16 +14,12 @@
 
 ```
 src/
-├── app/                  # Глобальні провайдери (Redux, Auth, Antd), стилі
-├── pages-flat/           # Логічні компоненти сторінок
-│   ├── home/             # Головна сторінка
-│   ├── catalog/          # Каталог товарів з фільтрами
-│   ├── cart/             # Сторінка кошика
-│   └── checkout/         # Оформлення замовлення
-├── widgets/              # Композиційні блоки (Header, Footer)
-├── features/             # Інтерактивна логіка користувача (auth/login, theme)
-├── entities/             # Бізнес-моделі та UI-картки (medicine, cart, order)
-└── shared/               # Спільні ресурси (api-клієнт baseApi, ui-компоненти)
+├── app/                  # Глобальні провайдери (Redux, Тема), стилі та конфігурації Next.js роутів
+├── pages-flat/           # Логічні компоненти сторінок (home, catalog, medicine-details, cart, checkout, login, register, admin, about, profile, symptoms)
+├── widgets/              # Великі композиційні блоки інтерфейсу (Header, Footer, Breadcrumbs)
+├── entities/             # Бізнес-сутності та прості UI-картки (medicine, cart, order, theme, user)
+├── shared/               # Спільні ресурси (api-клієнт baseApi, ui-компоненти, спільні типи)
+└── middleware.ts         # Файл проміжних обробників Next.js (захист роутів, авторизація)
 ```
 
 ## 🔄 Клієнтський стан та Запити (Redux & RTK Query)

@@ -45,6 +45,16 @@ const projectTree: FileTreeNode = {
       fsdLayer: 'app',
       children: [
         {
+          name: 'about',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
+        {
+          name: 'admin',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
+        {
           name: 'api',
           type: 'folder',
           children: [
@@ -64,23 +74,61 @@ const projectTree: FileTreeNode = {
           ]
         },
         {
-          name: 'providers',
-          type: 'folder',
-          children: [
-            { name: 'AuthProvider.tsx', type: 'file' },
-            { name: 'ThemeProvider.tsx', type: 'file' },
-            { name: 'StoreProvider.tsx', type: 'file' },
-            { name: 'AntdRegistry.tsx', type: 'file' }
-          ]
-        },
-        {
-          name: 'admin',
+          name: 'cart',
           type: 'folder',
           children: [{ name: 'page.tsx', type: 'file' }]
         },
+        {
+          name: 'catalog',
+          type: 'folder',
+          children: [
+            { name: 'page.tsx', type: 'file' },
+            {
+              name: '[id]',
+              type: 'folder',
+              children: [{ name: 'page.tsx', type: 'file' }]
+            }
+          ]
+        },
+        {
+          name: 'checkout',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
+        {
+          name: 'login',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
+        {
+          name: 'profile',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
+        {
+          name: 'providers',
+          type: 'folder',
+          children: [
+            { name: 'StoreProvider.tsx', type: 'file' },
+            { name: 'ThemeProvider.tsx', type: 'file' }
+          ]
+        },
+        {
+          name: 'register',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
+        {
+          name: 'symptoms',
+          type: 'folder',
+          children: [{ name: 'page.tsx', type: 'file' }]
+        },
+        { name: 'favicon.ico', type: 'file' },
         { name: 'globals.css', type: 'file' },
         { name: 'layout.tsx', type: 'file' },
+        { name: 'page.module.css', type: 'file' },
         { name: 'page.tsx', type: 'file' },
+        { name: 'sitemap.ts', type: 'file' },
         { name: 'store.ts', type: 'file' }
       ]
     },
@@ -90,19 +138,14 @@ const projectTree: FileTreeNode = {
       fsdLayer: 'pages-flat',
       children: [
         {
-          name: 'home',
+          name: 'about',
           type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'HomePage.tsx', type: 'file' }] }]
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'AboutPage.tsx', type: 'file' }] }]
         },
         {
-          name: 'catalog',
+          name: 'admin',
           type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'CatalogPage.tsx', type: 'file' }] }]
-        },
-        {
-          name: 'medicine-details',
-          type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'MedicineDetailsPage.tsx', type: 'file' }] }]
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'AdminPage.tsx', type: 'file' }] }]
         },
         {
           name: 'cart',
@@ -110,9 +153,19 @@ const projectTree: FileTreeNode = {
           children: [{ name: 'ui', type: 'folder', children: [{ name: 'CartPage.tsx', type: 'file' }] }]
         },
         {
+          name: 'catalog',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'CatalogPage.tsx', type: 'file' }] }]
+        },
+        {
           name: 'checkout',
           type: 'folder',
           children: [{ name: 'ui', type: 'folder', children: [{ name: 'CheckoutPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'home',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'HomePage.tsx', type: 'file' }] }]
         },
         {
           name: 'login',
@@ -120,14 +173,19 @@ const projectTree: FileTreeNode = {
           children: [{ name: 'ui', type: 'folder', children: [{ name: 'LoginPage.tsx', type: 'file' }] }]
         },
         {
+          name: 'medicine-details',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'MedicineDetailsPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'profile',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'ProfilePage.tsx', type: 'file' }] }]
+        },
+        {
           name: 'register',
           type: 'folder',
           children: [{ name: 'ui', type: 'folder', children: [{ name: 'RegisterPage.tsx', type: 'file' }] }]
-        },
-        {
-          name: 'admin',
-          type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'AdminPage.tsx', type: 'file' }] }]
         },
         {
           name: 'symptoms',
@@ -142,26 +200,19 @@ const projectTree: FileTreeNode = {
       fsdLayer: 'widgets',
       children: [
         {
-          name: 'header',
+          name: 'breadcrumbs',
           type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'Header.tsx', type: 'file' }] }]
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'Breadcrumbs.tsx', type: 'file' }] }]
         },
         {
           name: 'footer',
           type: 'folder',
           children: [{ name: 'ui', type: 'folder', children: [{ name: 'Footer.tsx', type: 'file' }] }]
-        }
-      ]
-    },
-    {
-      name: 'features',
-      type: 'folder',
-      fsdLayer: 'features',
-      children: [
+        },
         {
-          name: 'auth',
+          name: 'header',
           type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'LoginForm.tsx', type: 'file' }] }]
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'Header.tsx', type: 'file' }] }]
         }
       ]
     },
@@ -171,19 +222,23 @@ const projectTree: FileTreeNode = {
       fsdLayer: 'entities',
       children: [
         {
-          name: 'medicine',
-          type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'MedicineCard.tsx', type: 'file' }] }]
-        },
-        {
           name: 'cart',
           type: 'folder',
           children: [{ name: 'model', type: 'folder', children: [{ name: 'cartSlice.ts', type: 'file' }] }]
         },
         {
+          name: 'medicine',
+          type: 'folder',
+          children: [
+            { name: 'api', type: 'folder', children: [{ name: 'medicineApi.ts', type: 'file' }] },
+            { name: 'model', type: 'folder', children: [{ name: 'types.ts', type: 'file' }] },
+            { name: 'ui', type: 'folder', children: [{ name: 'MedicineCard.tsx', type: 'file' }] }
+          ]
+        },
+        {
           name: 'order',
           type: 'folder',
-          children: [{ name: 'ui', type: 'folder', children: [{ name: 'OrderCard.tsx', type: 'file' }] }]
+          children: [{ name: 'api', type: 'folder', children: [{ name: 'orderApi.ts', type: 'file' }] }]
         },
         {
           name: 'theme',
@@ -194,8 +249,8 @@ const projectTree: FileTreeNode = {
           name: 'user',
           type: 'folder',
           children: [
-            { name: 'model', type: 'folder', children: [{ name: 'userSlice.ts', type: 'file' }] },
-            { name: 'api', type: 'folder', children: [{ name: 'userApi.ts', type: 'file' }, { name: 'adminApi.ts', type: 'file' }] }
+            { name: 'api', type: 'folder', children: [{ name: 'userApi.ts', type: 'file' }, { name: 'adminApi.ts', type: 'file' }] },
+            { name: 'model', type: 'folder', children: [{ name: 'userSlice.ts', type: 'file' }, { name: 'types.ts', type: 'file' }] }
           ]
         }
       ]
@@ -213,7 +268,7 @@ const projectTree: FileTreeNode = {
         {
           name: 'types',
           type: 'folder',
-          children: [{ name: 'index.ts', type: 'file' }]
+          children: [{ name: 'next-auth.d.ts', type: 'file' }]
         },
         {
           name: 'ui',
@@ -238,6 +293,10 @@ const projectTree: FileTreeNode = {
           ]
         }
       ]
+    },
+    {
+      name: 'middleware.ts',
+      type: 'file'
     }
   ]
 };
