@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input, Button, Card, Row, Col, Typography } from 'antd';
-import { SearchOutlined, SafetyCertificateOutlined, TrophyOutlined, CarOutlined, RightOutlined } from '@ant-design/icons';
+import { SearchOutlined, SafetyCertificateOutlined, TrophyOutlined, CarOutlined, RightOutlined, RobotOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 
@@ -162,6 +162,73 @@ export const HomePage = () => {
             </Col>
           ))}
         </Row>
+      </section>
+
+      {/* Блок ШІ-аналізатора */}
+      <section style={{ maxWidth: '1200px', margin: '60px auto 0 auto', padding: '0 24px' }}>
+        <Card
+          hoverable
+          styles={{
+            body: {
+              padding: '40px',
+              borderRadius: '24px',
+              background: isDark
+                ? 'linear-gradient(135deg, #0f2b26 0%, #151e22 100%)'
+                : 'linear-gradient(135deg, #e6fcf5 0%, #f0fdfa 100%)',
+              border: isDark ? '1px solid #1a3c35' : '1px solid #c3fae8',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center'
+            }
+          }}
+          style={{
+            borderRadius: '24px',
+            overflow: 'hidden',
+            boxShadow: isDark ? '0 10px 30px rgba(0, 184, 148, 0.1)' : '0 10px 30px rgba(0, 184, 148, 0.05)'
+          }}
+          onClick={() => router.push('/symptoms')}
+        >
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '64px',
+            height: '64px',
+            borderRadius: '50%',
+            backgroundColor: isDark ? '#1a3c35' : '#c3fae8',
+            marginBottom: '20px',
+            color: '#00b894'
+          }}>
+            <RobotOutlined style={{ fontSize: '32px' }} />
+          </div>
+
+          <Title level={2} style={{ color: textColor, marginBottom: '16px', fontSize: '28px', fontWeight: 800 }}>
+            Інтелектуальний аналізатор симптомів
+          </Title>
+
+          <Paragraph style={{ color: secondaryTextColor, fontSize: '16px', maxWidth: '700px', marginBottom: '32px', lineHeight: '1.7' }}>
+            Відчуваєте нездужання? Наш тестовий сервіс на базі штучного інтелекту допоможе провести швидку попередню оцінку вашого стану. Оберіть симптоми та отримайте миттєві рекомендації щодо подальших дій та можливих категорій допоміжних засобів.
+          </Paragraph>
+
+          <Button 
+            type="primary" 
+            size="large" 
+            icon={<ThunderboltOutlined />} 
+            style={{ 
+              height: '48px', 
+              backgroundColor: '#00b894', 
+              borderColor: '#00b894', 
+              borderRadius: '24px',
+              fontWeight: 600,
+              padding: '0 32px',
+              fontSize: '16px'
+            }}
+          >
+            Спробувати аналізатор
+          </Button>
+        </Card>
       </section>
     </div>
   );
