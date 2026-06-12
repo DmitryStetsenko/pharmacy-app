@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /catalog
+Allow: /catalog/*
+Allow: /about
+Allow: /symptoms
+Disallow: /admin/
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Disallow: /profile
+Disallow: /api/
+
+# Вказуємо майбутню мапу сайту (Sitemap)
+Sitemap: http://localhost:3000/sitemap.xml

@@ -906,6 +906,37 @@ export default function App() {
               </p>
             </div>
 
+            {/* SEO & Next.js Justification Card */}
+            <div className="card" style={{ marginBottom: '2.5rem', borderLeft: '4px solid var(--primary)', background: 'var(--bg-secondary)', padding: '1.5rem' }}>
+              <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', margin: '0 0 0.75rem 0', fontSize: '1.2rem' }}>
+                🌐 Обґрунтування Next.js: SEO-оптимізація та Мікророзмітка товарів
+              </h3>
+              <p className="card-text" style={{ fontSize: '0.9rem', lineHeight: '1.6', color: 'var(--text-primary)', margin: '0 0 1rem 0' }}>
+                Для підтвердження доцільності використання <strong>Next.js App Router</strong> (замість звичайного клієнтського React SPA), у проєкті реалізовано повноцінну пошукову оптимізацію на рівні сервера (SSR/ISR):
+              </p>
+              <ul style={{ paddingLeft: '1.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.65rem', margin: '0 0 1rem 0' }}>
+                <li>
+                  <strong>Динамічна мікророзмітка JSON-LD (schema.org/Product):</strong>
+                  {' '}Усі сторінки деталей препаратів (<code>/catalog/[id]</code>) генерують вбудовану в HTML розмітку з метаданими товару (назва, опис, ціна в UAH, виробник, наявність на складі та фото). Це гарантує відображення розширених сніпетів (Rich Snippets) у пошукових системах Google без потреби виконання клієнтського JavaScript.
+                </li>
+                <li>
+                  <strong>Генерація динамічної мапи сайту (Dynamic Sitemap):</strong>
+                  {' '}Конфігураційний файл <code>sitemap.ts</code> динамічно підвантажує список усіх товарів із бази даних та генерує актуальний <code>sitemap.xml</code> для пошукових систем.
+                </li>
+                <li>
+                  <strong>Розумний контроль індексації (robots.txt):</strong>
+                  {' '}Файл <code>public/robots.txt</code> спрямовує пошукових роботів, забороняючи індексувати адміністративні сторінки (<code>/admin</code>), кошик (<code>/cart</code>), сторінки профілю (<code>/profile</code>) та внутрішнє API.
+                </li>
+                <li>
+                  <strong>Динамічні Meta-теги та OpenGraph:</strong>
+                  {' '}Використання функції <code>generateMetadata</code> дозволяє Next.js автоматично формувати унікальні заголовки сторінок, описи та OG-теги з реальними зображеннями препаратів для привабливого поширення в соцмережах та месенджерах.
+                </li>
+              </ul>
+              <p className="card-text" style={{ fontSize: '0.85rem', fontStyle: 'italic', color: 'var(--text-muted)', margin: 0 }}>
+                💡 <strong>Результат:</strong> Завдяки серверному рендерингу (SSR), пошукові системи отримують повністю готовий HTML-код із мікророзміткою за долі секунди, що є критично важливим для публічного інтернет-магазину медикаментів.
+              </p>
+            </div>
+
             {/* Quick Links / Guide */}
             <div className="card" style={{ marginBottom: '2.5rem', background: 'var(--primary-light)', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
               <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>

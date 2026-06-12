@@ -20,8 +20,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Аптека - Сервіс замовлення ліків",
-  description: "Зручний онлайн-каталог та замовлення медикаментів",
+  title: {
+    template: "%s | Аптека Здоров'я",
+    default: "Аптека Здоров'я — Онлайн-замовлення та доставка ліків",
+  },
+  description: "Сучасний онлайн-сервіс для швидкого пошуку, порівняння та замовлення медичних препаратів з розумним ШІ-аналізатором симптомів.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    title: "Аптека Здоров'я — Онлайн-каталог ліків",
+    description: "Швидке замовлення медикаментів, актуальні ціни, наявність на складі та тріаж симптомів за допомогою ШІ.",
+    url: 'http://localhost:3000',
+    siteName: "Аптека Здоров'я",
+    locale: 'uk_UA',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
