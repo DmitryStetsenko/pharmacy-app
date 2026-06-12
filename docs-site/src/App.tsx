@@ -967,7 +967,7 @@ export default function App() {
                 <div className="stat-lbl">Архітектурних шарів</div>
               </div>
               <div className="stat-card">
-                <div className="stat-val">18</div>
+                <div className="stat-val">19</div>
                 <div className="stat-lbl">API Ендпоінтів</div>
               </div>
               <div className="stat-card">
@@ -982,6 +982,15 @@ export default function App() {
               </h3>
               <p className="card-text" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
                 У проєкт інтегровано повноцінний адміністративний інтерфейс (роут <code>/admin</code>), який дозволяє управляти користувачами, медикаментами та замовленнями в реальному часі. Доступ захищено за допомогою JWT токенів та авторизаційного Middleware (перевірка ролі <code>admin</code>), що гарантує безпеку конфіденційних даних та дій.
+              </p>
+            </div>
+
+            <div className="card" style={{ marginBottom: '2.5rem' }}>
+              <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
+                <Cpu /> Інтелектуальний аналізатор симптомів (ШІ)
+              </h3>
+              <p className="card-text" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                Додатково розроблено сервіс первинного скринінгу здоров'я на базі штучного інтелекту (роут <code>/symptoms</code>). Він використовує <strong>Groq API (llama-3.3-70b-versatile)</strong> для аналізу скарг пацієнта, температури тіла, віку та тривалості симптомів. ШІ визначає потенційні загрози, виводить попередження українською мовою про необхідність звернення до лікаря або виклику швидкої, а також рекомендує типи безрецептурних засобів без згадки брендів.
               </p>
             </div>
 
