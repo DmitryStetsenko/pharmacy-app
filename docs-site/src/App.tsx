@@ -128,6 +128,11 @@ const projectTree: FileTreeNode = {
           name: 'admin',
           type: 'folder',
           children: [{ name: 'ui', type: 'folder', children: [{ name: 'AdminPage.tsx', type: 'file' }] }]
+        },
+        {
+          name: 'symptoms',
+          type: 'folder',
+          children: [{ name: 'ui', type: 'folder', children: [{ name: 'SymptomsPage.tsx', type: 'file' }] }]
         }
       ]
     },
@@ -419,11 +424,19 @@ export default function App() {
     'pages-flat': {
       name: 'Pages Flat (Шар сторінок за FSD)',
       purpose: 'Компоненти сторінок, які містять основну логіку та збирають докупи віджети і фічі. Next.js App Router роути лише імпортують ці компоненти, що усуває зайве дублювання логіки.',
-      contents: ['`HomePage` — Головна сторінка з промо-блоками', '`CatalogPage` — Каталог медикаментів з пошуком та фільтрами', '`CartPage` — Кошик товарів', '`CheckoutPage` — Форма оформлення замовлення', '`AdminPage` — Адмін-панель для повного CRUD-керування користувачами, ліками та замовленнями'],
-      examples: ['src/pages-flat/catalog/ui/CatalogPage.tsx', 'src/pages-flat/admin/ui/AdminPage.tsx'],
+      contents: [
+        '`HomePage` — Головна сторінка з промо-блоками та ШІ-карткою',
+        '`CatalogPage` — Каталог медикаментів з пошуком та фільтрами',
+        '`CartPage` — Кошик товарів',
+        '`CheckoutPage` — Форма оформлення замовлення',
+        '`AdminPage` — Адмін-панель для повного CRUD-керування користувачами, ліками та замовленнями',
+        '`SymptomsPage` — Сторінка ШІ-аналізатора симптомів користувача'
+      ],
+      examples: ['src/pages-flat/catalog/ui/CatalogPage.tsx', 'src/pages-flat/admin/ui/AdminPage.tsx', 'src/pages-flat/symptoms/ui/SymptomsPage.tsx'],
       screenshots: [
         { src: 'screenshots/home.png', title: 'Головна сторінка (HomePage)', desc: 'Основна сторінка аптеки з промо-банерами та категоріями ліків.' },
-        { src: 'screenshots/catalog.png', title: 'Сторінка каталогу (CatalogPage)', desc: 'Список товарів, пошук з debounce та бічні фільтри за ціною.' }
+        { src: 'screenshots/catalog.png', title: 'Сторінка каталогу (CatalogPage)', desc: 'Список товарів, пошук з debounce та бічні фільтри за ціною.' },
+        { src: 'screenshots/symptoms.png', title: 'Аналізатор симптомів (SymptomsPage)', desc: 'Форма вибору симптомів та виведення результатів попереднього тріажу від ШІ.' }
       ]
     },
     'widgets': {
