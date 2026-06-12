@@ -59,16 +59,31 @@ export const analyzeSymptomsMvp = async (req: Request, res: Response): Promise<v
       return;
     }
 
-    const promptText = `Ти — медичний ШІ-асистент. Проаналізуй симптоми:
-Вік: ${readableAge}, Температура: ${readableTemp}, Тривалість: ${readableDuration}, Маркери: ${mappedSymptoms}, Опис: ${description}.
+    const promptText = `You are an expert AI Medical Assistant integrated into a pharmacy website. Your task is to analyze patient symptoms and return a structured assessment. 
 
-Поверни JSON із наступними полями:
-'disclaimer' (попередження українською мовою про те, що це лише інформаційна оцінка і не замінює консультацію лікаря),
-'analysis' (короткий висновок українською мовою про можливу причину та поради),
-'textRecommendations' (масив строк українською мовою із загальними назвами ліків, які можуть допомогти, наприклад: ['Парацетамол або Ібупрофен (при температурі)', 'Спрей для носа з морською водою', 'Льодяники від болю в горлі']),
-'isCritical' (boolean: true, якщо стан критичний, температура понад 39°C або є задишка, інакше false).
+Analyze the following patient data:
+- Age Category: ${readableAge} (e.g., child, teenager, adult, elderly)
+- Body Temperature: ${readableTemp}
+- Duration of symptoms: ${readableDuration}
+- Selected Symptom Markers: [${mappedSymptoms}]
+- Patient's Additional Description: "${description}"
 
-Не прив'язуйся до жодних ID, пиши просто зрозумілі людям назви ліків. Поверни суворо JSON без форматування markdown чи обгорток block.`;
+You MUST respond STRICTLY in JSON format with the following keys. Do not include any markdown formatting wrappers (like \`\`\`json) outside the JSON object if using raw response, or ensure responseMimeType is active.
+
+The JSON object structure must be EXACTLY as follows:
+{
+  "isCritical": true/false,
+  "disclaimer": "A warning string in Ukrainian. If 'isCritical' is true, make it urgent, telling them to call an ambulance (103) immediately. If false, remind them that this is an AI pre-assessment and they must consult a doctor.",
+  "analysis": "A brief, professional overview in Ukrainian explaining what these symptoms might indicate, taking into account the patient's age and duration of illness. Do not state a 100% definitive diagnosis, use terms like 'Схоже на...', 'Може свідчити про...'.",
+  "textRecommendations": [
+    "Array of 2-4 strings in Ukrainian listing general over-the-counter medicine types or actions that could help, WITHOUT naming specific commercial brands. Examples: 'Жарознижувальні засоби (Парацетамол або Ібупрофен) при температурі вище 38.5°C', 'Льодяники або спреї для полегшення болю в горлі', 'Рясне тепле пиття та відпочинок'."
+  ]
+}
+
+CRITICAL SAFETY RULES:
+1. If the temperature is 'critical' (39°C+), or if symptom markers contain 'shortness_of_breath', set "isCritical" to true, write an urgent disclaimer, and keep "textRecommendations" empty or focused only on immediate emergency actions.
+2. All text values ("disclaimer", "analysis", "textRecommendations") MUST be written in fluent Ukrainian.
+3. NEVER mention brand names of specific pharmacy products. Only specify general drug classes or home care tips.`;
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',

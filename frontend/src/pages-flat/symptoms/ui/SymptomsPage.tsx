@@ -20,6 +20,47 @@ import { RootState } from '@/app/store';
 const { Title, Paragraph, Text } = Typography;
 const { Option } = Select;
 
+const ageLabels: Record<string, string> = {
+  child: 'Дитина (до 12 років)',
+  teenager: 'Підліток (12-18 років)',
+  adult: 'Дорослий (18-60 років)',
+  elderly: 'Людина похилого віку (60+)'
+};
+
+const tempLabels: Record<string, string> = {
+  no_fever: 'Нормальна (до 37°C)',
+  subfebrile: 'Субфебрильна (37-38°C)',
+  high: 'Висока (38-39°C)',
+  critical: 'Критична (понад 39°C)'
+};
+
+const durationLabels: Record<string, string> = {
+  less_24h: 'Менше 24 годин',
+  '1_3_days': '1-3 дні',
+  week_plus: 'Тиждень або довше'
+};
+
+const symptomLabels: Record<string, string> = {
+  sweating: 'Пітливість',
+  chills: 'Озноб',
+  body_aches: 'Ломота в тілі',
+  cough_dry: 'Сухий кашель',
+  cough_wet: 'Вологий кашель',
+  runny_nose: 'Нежить',
+  sore_throat: 'Біль у горлі',
+  shortness_of_breath: 'Задишка',
+  chest_pain: 'Біль у грудях',
+  palpitations: 'Прискорене серцебиття',
+  fatigue: 'Втома / слабкість',
+  muscle_pain: 'Біль у м’язах',
+  joint_pain: 'Біль у суглобах',
+  nausea: 'Нудота',
+  diarrhea: 'Діарея',
+  headache: 'Сильний головний біль',
+  dizziness: 'Запаморочення',
+  insomnia: 'Безсоння (порушення сну)'
+};
+
 interface AnalysisResponse {
   isCritical: boolean;
   disclaimer: string;
@@ -33,6 +74,7 @@ export const SymptomsPage = () => {
 
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResponse | null>(null);
+  const [submittedSymptoms, setSubmittedSymptoms] = useState<any | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [form] = Form.useForm();
 
@@ -45,6 +87,7 @@ export const SymptomsPage = () => {
     setLoading(true);
     setError(null);
     setResult(null);
+    setSubmittedSymptoms(values);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
       const response = await fetch(`${apiUrl}/symptoms/analyze-mvp`, {
@@ -70,6 +113,7 @@ export const SymptomsPage = () => {
     form.resetFields();
     setResult(null);
     setError(null);
+    setSubmittedSymptoms(null);
   };
 
   return (
@@ -438,6 +482,85 @@ export const SymptomsPage = () => {
               padding: '16px'
             }}
           />
+
+          {/* Вказані пацієнтом дані */}
+          <Card 
+            title={
+              <span style={{ color: textColor, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <MedicineBoxOutlined style={{ color: '#00b894' }} />
+                <span>Вказані вами дані</span>
+              </span>
+            }
+            style={{ 
+              borderRadius: '16px', 
+              backgroundColor: cardBgColor, 
+              borderColor: cardBorderColor,
+              marginBottom: '24px',
+              boxShadow: isDark ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(0,0,0,0.05)'
+            }}
+          >
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={8}>
+                <Text type="secondary">Вік: </Text>
+                <Text strong style={{ color: textColor }}>
+                  {ageLabels[submittedSymptoms?.age] || submittedSymptoms?.age || 'не вказано'}
+                </Text>
+              </Col>
+              <Col xs={24} sm={8}>
+                <Text type="secondary">Температура тіла: </Text>
+                <Text strong style={{ color: textColor }}>
+                  {tempLabels[submittedSymptoms?.temperature] || submittedSymptoms?.temperature || 'не вказано'}
+                </Text>
+              </Col>
+              <Col xs={24} sm={8}>
+                <Text type="secondary">Тривалість симптомів: </Text>
+                <Text strong style={{ color: textColor }}>
+                  {durationLabels[submittedSymptoms?.duration] || submittedSymptoms?.duration || 'не вказано'}
+                </Text>
+              </Col>
+
+              {submittedSymptoms?.symptoms && submittedSymptoms.symptoms.length > 0 && (
+                <Col span={24} style={{ marginTop: '8px' }}>
+                  <Text type="secondary" style={{ display: 'block', marginBottom: '8px' }}>Обрані симптоми:</Text>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {submittedSymptoms.symptoms.map((code: string) => (
+                      <span 
+                        key={code} 
+                        style={{ 
+                          padding: '4px 12px', 
+                          borderRadius: '16px', 
+                          backgroundColor: isDark ? '#262626' : '#e6f7ff', 
+                          border: isDark ? '1px solid #303030' : '1px solid #91d5ff',
+                          color: isDark ? '#f5f5f5' : '#0050b3',
+                          fontSize: '13px',
+                          fontWeight: 500
+                        }}
+                      >
+                        {symptomLabels[code] || code}
+                      </span>
+                    ))}
+                  </div>
+                </Col>
+              )}
+
+              {submittedSymptoms?.description && (
+                <Col span={24} style={{ marginTop: '8px' }}>
+                  <Text type="secondary" style={{ display: 'block', marginBottom: '4px' }}>Додатковий опис стану:</Text>
+                  <Paragraph style={{ 
+                    fontStyle: 'italic', 
+                    color: textColor, 
+                    paddingLeft: '12px', 
+                    borderLeft: '3px solid #00b894',
+                    margin: 0,
+                    fontSize: '14px',
+                    lineHeight: '1.6'
+                  }}>
+                    "{submittedSymptoms.description}"
+                  </Paragraph>
+                </Col>
+              )}
+            </Row>
+          </Card>
 
           <Card 
             title={
