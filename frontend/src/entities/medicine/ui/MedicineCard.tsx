@@ -113,7 +113,14 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
               fontSize: '18px', 
               fontWeight: 600,
               color: textColor,
-              transition: 'color 0.2s'
+              transition: 'color 0.2s',
+              height: '50px',
+              lineHeight: '25px',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
             onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
@@ -127,7 +134,7 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
       </div>
 
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '12px' }}>
           <div>
             <Text style={{ fontSize: '13px', color: '#b2bec3' }}>Ціна</Text>
             <div style={{ fontSize: '20px', fontWeight: 700, color: textColor }}>
