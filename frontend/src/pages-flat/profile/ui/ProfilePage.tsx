@@ -264,7 +264,7 @@ export const ProfilePage = () => {
               type="success"
               showIcon
               icon={<LockOutlined />}
-              message="Ви авторизовані"
+              title="Ви авторизовані"
               description="Ім'я та email заповнено автоматично з вашого акаунту і не можуть бути змінені тут. Заповніть телефон та адресу доставки для швидкого оформлення замовлень."
               style={{ marginBottom: '20px', borderRadius: '10px' }}
             />
