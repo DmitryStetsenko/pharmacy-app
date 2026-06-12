@@ -158,7 +158,7 @@ export const CatalogPage = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
               <Row gutter={[16, 16]}>
                 {data.medicines.map((medicine) => (
-                  <Col xs={24} sm={12} md={8} key={medicine.id}>
+                  <Col xs={24} sm={12} md={8} key={medicine.id} style={{ display: 'flex' }}>
                     <MedicineCard medicine={medicine} />
                   </Col>
                 ))}

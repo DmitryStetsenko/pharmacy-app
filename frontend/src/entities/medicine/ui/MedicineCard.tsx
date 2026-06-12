@@ -55,28 +55,29 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
   const buttonBgColor = currentQuantityInCart > 0 ? (isDark ? '#142924' : '#e8f8f5') : '#00b894';
 
   return (
-    <Badge.Ribbon text={ribbonText} color={ribbonColor}>
-      <Card
-        hoverable
-        style={{
-          height: '100%',
+    <Card
+      hoverable
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        border: currentQuantityInCart > 0 ? '2px solid #00b894' : `1px solid ${cardBorderColor}`,
+        transition: 'all 0.3s ease'
+      }}
+      styles={{
+        body: {
+          padding: '16px',
+          flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          border: currentQuantityInCart > 0 ? '2px solid #00b894' : `1px solid ${cardBorderColor}`,
-          transition: 'all 0.3s ease'
-        }}
-        styles={{
-          body: {
-            padding: '16px',
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-          }
-        }}
-        cover={
+          justifyContent: 'space-between'
+        }
+      }}
+      cover={
+        <Badge.Ribbon text={ribbonText} color={ribbonColor}>
           <Link href={`/catalog/${medicine.id}`}>
             <div style={{
               height: '200px',
@@ -97,95 +98,95 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
               )}
             </div>
           </Link>
-        }
-      >
-        <div style={{ marginBottom: '16px' }}>
-          <Text type="secondary" style={{ fontSize: '12px' }}>
-            {medicine.manufacturer}
-          </Text>
-          <Link href={`/catalog/${medicine.id}`} style={{ textDecoration: 'none' }}>
-            <Title 
-              level={4} 
-              style={{ 
-                margin: '4px 0 8px 0', 
-                fontSize: '18px', 
-                fontWeight: 600,
-                color: textColor,
-                transition: 'color 0.2s'
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
-            >
-              {medicine.name}
-            </Title>
-          </Link>
-          <Paragraph ellipsis={{ rows: 2 }} style={{ color: secondaryTextColor, fontSize: '13px', margin: 0 }}>
-            {medicine.description}
-          </Paragraph>
-        </div>
+        </Badge.Ribbon>
+      }
+    >
+      <div style={{ marginBottom: '16px' }}>
+        <Text type="secondary" style={{ fontSize: '12px' }}>
+          {medicine.manufacturer}
+        </Text>
+        <Link href={`/catalog/${medicine.id}`} style={{ textDecoration: 'none' }}>
+          <Title 
+            level={4} 
+            style={{ 
+              margin: '4px 0 8px 0', 
+              fontSize: '18px', 
+              fontWeight: 600,
+              color: textColor,
+              transition: 'color 0.2s'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#00b894')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
+          >
+            {medicine.name}
+          </Title>
+        </Link>
+        <Paragraph ellipsis={{ rows: 2 }} style={{ color: secondaryTextColor, fontSize: '13px', margin: 0 }}>
+          {medicine.description}
+        </Paragraph>
+      </div>
 
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <div>
-              <Text style={{ fontSize: '13px', color: '#b2bec3' }}>Ціна</Text>
-              <div style={{ fontSize: '20px', fontWeight: 700, color: textColor }}>
-                {medicine.price.toFixed(2)} грн
-              </div>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-              <Text type={isOutOfStock ? "danger" : "secondary"} style={{ fontSize: '12px' }}>
-                {isOutOfStock ? "Закінчився" : `В наявності: ${medicine.inStock} шт.`}
-              </Text>
-              {currentQuantityInCart > 0 && (
-                <span style={{ 
-                  fontSize: '11px', 
-                  color: '#00b894', 
-                  fontWeight: 600,
-                  marginTop: '4px',
-                  backgroundColor: badgeBgColor,
-                  padding: '2px 6px',
-                  borderRadius: '4px'
-                }}>
-                  У кошику: {currentQuantityInCart} шт.
-                </span>
-              )}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <div>
+            <Text style={{ fontSize: '13px', color: '#b2bec3' }}>Ціна</Text>
+            <div style={{ fontSize: '20px', fontWeight: 700, color: textColor }}>
+              {medicine.price.toFixed(2)} грн
             </div>
           </div>
-
-          <Button
-            type={currentQuantityInCart > 0 ? "default" : "primary"}
-            icon={currentQuantityInCart > 0 ? <CheckOutlined /> : <ShoppingCartOutlined />}
-            onClick={handleAddToCart}
-            disabled={isOutOfStock || isMaxStockReached}
-            block
-            style={{
-              height: '40px',
-              backgroundColor: isOutOfStock || isMaxStockReached 
-                ? undefined 
-                : buttonBgColor,
-              borderColor: isOutOfStock || isMaxStockReached 
-                ? undefined 
-                : '#00b894',
-              color: isOutOfStock || isMaxStockReached 
-                ? undefined 
-                : currentQuantityInCart > 0 
-                ? '#00b894' 
-                : '#fff',
-              fontWeight: 600,
-              borderRadius: '8px'
-            }}
-          >
-            {isOutOfStock 
-              ? "Немає в наявності" 
-              : isMaxStockReached 
-              ? "Вже у кошику" 
-              : currentQuantityInCart > 0 
-              ? `У кошику (${currentQuantityInCart}) +` 
-              : "Додати в кошик"
-            }
-          </Button>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <Text type={isOutOfStock ? "danger" : "secondary"} style={{ fontSize: '12px' }}>
+              {isOutOfStock ? "Закінчився" : `В наявності: ${medicine.inStock} шт.`}
+            </Text>
+            {currentQuantityInCart > 0 && (
+              <span style={{ 
+                fontSize: '11px', 
+                color: '#00b894', 
+                fontWeight: 600,
+                marginTop: '4px',
+                backgroundColor: badgeBgColor,
+                padding: '2px 6px',
+                borderRadius: '4px'
+              }}>
+                У кошику: {currentQuantityInCart} шт.
+              </span>
+            )}
+          </div>
         </div>
-      </Card>
-    </Badge.Ribbon>
+
+        <Button
+          type={currentQuantityInCart > 0 ? "default" : "primary"}
+          icon={currentQuantityInCart > 0 ? <CheckOutlined /> : <ShoppingCartOutlined />}
+          onClick={handleAddToCart}
+          disabled={isOutOfStock || isMaxStockReached}
+          block
+          style={{
+            height: '40px',
+            backgroundColor: isOutOfStock || isMaxStockReached 
+              ? undefined 
+              : buttonBgColor,
+            borderColor: isOutOfStock || isMaxStockReached 
+              ? undefined 
+              : '#00b894',
+            color: isOutOfStock || isMaxStockReached 
+              ? undefined 
+              : currentQuantityInCart > 0 
+              ? '#00b894' 
+              : '#fff',
+            fontWeight: 600,
+            borderRadius: '8px'
+          }}
+        >
+          {isOutOfStock 
+            ? "Немає в наявності" 
+            : isMaxStockReached 
+            ? "Вже у кошику" 
+            : currentQuantityInCart > 0 
+            ? `У кошику (${currentQuantityInCart}) +` 
+            : "Додати в кошик"
+          }
+        </Button>
+      </div>
+    </Card>
   );
 };
