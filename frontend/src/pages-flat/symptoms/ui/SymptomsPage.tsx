@@ -472,7 +472,7 @@ export const SymptomsPage = () => {
           
           {/* Попередження про критичний стан (дисклеймер від ШІ) */}
           <Alert
-            title={result.isCritical ? "⚠️ КРИТИЧНИЙ СТАН! ЗВЕРНІТЬСЯ ДО ЛІКАРЯ" : "Попередження щодо результатів"}
+            title={result.isCritical ? "КРИТИЧНИЙ СТАН! ЗВЕРНІТЬСЯ ДО ЛІКАРЯ" : "Попередження щодо результатів"}
             description={result.disclaimer}
             type={result.isCritical ? "error" : "warning"}
             showIcon
@@ -586,7 +586,10 @@ export const SymptomsPage = () => {
 
             <Divider style={{ borderColor: cardBorderColor }} />
 
-            <Title level={4} style={{ color: '#00b894', margin: '16px 0 12px 0' }}>💊 Можливі допоміжні засоби (рекомендація ШІ):</Title>
+            <Title level={4} style={{ color: '#00b894', margin: '16px 0 12px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <MedicineBoxOutlined />
+              <span>Можливі допоміжні засоби (рекомендація ШІ):</span>
+            </Title>
             <ul style={{ paddingLeft: '20px', margin: 0 }}>
               {result.textRecommendations && result.textRecommendations.map((rec, idx) => (
                 <li key={idx} style={{ fontSize: '15px', margin: '8px 0', color: textColor }}>

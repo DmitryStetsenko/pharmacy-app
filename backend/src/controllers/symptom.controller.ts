@@ -83,7 +83,8 @@ The JSON object structure must be EXACTLY as follows:
 CRITICAL SAFETY RULES:
 1. If the temperature is 'critical' (39°C+), or if symptom markers contain 'shortness_of_breath', set "isCritical" to true, write an urgent disclaimer, and keep "textRecommendations" empty or focused only on immediate emergency actions.
 2. All text values ("disclaimer", "analysis", "textRecommendations") MUST be written in fluent Ukrainian.
-3. NEVER mention brand names of specific pharmacy products. Only specify general drug classes or home care tips.`;
+3. NEVER mention brand names of specific pharmacy products. Only specify general drug classes or home care tips.
+4. Do NOT include any emojis in the response text fields.`;
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
