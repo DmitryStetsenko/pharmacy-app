@@ -66,3 +66,11 @@ a {
     display: flex !important;
   }
 }
+
+/* Fix Ant Design Badge.Ribbon wrapper height and display when used inside Grid/Flex layouts */
+.ant-badge-ribbon-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

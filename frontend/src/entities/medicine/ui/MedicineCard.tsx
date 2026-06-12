@@ -55,29 +55,29 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
   const buttonBgColor = currentQuantityInCart > 0 ? (isDark ? '#142924' : '#e8f8f5') : '#00b894';
 
   return (
-    <Card
-      hoverable
-      style={{
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        borderRadius: '16px',
-        overflow: 'hidden',
-        border: currentQuantityInCart > 0 ? '2px solid #00b894' : `1px solid ${cardBorderColor}`,
-        transition: 'all 0.3s ease'
-      }}
-      styles={{
-        body: {
-          padding: '16px',
-          flex: 1,
+    <Badge.Ribbon text={ribbonText} color={ribbonColor}>
+      <Card
+        hoverable
+        style={{
+          height: '100%',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between'
-        }
-      }}
-      cover={
-        <Badge.Ribbon text={ribbonText} color={ribbonColor}>
+          borderRadius: '16px',
+          overflow: 'hidden',
+          border: currentQuantityInCart > 0 ? '2px solid #00b894' : `1px solid ${cardBorderColor}`,
+          transition: 'all 0.3s ease'
+        }}
+        styles={{
+          body: {
+            padding: '16px',
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }
+        }}
+        cover={
           <Link href={`/catalog/${medicine.id}`}>
             <div style={{
               height: '200px',
@@ -98,9 +98,8 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
               )}
             </div>
           </Link>
-        </Badge.Ribbon>
-      }
-    >
+        }
+      >
       <div style={{ marginBottom: '16px' }}>
         <Text type="secondary" style={{ fontSize: '12px' }}>
           {medicine.manufacturer}
@@ -134,30 +133,30 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
       </div>
 
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '12px' }}>
-          <div>
-            <Text style={{ fontSize: '13px', color: '#b2bec3' }}>Ціна</Text>
-            <div style={{ fontSize: '20px', fontWeight: 700, color: textColor }}>
+        <div style={{ marginBottom: '12px' }}>
+          <Text style={{ fontSize: '13px', color: '#b2bec3', display: 'block', marginBottom: '4px' }}>Ціна</Text>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+            <div style={{ fontSize: '20px', fontWeight: 700, color: textColor, lineHeight: '1.2' }}>
               {medicine.price.toFixed(2)} грн
             </div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-            <Text type={isOutOfStock ? "danger" : "secondary"} style={{ fontSize: '12px' }}>
-              {isOutOfStock ? "Закінчився" : `В наявності: ${medicine.inStock} шт.`}
-            </Text>
-            {currentQuantityInCart > 0 && (
-              <span style={{ 
-                fontSize: '11px', 
-                color: '#00b894', 
-                fontWeight: 600,
-                marginTop: '4px',
-                backgroundColor: badgeBgColor,
-                padding: '2px 6px',
-                borderRadius: '4px'
-              }}>
-                У кошику: {currentQuantityInCart} шт.
-              </span>
-            )}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <Text type={isOutOfStock ? "danger" : "secondary"} style={{ fontSize: '12px', lineHeight: '1.2' }}>
+                {isOutOfStock ? "Закінчився" : `В наявності: ${medicine.inStock} шт.`}
+              </Text>
+              {currentQuantityInCart > 0 && (
+                <span style={{ 
+                  fontSize: '11px', 
+                  color: '#00b894', 
+                  fontWeight: 600,
+                  marginTop: '4px',
+                  backgroundColor: badgeBgColor,
+                  padding: '2px 6px',
+                  borderRadius: '4px'
+                }}>
+                  У кошику: {currentQuantityInCart} шт.
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
@@ -194,6 +193,7 @@ export const MedicineCard = ({ medicine }: MedicineCardProps) => {
           }
         </Button>
       </div>
-    </Card>
+      </Card>
+    </Badge.Ribbon>
   );
 };
